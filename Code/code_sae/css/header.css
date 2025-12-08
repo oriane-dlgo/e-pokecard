@@ -1,6 +1,6 @@
 *{
     margin: 0;
-    padding: 0;
+    padding: 5px;
     box-sizing: border-box;
 }
 
@@ -12,7 +12,10 @@
   padding: 10px;
   height: 200px;
   width: 100%;
-  background-color: beige;
+  margin: auto;
+  background-color: #EDDCD9;
+  border: 2px solid #264143;
+  box-shadow: 3px 4px 0px 1px #E99F4C;
 }
 
 .logo {
@@ -21,6 +24,14 @@
   transform: translateX(-50%); /* centre horizontalement */
   width: 200px;
   height: 200px;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;    /* évite la déformation */
 }
 
 .img_bar {
