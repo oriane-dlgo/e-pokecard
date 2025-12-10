@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: sae_php_app
+    build:
+      context: .       # Le Dockerfile doit être à côté du docker-compose
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"      # Accès via localhost:8080
+    volumes:
+      - ./:/var/www/html:Z # <--- CRUCIAL : Lie votre dossier actuel au conteneur
+    depends_on:
+      - mysql
+
+  mysql:
+    container_name: sae_mysql
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sae_db  # Nom de la BDD du projet
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql # Pour ne pas perdre les données si on éteint le conteneur
+    ports:
+      - "3306:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: sae_pma
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8081:80"     # Accès via localhost:8081
+    depends_on:
+      - mysql
+
+volumes:
+  db_data:
