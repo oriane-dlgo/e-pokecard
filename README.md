@@ -5,15 +5,25 @@ Ce projet est une application e-commerce développée avec CodeIgniter 4 et Dock
 ## 🚀 Guide d'installation rapide
 
 
-### 1. Cloner le dépot 
+### 1. Cloner le dépot & Séléction de la branche
 Tout d'abord, lancer la commande suivante via un terminal dans un dossier vide : 
 
 ```bash
 git clone https://gitlab.univ-nantes.fr/pub/but/but2/sae/groupe4/eq_4_04_delgado-oriane_guillard-nhael_renard-clara_semaoune-ryan.git
 ```
 
+Entrer dans le dépot cloné : 
+```bash
+cd eq_4_04_delgado-oriane_guillard-nhael_renard-clara_semaoune-ryan
+```
+
+Sélectionner la branche *dev* contenant le code : 
+```bash
+git checkout dev 
+```
+
 ### 2. Lancer l'environnement (Docker/Podman)
-Le projet est conteneurisé. Lancez la commande suivante à la racine :
+Le projet est conteneurisé. Lancez donc la commande suivante à la racine :
 
 ```bash
 # Si vous êtes sur une machine personnelle
@@ -79,8 +89,21 @@ git pull origin dev
 >(Si un conflit apparaît, VSCode vous proposera de choisir entre "Current Change" et "Incoming Change").
 
 ### 2. Sauvegarder son travail (Le Commit)
-Ceci enregistre vos modifications sur votre ordinateur uniquement.
+Si vous changez d'ordinateur ou si c'est votre première connexion, Git ne sait pas qui vous êtes. Vous devez configurer votre identité pour que vos commits vous soient attribués.
 
+À taper dans le terminal avant de commencer à travailler :
+```bash
+# 1. Définir votre nom (C'est ce qui s'affichera dans l'historique GitLab)
+git config --global user.name "Prénom Nom"
+
+# 2. Définir votre email (Utilisez votre adresse universitaire)
+git config --global user.email "prenom.nom@etu.univ-nantes.fr"
+
+# (Optionnel) Vérifier que c'est bien pris en compte
+git config --list
+```
+
+Pour enregistrer vos modifications sur votre ordinateur uniquement.
 ```Bash
 # 1. Ajouter les fichiers modifiés (Mise en carton)
 git add .
