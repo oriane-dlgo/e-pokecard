@@ -65,6 +65,9 @@ L'application nécessite une base de données MySQL initialisée.
 L'application est accessible ici : 👉 http://localhost:8080  
 La base de donnée est accessible ici (*sae_db*): 👉 http://localhost:8081 
 
+---
+
+
 ## 📦 Gestion du Git (Workflow quotidien)
 
 Pour éviter les conflits et ne pas perdre de travail, voici la procédure à suivre à chaque séance.
@@ -91,6 +94,9 @@ C'est l'étape obligatoire pour que les autres voient votre travail et pour le s
 git push origin dev
 ```
 > Note : Si VSCode indique "Outgoing Changes" ou "Modifications sortantes", c'est que vous avez oublié cette étape !
+
+---
+
 
 ## 🛑 Arrêter le projet proprement
 
