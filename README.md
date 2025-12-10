@@ -64,3 +64,39 @@ L'application nécessite une base de données MySQL initialisée.
 
 L'application est accessible ici : 👉 http://localhost:8080  
 La base de donnée est accessible ici (*sae_db*): 👉 http://localhost:8081 
+
+## 📦 Gestion du Git (Workflow quotidien)
+
+Pour éviter les conflits et ne pas perdre de travail, voici la procédure à suivre à chaque séance.
+### 1. Avant de commencer à coder (Le matin)
+Toujours récupérer le travail des autres pour être à jour.
+```bash
+git pull origin dev
+```
+>(Si un conflit apparaît, VSCode vous proposera de choisir entre "Current Change" et "Incoming Change").
+
+### 2. Sauvegarder son travail (Le Commit)
+Ceci enregistre vos modifications sur votre ordinateur uniquement.
+
+```Bash
+# 1. Ajouter les fichiers modifiés (Mise en carton)
+git add .
+# 2. Valider la version (Fermer le carton)
+git commit -m "Description claire de ce que j'ai fait (ex: Ajout page Panier)"
+```
+### 3. Envoyer le travail au groupe (Le Push)
+C'est l'étape obligatoire pour que les autres voient votre travail et pour le sauvegarder sur le serveur.
+```Bash
+# Envoyer le carton au serveur
+git push origin dev
+```
+> Note : Si VSCode indique "Outgoing Changes" ou "Modifications sortantes", c'est que vous avez oublié cette étape !
+
+## 🛑 Arrêter le projet proprement
+
+Lorsque vous avez fini de travailler, n'éteignez pas brutalement le terminal ou VSCode. Arrêtez les conteneurs pour libérer les ressources.
+```Bash
+# Arrête et supprime les conteneurs (Vos données BDD sont conservées)
+podman-compose down
+```
+(Ou docker-compose down sur machine perso).
