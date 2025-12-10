@@ -21,7 +21,7 @@ class Home extends BaseController
         try {
             // On tente d'appeler le modèle
             $model = new ProductModel();
-            
+            $a="ptn";
             // On tente de récupérer les données
             $data['lesProduits'] = $model->findAll();
             
