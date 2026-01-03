@@ -27,7 +27,7 @@ Le projet est conteneurisé. Lancez donc la commande suivante à la racine :
 
 ```bash
 # Si vous êtes sur une machine personnelle
-docker-compose up -d --build
+docker compose up -d --build
 # Si vous êtes sur les machines de l'IUT (Podman)
 podman-compose up -d --build
 ```
@@ -40,21 +40,34 @@ Si on vous demande de choisir une image.
 
 Une fois le conteneur lancé, il faut initialiser le framework. Exécutez ces commandes (depuis votre terminal hôte) :
 
+- **Sous Linux** :  
+ ```Bash
+ # 1. Installer les librairies CodeIgniter (dossier vendor)
+ podman exec -it sae_php_app composer install
+
+ # 2. Configurer l'environnement
+ # Copiez le fichier d'exemple pour créer votre configuration locale
+ cp env.example .env
+
+ # 3. Fixer les permissions 
+ # Cette commande corrige les erreurs 403 Forbidden et les problèmes d'écriture
+ podman exec -it sae_php_app chmod -R 755 /var/www/html
+ podman exec -it sae_php_app chmod -R 777 / var/www/html/writable
+ ```
+
+- **Sous Windows** :
 ```Bash
-# 1. Installer les librairies CodeIgniter (dossier vendor)
-podman exec -it sae_php_app composer install
+ # 1. Installer les librairies CodeIgniter (dossier vendor)
+ docker exec sae_php_app composer install
 
-# 2. Configurer l'environnement
-# Copiez le fichier d'exemple pour créer votre configuration locale
-cp env.example .env
-# (Ou créez un fichier .env manuellement avec CI_ENVIRONMENT = development)
+ # 2. Configurer l'environnement
+ # Copiez le fichier d'exemple pour créer votre configuration locale
+ cp env.example .env
 
-# 3. Fixer les permissions (Crucial sous Linux/IUT)
-# Cette commande corrige les erreurs 403 Forbidden et les problèmes d'écriture
-podman exec -it sae_php_app chmod -R 755 /var/www/html
-podman exec -it sae_php_app chmod -R 777 /var/www/html/writable
-```
-
+ # 3. Fixer les permissions 
+ # Cette commande corrige les erreurs 403 Forbidden et les problèmes d'écriture
+ docker exec sae_php_app chmod -R 777 writable
+ ```
 
 ### 4. Base de Données
 L'application nécessite une base de données MySQL initialisée.
@@ -68,7 +81,7 @@ L'application nécessite une base de données MySQL initialisée.
 
 -  Allez dans l'onglet *Importer*.
 
--   Chargez le fichier *database.sql* situé à la racine du projet.
+-   Chargez le fichier *database.sql* situé dans *app/Database/Seeds/*.
 
 ### 5. Accès au site
 
@@ -81,12 +94,45 @@ La base de donnée est accessible ici (*sae_db*): 👉 http://localhost:8081
 ## 📦 Gestion du Git (Workflow quotidien)
 
 Pour éviter les conflits et ne pas perdre de travail, voici la procédure à suivre à chaque séance.
-### 1. Avant de commencer à coder (Le matin)
+### 1. Avant de commencer à coder 
 Toujours récupérer le travail des autres pour être à jour.
 ```bash
 git pull origin dev
 ```
 >(Si un conflit apparaît, VSCode vous proposera de choisir entre "Current Change" et "Incoming Change").
+
+### Problème pouvant être rencontré ⚠️
+Si après le pull, VSCode (ou via *git status*) détecte des différences entre votre version et celle de Git.   
+Cela est dû au fait que Git détecte des changements de permission et des retours à la ligne différents (Windows/Linux).   
+
+<ins> Pour régler tout ça : </ins>  
+
+ - **Sous Linux** :  
+ ```bash
+ # Dit à Git : "Ne regarde pas si le fichier est exécutable ou non, ignore les chmod"
+ git config core.filemode false
+ # Dit à Git : "Si jamais tu trouves du CRLF (venant de Windows), convertis-le en LF. Sinon ne touche à rien."
+ git config core.autocrlf input
+ ```
+ - **Sous Windows** :  
+ ```bash
+ # Dis à Git : "Arrête de surveiller si un fichier est exécutable ou non, je suis sous Windows, je m'en fiche."
+ git config core.filemode false
+ # Dis à Git : "Gére intelligemment les conversions ou ignore les."
+ git config core.autocrlf true
+ ```
+
+Si même après ces commandes VSCode (*git status*) affiche des fichiers modifiés, c'est qu'il n'a pas pris en compte les modifications.  
+- Essayer **CTRL+SHIF+P** et exécuter *Developer: Reload Window*  
+
+Sinon :
+> ⚠️ **Attention** : Ne fais cette commande que si tu es sûr de ne pas avoir commencé à codé (sinon tu perdras tes vraies modifs).  
+
+**Sous Linux/Windows** :
+```bash
+# Annule toutes les modifications locales pour revenir à l'état propre du dernier commit
+git reset --hard
+```
 
 ### 2. Sauvegarder son travail (Le Commit)
 Si vous changez d'ordinateur ou si c'est votre première connexion, Git ne sait pas qui vous êtes. Vous devez configurer votre identité pour que vos commits vous soient attribués.
@@ -110,13 +156,17 @@ git add .
 # 2. Valider la version (Fermer le carton)
 git commit -m "Description claire de ce que j'ai fait (ex: Ajout page Panier)"
 ```
+
+
+
+
 ### 3. Envoyer le travail au groupe (Le Push)
 C'est l'étape obligatoire pour que les autres voient votre travail et pour le sauvegarder sur le serveur.
 ```Bash
 # Envoyer le carton au serveur
 git push origin dev
 ```
-> Note : Si VSCode indique "Outgoing Changes" ou "Modifications sortantes", c'est que vous avez oublié cette étape !
+> **Note** : Si VSCode indique "Outgoing Changes" ou "Modifications sortantes", c'est que vous avez oublié cette étape !
 
 ---
 
@@ -128,4 +178,4 @@ Lorsque vous avez fini de travailler, n'éteignez pas brutalement le terminal ou
 # Arrête et supprime les conteneurs (Vos données BDD sont conservées)
 podman-compose down
 ```
-(Ou docker-compose down sur machine perso).
+(Ou docker compose down sur machine perso).
