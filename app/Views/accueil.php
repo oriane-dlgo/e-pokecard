@@ -43,11 +43,14 @@
 
     </header>
     <main>
-
-        <h1>Bienvenue dans la boutique !</h1>
-       
+        <div class = "bienvenue">
+            <img src="<?= base_url("assets/perso.png")?>" alt="">
+            <h1>Bienvenue dans la boutique !<i></i></h1>
+        </div>
+        
+    
         <div class="catalogue">
-            <!-- TODO : catégorie bestseller et en fonction des types de produits // faire carroussel avec produits -->
+
             <div class = "bestseller">
                 <h2>Nos Bestsellers</h2>
                 <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
