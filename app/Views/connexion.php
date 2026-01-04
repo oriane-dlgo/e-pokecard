@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/connexion.css">
-    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="<?= base_url("css/connexion.css") ?>">
+    <link rel="stylesheet" href="<?= base_url("css/header.css") ?>">
 </head>
 <body>
     <header>

@@ -16,7 +16,7 @@
                 <img src="<?= base_url("assets/logo.png") ?>" alt="logo du site">
             </a>
             <div class="img_bar">
-                <a href="inscription.html">
+                <a href="<?= base_url('connexion') ?>">
                     <img src="<?= base_url("assets/utilisateur_icone.png") ?>" alt="image utilisateur">
                 </a>
                 <a href="panier.html">
