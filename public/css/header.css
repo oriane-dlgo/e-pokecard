@@ -9,14 +9,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400..800&family=Island+Moments&family=Playpen+Sans:wght@100..800&display=swap');
 
 body {
-  background-color: antiquewhite;
+  background-image: url("/assets/background.jpg");
 }
+
 header{
+  /*TODO : voir le display*/
+  width: 100%;
   background-color: #EDDCD9;
   border: 2px solid #264143;
   box-shadow: 3px 4px 0px 1px #E99F4C;
   align-items: center;
+  border-radius: 30px;
 }
+
 .top-bar {
   position: relative;
   display: flex;
@@ -57,8 +62,9 @@ header{
   display: block;
   
 }
+
 .navbar{
-  position: flex;
+  position:absolute;
   margin: 0px;
   padding: 10px;
   display: flex;
@@ -86,23 +92,81 @@ ul {
   display: flex;
   justify-content: flex-end;
   background-color: #dcbfb8ef;
+  align-items: center;
+  border-radius: 30px;
 }
 
+a {
+  list-style-type: none;
+}
 
 h1{
-  color: #E99F4C;
+  font-weight: bolder;
+  color: #6e481d;
+  font-size: 80px; 
+}
+a {
+  text-decoration: none;
+}
+.catalogue h2 {
+  color: #6e481d;
 }
 
-main{
-  padding-top: 50px;
+.catalogue h2 a {
+  color: #6e481d;
 }
+
 
 footer {
   background-color: #EDDCD9;
   border: 2px solid #264143;
   box-shadow: 3px 4px 0px 1px #E99F4C;
   align-items: center;
+  
 }
+main {
+  align-items: center;
+}
+
+
+.catalogue {
+  padding: 5px;
+
+}
+
+.bestseller {
+  background-color: #eddcd9e2;
+  border: 4px solid #000000;
+  border-radius: 10px;
+  margin : 10px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.coffrets {
+  background-color: #eddcd9e2;
+  border: 4px solid #000000;
+  border-radius: 10px;
+  margin : 10px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.booster {
+  background-color: #eddcd9e2;
+  border: 4px solid #000000;
+  border-radius: 10px;
+  margin : 10px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.cartes {
+  background-color: #eddcd9e2;
+  border: 4px solid #000000;
+  border-radius: 10px;
+  margin : 10px;
+  overflow-x: scroll;
+  white-space: nowrap; 
+}
+
 .carte {
   border: 1px solid #050000;
   padding: 10px;

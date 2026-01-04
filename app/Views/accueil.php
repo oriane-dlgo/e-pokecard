@@ -12,7 +12,7 @@
     <header>
 
         <div class="top-bar">
-            <a href="accueil.php" class="logo">
+            <a href="<?= base_url("accueil.php")?>" class="logo">
                 <img src="<?= base_url("assets/logo.png") ?>" alt="logo du site">
             </a>
             <div class="img_bar">
@@ -45,10 +45,12 @@
     <main>
 
         <h1>Bienvenue dans la boutique !</h1>
-
+       
         <div class="catalogue">
             <!-- TODO : catégorie bestseller et en fonction des types de produits // faire carroussel avec produits -->
-            <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
+            <div class = "bestseller">
+                <h2>Nos Bestsellers</h2>
+                <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
                 <?php foreach ($lesProduits as $produit): ?>
                     <div class="carte">
                         <h3><?= esc($produit->nom) ?></h3>
@@ -61,10 +63,70 @@
                         <p class="prix"><?= esc($produit->prix) ?> €</p>
                     </div>
                 <?php endforeach; ?>
-
             <?php else: ?>
                 <p>Aucun produit Pokémon trouvé.</p>
             <?php endif; ?>
+            </div>
+            
+            <div class = "coffrets">
+                <h2><a href="">Nos Coffrets</a></h2>
+                <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
+                <?php foreach ($lesProduits as $produit): ?>
+                    <div class="carte">
+                        <h3><?= esc($produit->nom) ?></h3>
+                        <p><?= esc($produit->type_produit) ?></p>
+
+                        <?php if ($produit->type_produit == 'carte'): ?>
+                            <p>Rareté : <?= esc($produit->rarete) ?></p>
+                        <?php endif; ?>
+
+                        <p class="prix"><?= esc($produit->prix) ?> €</p>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Aucun produit Pokémon trouvé.</p>
+            <?php endif; ?>
+            </div>
+
+            <div class = "booster">
+                <h2><a href="">Nos Booster</a></h2>
+                <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
+                <?php foreach ($lesProduits as $produit): ?>
+                    <div class="carte">
+                        <h3><?= esc($produit->nom) ?></h3>
+                        <p><?= esc($produit->type_produit) ?></p>
+
+                        <?php if ($produit->type_produit == 'carte'): ?>
+                            <p>Rareté : <?= esc($produit->rarete) ?></p>
+                        <?php endif; ?>
+
+                        <p class="prix"><?= esc($produit->prix) ?> €</p>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Aucun produit Pokémon trouvé.</p>
+            <?php endif; ?>
+            </div>
+
+            <div class = "cartes">
+                <h2><a href="">Nos Cartes</a></h2>
+                <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
+                <?php foreach ($lesProduits as $produit): ?>
+                    <div class="carte">
+                        <h3><?= esc($produit->nom) ?></h3>
+                        <p><?= esc($produit->type_produit) ?></p>
+
+                        <?php if ($produit->type_produit == 'carte'): ?>
+                            <p>Rareté : <?= esc($produit->rarete) ?></p>
+                        <?php endif; ?>
+
+                        <p class="prix"><?= esc($produit->prix) ?> €</p>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Aucun produit Pokémon trouvé.</p>
+            <?php endif; ?>
+            </div>
         </div>
 
     </main>
