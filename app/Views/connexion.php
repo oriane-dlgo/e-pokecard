@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="top-bar">
-            <a href="accueil.html" class="logo">
+            <a href="<?= base_url("/") ?>" class="logo">
             <img src="assets/logo.png" alt="logo du site">
             </a>
             <div class="img_bar">

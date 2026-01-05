@@ -22,10 +22,24 @@ class Home extends BaseController
             // On tente d'appeler le modèle
             $model = new ProductModel();
             // On tente de récupérer les données
-            $data['lesProduits'] = $model->findAll();
-            
+           $lesProduits = $model->findAll();
+
+        // Coffrets uniquement
+        $lesCoffrets = $model->where('type_produit', 'coffret')->findAll();
+        $lesBoosters = $model->where('type_produit', 'booster')->findAll();
+        $lesCartes = $model->where('type_produit', 'carte')->findAll();
+
+        // Préparer le tableau pour la vue
+        $data = [
+            'lesProduits' => $lesProduits,
+            'lesCoffrets' => $lesCoffrets,
+            'lesBoosters'=>$lesBoosters,
+            'lesCartes'=>$lesCartes
+        ];
+
+        return view('accueil', $data);
             // On tente d'afficher la vue
-            return view('accueil', $data);
+            // return view('accueil', $$coffrets);
 
         } catch (\Throwable $e) {
             // EN CAS D'ERREUR, on l'affiche ici :

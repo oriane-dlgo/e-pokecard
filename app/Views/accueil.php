@@ -12,7 +12,7 @@
     <header>
 
         <div class="top-bar">
-            <a href="<?= base_url("accueil.php")?>" class="logo">
+            <a href="<?= base_url('/')?>" class="logo">
                 <img src="<?= base_url("assets/logo.png") ?>" alt="logo du site">
             </a>
             <div class="img_bar">
@@ -73,8 +73,8 @@
             
             <div class = "coffrets">
                 <h2><a href="">Nos Coffrets</a></h2>
-                <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
-                <?php foreach ($lesProduits as $produit): ?>
+                <?php if (!empty($lesCoffrets) && is_array($lesCoffrets)): ?>
+                <?php foreach ($lesCoffrets as $produit): ?>
                     <div class="carte">
                         <h3><?= esc($produit->nom) ?></h3>
                         <p><?= esc($produit->type_produit) ?></p>
@@ -93,8 +93,8 @@
 
             <div class = "booster">
                 <h2><a href="">Nos Booster</a></h2>
-                <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
-                <?php foreach ($lesProduits as $produit): ?>
+                <?php if (!empty($lesBoosters) && is_array($lesBoosters)): ?>
+                <?php foreach ($lesBoosters as $produit): ?>
                     <div class="carte">
                         <h3><?= esc($produit->nom) ?></h3>
                         <p><?= esc($produit->type_produit) ?></p>
@@ -113,8 +113,8 @@
 
             <div class = "cartes">
                 <h2><a href="">Nos Cartes</a></h2>
-                <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
-                <?php foreach ($lesProduits as $produit): ?>
+                <?php if (!empty($lesCartes) && is_array($lesCartes)): ?>
+                <?php foreach ($lesCartes as $produit): ?>
                     <div class="carte">
                         <h3><?= esc($produit->nom) ?></h3>
                         <p><?= esc($produit->type_produit) ?></p>

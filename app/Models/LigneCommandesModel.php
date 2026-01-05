@@ -1,20 +1,20 @@
 <?php
 
-
 namespace App\Models;
 
 use CodeIgniter\Model;
-use App\Entities\Produit;
+use App\Entities\LigneCommandes;
 
-class ProductModel extends Model
+class LigneCommandesModel extends Model
 {
-    protected $table            = 'produits';
+    protected $table            = 'ligne_commandes';
     protected $primaryKey       = 'id';
-    protected $useAutoIncrement = false;
-    protected $returnType = 'App\Entities\Produit';
+    protected $useAutoIncrement = true;
+    protected $returnType       = LigneCommandes::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields = ['type_produit', 'name', 'quantity', 'price', 'promotion'];
+    protected $allowedFields    = ['id_commande','id_produit','quantite','prix_unitaire'];
+
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
 
