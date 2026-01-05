@@ -25,3 +25,6 @@ $routes->get('panier', 'Panier::index');                // Voir le panier
 $routes->post('panier/ajouter', 'Panier::ajouter');     // Ajouter (via un formulaire caché)
 $routes->get('panier/supprimer/(:num)', 'Panier::supprimer/$1'); // Supprimer un item
 $routes->get('panier/vider', 'Panier::vider');          // Tout vider
+
+
+$routes->get('detail/(:num)', 'Home::find/$1');
