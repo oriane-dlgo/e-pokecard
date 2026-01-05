@@ -8,16 +8,6 @@ class Home extends BaseController
 {
     public function index()
     {
-        // // 1. On appelle le modèle
-        // $model = new ProductModel();
-
-        // // 2. On récupère tous les produits (équivalent du SELECT * FROM...)
-        // $data['lesProduits'] = $model->findAll();
-
-        // // 3. On envoie ces données à la Vue (l'affichage)
-        // // 'accueil' sera le nom de votre fichier dans app/Views
-        // return view('accueil', $data);
-
         try {
             // On tente d'appeler le modèle
             $model = new ProductModel();
@@ -39,7 +29,7 @@ class Home extends BaseController
 
         return view('accueil', $data);
             // On tente d'afficher la vue
-            // return view('accueil', $$coffrets);
+            return view('accueil2', $data);
 
         } catch (\Throwable $e) {
             // EN CAS D'ERREUR, on l'affiche ici :
@@ -53,5 +43,5 @@ class Home extends BaseController
                 echo "<br>ASTUCE : La classe App\Models\ProductModel est introuvable. Vérifiez le nom du fichier et le namespace.";
             }
         }
-    }
+    } 
 }
