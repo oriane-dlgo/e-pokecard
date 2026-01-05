@@ -1,151 +1,39 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?= $this->extend('layouts/base') ?>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Boutique Pokémon</title>
-    <link rel="stylesheet" href="<?= base_url("css/header.css") ?>">
+<?= $this->section('contenu') ?>
 
-</head>
+    <div class="bienvenue">
+        <img src="<?= base_url("assets/perso.png")?>" alt="">
+        <h1>Bienvenue dans la boutique !<i></i></h1>
+    </div>
 
-<body>
-    <header>
-
-        <div class="top-bar">
-            <a href="<?= base_url("accueil.php")?>" class="logo">
-                <img src="<?= base_url("assets/logo.png") ?>" alt="logo du site">
-            </a>
-            <div class="img_bar">
-                <a href="<?= base_url('connexion') ?>">
-                    <img src="<?= base_url("assets/utilisateur_icone.png") ?>" alt="image utilisateur">
-                </a>
-                <a href="panier.html">
-                    <img src="<?= base_url("assets/panier_icone.png") ?>" alt="image panier">
-                </a>
-            </div>
-        </div>
-        <div class="bottom-bar">
-            <nav class="navbar">
-                <ul>
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Coffrets</a></li>
-                    <li><a href="">Booster</a></li>
-                    <li><a href="">Cartes</a></li>
-                </ul>
-            </nav>
-            <div class="recherche">
-                <form class="search" action="" method="GET">
-                    <input type="text" class="searchbar" placeholder="Recherche...">
-                </form>
-            </div>
-
-        </div>
-
-    </header>
-    <main>
-        <div class = "bienvenue">
-            <img src="<?= base_url("assets/perso.png")?>" alt="">
-            <h1>Bienvenue dans la boutique !<i></i></h1>
-        </div>
+    <div class="catalogue">
         
-    
-        <div class="catalogue">
-
-            <div class = "bestseller">
-                <h2>Nos Bestsellers</h2>
-                <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
-                <?php foreach ($lesProduits as $produit): ?>
-                    <div class="carte">
-                        <h3><?= esc($produit->nom) ?></h3>
-                        <p><?= esc($produit->type_produit) ?></p>
-
-                        <?php if ($produit->type_produit == 'carte'): ?>
-                            <p>Rareté : <?= esc($produit->rarete) ?></p>
-                        <?php endif; ?>
-
-                        <p class="prix"><?= esc($produit->prix) ?> €</p>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Aucun produit Pokémon trouvé.</p>
-            <?php endif; ?>
+        <div class="bestseller">
+            <div class="section-title-container">
+                <h2 class="main-title">Les plus populaires</h2>
+                <div class="title-bar"></div>
             </div>
             
-            <div class = "coffrets">
-                <h2><a href="">Nos Coffrets</a></h2>
-                <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
+            <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
                 <?php foreach ($lesProduits as $produit): ?>
+                            
                     <div class="carte">
                         <h3><?= esc($produit->nom) ?></h3>
                         <p><?= esc($produit->type_produit) ?></p>
-
-                        <?php if ($produit->type_produit == 'carte'): ?>
+                            <?php if ($produit->type_produit == 'carte'): ?>
                             <p>Rareté : <?= esc($produit->rarete) ?></p>
-                        <?php endif; ?>
-
+                            <?php endif; ?>
                         <p class="prix"><?= esc($produit->prix) ?> €</p>
                     </div>
+
                 <?php endforeach; ?>
-            <?php else: ?>
+            
+                <?php else: ?>
                 <p>Aucun produit Pokémon trouvé.</p>
             <?php endif; ?>
-            </div>
-
-            <div class = "booster">
-                <h2><a href="">Nos Booster</a></h2>
-                <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
-                <?php foreach ($lesProduits as $produit): ?>
-                    <div class="carte">
-                        <h3><?= esc($produit->nom) ?></h3>
-                        <p><?= esc($produit->type_produit) ?></p>
-
-                        <?php if ($produit->type_produit == 'carte'): ?>
-                            <p>Rareté : <?= esc($produit->rarete) ?></p>
-                        <?php endif; ?>
-
-                        <p class="prix"><?= esc($produit->prix) ?> €</p>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Aucun produit Pokémon trouvé.</p>
-            <?php endif; ?>
-            </div>
-
-            <div class = "cartes">
-                <h2><a href="">Nos Cartes</a></h2>
-                <?php if (!empty($lesProduits) && is_array($lesProduits)): ?>
-                <?php foreach ($lesProduits as $produit): ?>
-                    <div class="carte">
-                        <h3><?= esc($produit->nom) ?></h3>
-                        <p><?= esc($produit->type_produit) ?></p>
-
-                        <?php if ($produit->type_produit == 'carte'): ?>
-                            <p>Rareté : <?= esc($produit->rarete) ?></p>
-                        <?php endif; ?>
-
-                        <p class="prix"><?= esc($produit->prix) ?> €</p>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Aucun produit Pokémon trouvé.</p>
-            <?php endif; ?>
-            </div>
         </div>
 
-    </main>
-
-    <footer>
-        <div class="contact">
-            <ul>
-                <li>tel : 999999999999</li>
-                <li>mail : haiohfe@fjz.com</li>
-
-            </ul>
         </div>
 
-
-    </footer>
-
-</body>
-
-</html>
+<?= $this->endSection() ?>

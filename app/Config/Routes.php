@@ -9,3 +9,6 @@ $routes->get('/', 'Home::index');
 
 // Quand l'URL est /connexion, utilise la méthode index() du contrôleur Connexion
 $routes->get('connexion', 'Connexion::index');
+$routes->post('connexion/auth', 'Connexion::auth');
+
+$routes->get('profil', 'Profil::index');
