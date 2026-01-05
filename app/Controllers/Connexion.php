@@ -54,4 +54,11 @@ class Connexion extends BaseController
         }
 
     }
+
+    public function deconnexion()
+    {
+        $session = session();
+        $session->destroy(); // On détruit la session
+        return redirect()->to('/');
+    }
 }

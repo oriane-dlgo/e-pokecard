@@ -1,0 +1,77 @@
+.profil-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.profil-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* 1/3 pour infos, 2/3 pour commandes */
+    gap: 30px;
+}
+
+/* Responsive : sur mobile, tout en une colonne */
+@media (max-width: 768px) {
+    .profil-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.profil-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.info-row {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.label {
+    display: block;
+    font-weight: bold;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.value {
+    display: block;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.badge {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.btn-logout {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: #c0392b;
+}
