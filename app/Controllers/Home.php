@@ -25,7 +25,7 @@ class Home extends BaseController
             $data['lesProduits'] = $model->findAll();
             
             // On tente d'afficher la vue
-            return view('accueil', $data);
+            return view('accueil2', $data);
 
         } catch (\Throwable $e) {
             // EN CAS D'ERREUR, on l'affiche ici :
@@ -39,5 +39,5 @@ class Home extends BaseController
                 echo "<br>ASTUCE : La classe App\Models\ProductModel est introuvable. Vérifiez le nom du fichier et le namespace.";
             }
         }
-    }
+    } 
 }
