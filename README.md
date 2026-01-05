@@ -52,7 +52,7 @@ Une fois le conteneur lancé, il faut initialiser le framework. Exécutez ces co
  # 3. Fixer les permissions 
  # Cette commande corrige les erreurs 403 Forbidden et les problèmes d'écriture
  podman exec -it sae_php_app chmod -R 755 /var/www/html
- podman exec -it sae_php_app chmod -R 777 / var/www/html/writable
+ podman exec -it sae_php_app chmod -R 777 /var/www/html/writable
  ```
 
 - **Sous Windows** :
