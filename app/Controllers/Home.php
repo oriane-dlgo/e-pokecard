@@ -29,7 +29,7 @@ class Home extends BaseController
 
         return view('accueil', $data);
             // On tente d'afficher la vue
-            return view('accueil2', $data);
+            // return view('accueil2', $data);
 
         } catch (\Throwable $e) {
             // EN CAS D'ERREUR, on l'affiche ici :
@@ -44,4 +44,18 @@ class Home extends BaseController
             }
         }
     } 
+public function find(int $id)
+{
+    $model = new ProductModel();
+    $product = $model->find($id);
+
+    if (!$product) {
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+
+    return view('detail', [
+        'product' => $product
+    ]);
+}
+
 }

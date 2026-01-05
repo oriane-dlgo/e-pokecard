@@ -12,3 +12,4 @@ $routes->get('connexion', 'Connexion::index');
 $routes->post('connexion/auth', 'Connexion::auth');
 
 $routes->get('profil', 'Profil::index');
+$routes->get('detail/(:num)', 'Home::find/$1');
