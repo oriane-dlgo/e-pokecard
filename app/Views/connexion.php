@@ -2,6 +2,28 @@
 
 <?= $this->section('css') ?>
     <link rel="stylesheet" href="<?= base_url("css/connexion.css") ?>">
+    <link rel="stylesheet" href="<?= base_url("css/header.css") ?>">
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <a href="<?= base_url("/") ?>" class="logo">
+            <img src="assets/logo.png" alt="logo du site">
+            </a>
+            <div class="img_bar">
+                <a href="inscription.html">
+                <img src="assets/utilisateur_icone.png" alt="image utilisateur">
+                </a>
+
+                <a href="panier.html">
+                <img src="assets/panier_icone.png" alt="image panier">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
 <?= $this->endSection() ?>
 
 <?= $this->section('contenu') ?>
