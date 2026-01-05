@@ -95,7 +95,7 @@
                                         <p>Rareté : <?= esc($produit->rarete) ?></p>
                                     <?php endif; ?>
                                     <p class="prix"><?= esc($produit->prix) ?> €</p>
-
+                                    <a href="/detail/<?= $produit->id ?>" >Voir les détails</a>
            
 
                                 </div>
@@ -140,6 +140,7 @@
                                     <?php endif; ?>
 
                                     <p class="prix"><?= esc($produit->prix) ?> €</p>
+                                    <a href="/detail/<?= $produit->id ?>" >Voir les détails</a>
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
