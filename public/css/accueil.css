@@ -31,7 +31,7 @@
     font-size: 100px;
     font-weight: bold;
     color: rgb(200, 3, 3);
-    text-shadow: 10px 1px #cd4d6dd1;
+    /*text-shadow: 8px 3px #b37282d1;*/
 }
 
 .titre img {
@@ -53,6 +53,7 @@
 }
 
 .bottom-bar {
+    border: 2px solid black;
     position: relative;
     justify-content: flex-end; 
     display: flex;
@@ -66,6 +67,8 @@ header{
     width: 100%;
 }
 .searchbar {
+    border : none;
+    border-radius: 5px;
     margin : 20px;
     height: 20px;
     width : 300px;
@@ -90,6 +93,7 @@ ul {
     inset 3px 3px white;
     
     
+    
 }
 
 .navbar a:hover{
@@ -110,6 +114,7 @@ ul {
   width: 100%;
   box-sizing: border-box;
   align-items: center;
+
 }
 
 .bienvenue h1{
@@ -118,8 +123,8 @@ ul {
   font-size: 25px; 
   border-radius: 2px;
   padding: 30px;
-  width: 600px;
-  height: 70px;
+  width: 500px;
+  height: 50px;
   line-height: 16px;
   margin: 10px;
   background: #9b9b9bdd;
@@ -140,14 +145,15 @@ ul {
 }
 
 .bienvenue img {
-  margin-left: 19%;
+  margin-left: 18%;
   width: 140px;
   height: 140px;
 }
-.bienvenue{
-  padding-left: 33%;
-
-  justify-content: center;
+.bienvenue {
+    margin-top: 10px;
+    padding-left: 35%;
+    justify-content: center;
+    align-items: center;
 }
 
 .msg{
@@ -182,4 +188,28 @@ main {
   100% {
     transform: translate3d(-100%,0,0);  /* position finale à gauche */
   }
+}
+
+
+.bestseller {
+    display: block;
+    margin : 20px auto;
+    padding : 10px;
+    width: 70%;
+    background-color: #8e8d8d;
+    border: 8px solid #9b9b9bdd;
+    box-shadow: 0 3px 0 3px black,
+                inset 0 3px 0 3px black,
+                0 0 0 3px black,
+                inset 0 0 0 3px black;
+}
+.section-title-container {
+    display: block;
+    margin: 0px auto;
+}
+.main-title {
+    
+    font-size: 50px;
+    align-items: center;
+    justify-items: center;
 }

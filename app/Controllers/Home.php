@@ -27,9 +27,9 @@ class Home extends BaseController
             'lesCartes'=>$lesCartes
         ];
 
-        return view('accueil', $data);
+        //return view('accueil', $data);
             // On tente d'afficher la vue
-            // return view('accueil2', $data);
+             return view('accueil2', $data);
 
         } catch (\Throwable $e) {
             // EN CAS D'ERREUR, on l'affiche ici :
