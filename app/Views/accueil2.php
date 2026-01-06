@@ -1,14 +1,11 @@
 <?= $this->extend('layouts/base2') ?>
 
-<?= $this->section('contenu') ?>
+<?= $this->section('css') ?>
+<link rel="stylesheet" href="<?= base_url("css/accueil.css") ?>">
+<?= $this->endSection() ?>
 
-<main>
-    <div class="msg">
-        <p>
-            !! ALERTE !! -- PROMOTION -50% SUR UNE GAMME DE PRODUITS
-            DESIGNE SUR NOTRE SITE, PROFITEZ-EN JUSQU'AU 12/12/2026 --
-        </p>
-    </div>
+<?= $this->section('contenu') ?>
+    
 
     <div class="bienvenue">
         <img src="<?= base_url('assets/perso.png') ?>" alt="">
@@ -23,10 +20,25 @@
             </div>
 
             <div class="coffrets">
-                <h2><a href="">Nos Coffrets</a></h2>
-                <?php if (!empty($lesCoffrets) && is_array($lesCoffrets)): ?>
+                <h2><a href="">Nos Display</a></h2>
+                <div class = "produit">
+                    <?php if (!empty($lesCoffrets) && is_array($lesCoffrets)): ?>
                     <?php foreach ($lesCoffrets as $produit): ?>
                         <div class="carte">
+                            <?php if (!empty($produit->image_url)): ?>
+                                <img 
+                                    src="<?= base_url('assets/produits/' . $produit->image_url) ?>" 
+                                    alt="<?= esc($produit->nom) ?>" 
+                                    class="img-produit"
+                                >
+                            <?php else: ?>
+                                <img 
+                                    src="<?= base_url('assets/produits/default.png') ?>" 
+                                    alt="Image par défaut" 
+                                    class="img-produit"
+                                >
+                            <?php endif; ?>
+
                             <h3><?= esc($produit->nom) ?></h3>
                             <p><?= esc($produit->type_produit) ?></p>
                             <?php if ($produit->type_produit == 'carte'): ?>
@@ -42,13 +54,28 @@
                 <?php else: ?>
                     <p>Aucun produit Pokémon trouvé.</p>
                 <?php endif; ?>
+                </div>
             </div>
 
             <div class="booster">
                 <h2><a href="">Nos Booster</a></h2>
-                <?php if (!empty($lesBoosters) && is_array($lesBoosters)): ?>
+                <div class = "produit">
+                    <?php if (!empty($lesBoosters) && is_array($lesBoosters)): ?>
                     <?php foreach ($lesBoosters as $produit): ?>
                         <div class="carte">
+                            <?php if (!empty($produit->image_url)): ?>
+                                <img 
+                                    src="<?= base_url('assets/produits/' . $produit->image_url) ?>" 
+                                    alt="<?= esc($produit->nom) ?>" 
+                                    class="img-produit"
+                                >
+                            <?php else: ?>
+                                <img 
+                                    src="<?= base_url('assets/produits/default.png') ?>" 
+                                    alt="Image par défaut" 
+                                    class="img-produit"
+                                >
+                            <?php endif; ?>
                             <h3><?= esc($produit->nom) ?></h3>
                             <p><?= esc($produit->type_produit) ?></p>
 
@@ -63,13 +90,28 @@
                 <?php else: ?>
                     <p>Aucun produit Pokémon trouvé.</p>
                 <?php endif; ?>
+                </div>  
             </div>
 
             <div class="cartes">
                 <h2><a href="">Nos Cartes</a></h2>
-                <?php if (!empty($lesCartes) && is_array($lesCartes)): ?>
+                <div class = "produit">
+                    <?php if (!empty($lesCartes) && is_array($lesCartes)): ?>
                     <?php foreach ($lesCartes as $produit): ?>
                         <div class="carte">
+                            <?php if (!empty($produit->image_url)): ?>
+                                <img 
+                                    src="<?= base_url('assets/produits/' . $produit->image_url) ?>" 
+                                    alt="<?= esc($produit->nom) ?>" 
+                                    class="img-produit"
+                                >
+                            <?php else: ?>
+                                <img 
+                                    src="<?= base_url('assets/produits/default.png') ?>" 
+                                    alt="Image par défaut" 
+                                    class="img-produit"
+                                >
+                            <?php endif; ?>
                             <h3><?= esc($produit->nom) ?></h3>
                             <p><?= esc($produit->type_produit) ?></p>
 
@@ -84,10 +126,11 @@
                 <?php else: ?>
                     <p>Aucun produit Pokémon trouvé.</p>
                 <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>
 
-</main>
+
 
 <?= $this->endSection() ?>

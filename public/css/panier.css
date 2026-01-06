@@ -1,8 +1,8 @@
 .cart-container { 
-  max-width: 1000px; 
+  width: 100%; 
   margin: 40px auto; 
-  padding: 20px; 
-  background: #9b9b9b;; 
+  padding: 20px;
+  background: #000000;
   border-radius: 5px; 
   border: 3px solid #9b9b9bdd;
   box-shadow: 0 1px 0 1px black,
@@ -10,7 +10,9 @@
               0 0 0 1px black,
               inset 0 0 0 1px black;
 }
-
+main {
+  padding-bottom: 60px;
+}
 table { 
   width: 100%; 
   border-collapse: collapse; 
@@ -57,12 +59,11 @@ td {
 .btn-primary { 
   margin: 10px;
   background: white; 
-  color: rgb(0, 0, 0); padding: 10px 20px; 
+  color: rgb(0, 0, 0); 
+  padding: 10px 20px; 
   border-radius: 5px; 
   text-decoration: none; 
-  border : 3px solid black;
-  
-
+  border: 3px solid black;
 }
 
 .btn-primary:hover {
@@ -76,5 +77,8 @@ td {
   color: white; 
   padding: 10px 20px; 
   border-radius: 5px; 
-  text-decoration: none; 
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center; 
 }

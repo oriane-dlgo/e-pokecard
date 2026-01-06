@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="<?= base_url("css/accueil.css") ?>">
+        <link rel="stylesheet" href="<?= base_url("css/main.css") ?>">
         <?= $this->renderSection('css') ?>
     <title>Document</title>
 </head>
@@ -38,7 +38,23 @@
 
     </header>
     <main>
+        <div class="msg">
+            <p>
+                !! ALERTE !! -- PROMOTION -50% SUR UNE GAMME DE PRODUITS
+                DESIGNE SUR NOTRE SITE, PROFITEZ-EN JUSQU'AU 12/12/2026 --
+            </p>
+        </div>
     <?= $this->renderSection('contenu') ?>
   </main>
+  <footer>
+    
+        <h2>Nous contacter</h2>
+        <div class = "contact">
+            <ul>
+            <li>Téléphone : 02 34 54 56 89</li>
+            <li>Email : e-pokecard@pokemon.com</li>
+        </ul>
+    </div>
+  </footer>
  </body>
 </html>

@@ -1,97 +1,82 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title><?= esc($product->nom) ?> - Boutique Pokémon</title>
+<?= $this->extend('layouts/base2') ?>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<?= $this->section('css') ?>
+    <link rel="stylesheet" href="<?= base_url("css/detail.css") ?>">
 
-    <!-- Ton CSS perso si besoin -->
-    <!-- <link rel="stylesheet" href="<?= base_url("css/header.css") ?>"> -->
-</head>
+<?= $this->endSection() ?>
 
-<body class="bg-light">
+<?= $this->section('contenu') ?>
 
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-10 col-lg-8">
+<div class="produit-page">
+    <div class="produit-wrapper">
 
-            <div class="card shadow">
-                <div class="row g-0">
+        <div class="produit-card">
 
+        
                     <!-- Image -->
-                    <div class="col-md-5 text-center bg-white p-3">
+                    <div class="produit-img">
                         <img 
-                            src="<?= base_url('assets/' . esc($product->image_url)) ?>"
+                            src="<?= base_url('assets/produits/' . $product->image_url) ?>"
                             class="img-fluid rounded"
                             alt="Image <?= esc($product->nom) ?>"
                         >
                     </div>
 
                     <!-- Infos produit -->
-                    <div class="col-md-7">
-                        <div class="card-body">
+                    <div class="produit-info">
+                       
 
                             <h1 class="card-title"><?= esc($product->nom) ?></h1>
 
-                            <span class="badge bg-primary mb-2">
+                            <span>
                                 <?= esc($product->type_produit) ?>
                             </span>
 
                             <?php if (!empty($product->rarete)): ?>
-                                <span class="badge bg-warning text-dark">
+                                <span>
                                     Rareté : <?= esc($product->rarete) ?>
                                 </span>
                             <?php endif; ?>
 
-                            <p class="card-text mt-3">
+                            <p class="produit-description">
                                 <?= esc($product->description) ?>
                             </p>
 
-                            <h3 class="text-success">
+                            <h3 class="produit-prix">
                                 <?= esc($product->prix) ?> €
                             </h3>
 
-                            <p>
+                            <p class = "produit-stock">
                                 Stock :
                                 <?php if ($product->stock > 0): ?>
-                                    <span class="text-success fw-bold"><?= esc($product->stock) ?></span>
+                                    <span><?= esc($product->stock) ?></span>
                                 <?php else: ?>
-                                    <span class="text-danger fw-bold">Rupture</span>
+                                    <span>Rupture</span>
                                 <?php endif; ?>
                             </p>
 
-                            <p>
+                            <p class = "produit-promo">
                                 Promotion :
                                 <?php if (!empty($product->promotion)): ?>
-                                    <span class="badge bg-danger">En promotion</span>
+                                    <span>En promotion</span>
                                 <?php else: ?>
-                                    <span class="text-muted">Pas de promo</span>
+                                    <span>Pas de promo</span>
                                 <?php endif; ?>
                             </p>
 
-                            <div class="d-flex gap-2 mt-4">
-                                <a href="/" class="btn btn-outline-secondary">
+                            <div class="bouton">
+                                <a href="/" class="btn-retour">
                                     ← Retour
                                 </a>
 
                                 <?php if ($product->stock > 0): ?>
-                                    <button class="btn btn-success">
+                                    <button class="btnajouter">
                                         Ajouter au panier
                                     </button>
                                 <?php endif; ?>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
+                            </div>      
+            </div>           
         </div>
     </div>
 </div>
-
-</body>
-</html>
+<?= $this->endSection() ?>
