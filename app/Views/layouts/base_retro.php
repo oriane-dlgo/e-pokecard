@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?= base_url("css/style_retro.css") ?>">
+    <?= $this->renderSection('css') ?>
+    <title>E-POKECARD '85</title>
+
+
+
+</head>
+<body>
+
+<div style="background: black; color: white; padding: 5px; text-align: center;">
+    SWITCH DEBUG : 
+    <a href="<?= base_url('theme/standard') ?>" style="color: white;">Mode Moderne</a> | 
+    <a href="<?= base_url('theme/retro') ?>" style="color: yellow;">Mode Rétro</a>
+</div>
+
+<div class="game-container"> 
+    
+        <header>
+            
+            <?php if (session()->get('isLoggedIn') && session()->get('user_role') === 'admin'): ?>
+                <a href="<?= base_url('admin') ?>" class="admin-access-btn" title="Zone Administrateur">
+                    <img src="<?= base_url('assets/utilisateur_icone.png') ?>" alt="Admin">
+                    <span>ADMIN SYSTEM</span>
+                </a>
+            <?php endif; ?>
+
+            <div class="logo">
+                <h1><img src="<?= base_url("assets/pokeball.png")?>" 
+                style="width:80px; vertical-align:middle;"> POKÉ-TRADER '85</h1>
+            </div>
+
+        </header>
+
+        <nav class="nav-bar">
+            <div class="nav-links">
+                <a href="<?= base_url('/')?>">HOME</a>
+                <a href="<?= base_url('recherche?type=carte') ?>">CARTES</a>
+                <a href="<?= base_url('recherche?type=booster') ?>">BOOSTERS</a>
+                <a href="#">DISPLAYS</a>
+                <a href="#">ETB</a>
+                <a href="<?= base_url('promotions') ?>" class="prom">
+                    <span class="blink"> PROMOTIONS </span>             
+                </a>   
+                
+            </div>
+
+            <form action="<?= base_url('recherche') ?>" method="get" class="nav-search-form">
+                <input type="text" name="q" placeholder="SEARCH..." class="retro-input">
+                <button type="submit" class="retro-search-btn">GO</button>
+            </form>
+    
+            <div class="nav-icons">
+                 
+                 <?php if (session()->get('isLoggedIn')): ?>
+                    
+                    <a href="<?= base_url('profil') ?>" title="Mon Espace">
+                        <img src="<?= base_url("assets/utilisateur_icone.png")?>" alt="Profil">
+                    </a>
+                
+                    <div style="display:flex; align-items:center; gap:10px; margin-right:10px;">
+                        <span style="color:white; font-size:18px; font-weight:bold; text-transform:uppercase;">
+                            <?= esc(session()->get('user_name')) ?>
+                        </span>
+                        <a href="<?= base_url('deconnexion') ?>" title="Quitter la partie" class="btn-quit">
+                            OFF
+                        </a>
+                    </div>
+                
+                 <?php else: ?>
+                
+                    <a href="<?= base_url('connexion')?>" title="Se connecter / Start Game">
+                        <img src="<?= base_url("assets/utilisateur_icone.png")?>" alt="Connexion">
+                    </a>
+                
+                 <?php endif; ?>
+                
+                 <a href="<?= base_url('panier')?>" title="Mon Panier">
+                    <img src="<?= base_url("assets/panier_icone.png")?>" alt="Panier">
+                 </a>
+            </div>
+        </nav>
+
+    <div class="decoration-barres-top"></div>
+    
+    <div class="marquee-container">
+        <div class="marquee-content">
+            CATCH 'EM ALL IN 8-BIT!  *** NEW ARRIVALS DAILY!  *** PROMOTION -50% SUR LES BOOSTERS  ***
+        </div>
+    </div>
+
+    <div class="decoration-barres-bottom"></div>
+
+
+    <img src="<?= base_url("assets/dracaufeuX.png") ?>" class="bg-dracaufeuX" alt="Background Dragon">
+    <img src="<?= base_url("assets/dracaufeuY.png") ?>" class="bg-dracaufeuY" alt="Background Dragon">
+
+    <main>
+        <?= $this->renderSection('contenu') ?>
+    </main>
+
+    
+
+</div> 
+</body>
+</html>

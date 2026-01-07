@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/base2') ?>
+<?= $this->extend('layouts/base') ?>
 
 <?= $this->section('css') ?>
 <link rel="stylesheet" href="<?= base_url("css/panier.css") ?>">

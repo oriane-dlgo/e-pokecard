@@ -10,11 +10,21 @@ class ProductModel extends Model
 {
     protected $table            = 'produits';
     protected $primaryKey       = 'id';
-    protected $useAutoIncrement = false;
+    protected $useAutoIncrement = true;
     protected $returnType = 'App\Entities\Produit';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields = ['type_produit', 'name', 'quantity', 'price', 'promotion'];
+    protected $allowedFields = [
+        'nom', 
+        'type_produit', 
+        'prix', 
+        'stock', 
+        'description', 
+        'rarete', 
+        'id_extension', 
+        'image_url', 
+        'promotion'
+    ];
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
 

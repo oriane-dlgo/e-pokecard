@@ -1,57 +1,39 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boutique Pokémon</title>
-    
-    <link rel="stylesheet" href="<?= base_url("css/header.css") ?>">
-    
-    <?= $this->renderSection('css') ?>
+        <link rel="stylesheet" href="<?= base_url("css/main.css") ?>">
+        <?= $this->renderSection('css') ?>
+    <title>Document</title>
 </head>
-
 <body>
 
-    <header>
-        <div class="top-bar">
-            <a href="<?= base_url('/') ?>" class="logo">
-                <img src="<?= base_url("assets/logo.png") ?>" alt="logo du site">
-            </a>
+<div style="background: black; color: white; padding: 5px; text-align: center;">
+    SWITCH DEBUG : 
+    <a href="<?= base_url('theme/standard') ?>" style="color: white;">Mode Moderne</a> | 
+    <a href="<?= base_url('theme/retro') ?>" style="color: yellow;">Mode Rétro</a>
+</div>
 
-            <div class="img_bar">
-                
-                <?php if (session()->get('isLoggedIn')): ?>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        
-                        <a href="<?= base_url('profil') ?>">
-                            <img src="<?= base_url("assets/utilisateur_icone.png") ?>" alt="MonProfil">
-                            <span><?= esc(session()->get('user_name')) ?> </span>
-                        </a>
-                        <a href="<?= base_url('deconnexion') ?>" style="color: red; font-weight: bold;">(Déconnexion)</a>
-                    </div>
-
-                <?php else: ?>
-
-                    <a href="<?= base_url('connexion') ?>">
-                        <img src="<?= base_url("assets/utilisateur_icone.png") ?>" alt="Connexion">
-                    </a>
-
-                <?php endif; ?>
-
-                <a href="<?= base_url('panier') ?>">
-                    <img src="<?= base_url("assets/panier_icone.png") ?>" alt="Panier">
-                </a>
+ <header>
+        <div class = "top-bar">
+            <div class = "titre">
+                <img src="<?= base_url("assets/pokeball.png")?>" alt="">
+                <h1>E-POKECARD</h1>
             </div>
-
+            
+            <div class = "img">
+                <a href="<?= base_url('connexion')?>"><img src="<?= base_url("assets/utilisateur_icone.png")?>" alt=""></a>
+                <a href="<?= base_url('panier')?>"><img src="<?= base_url("assets/panier_icone.png")?>" alt=""></a>
+            </div>
         </div>
-
-        <div class="bottom-bar">
-            <nav class="navbar">
+        <div class = "bottom-bar">
+            <nav class = "navbar">
                 <ul>
-                    <li><a href="<?= base_url('/') ?>">Home</a></li>
-                    <li><a href="#">Coffrets</a></li>
-                    <li><a href="#">Booster</a></li>
-                    <li><a href="#">Cartes</a></li>
+                    <li><a href="<?= base_url('/')?>">HOME</a></li>
+                    <li><a href="">CARTE</a></li>
+                    <li><a href="">BOOSTER</a></li>
+                    <li><a href="">DISPLAY</a></li>
                 </ul>
             </nav>
             <div class="recherche">
@@ -60,20 +42,26 @@
                 </form>
             </div>
         </div>
+
     </header>
-
     <main>
-        <?= $this->renderSection('contenu') ?>
-    </main>
-
-    <footer>
-        <div class="contact">
-            <ul>
-                <li>tel : 999999999999</li>
-                <li>mail : haiohfe@fjz.com</li>
-            </ul>
+        <div class="msg">
+            <p>
+                !! ALERTE !! -- PROMOTION -50% SUR UNE GAMME DE PRODUITS
+                DESIGNE SUR NOTRE SITE, PROFITEZ-EN JUSQU'AU 12/12/2026 --
+            </p>
         </div>
-    </footer>
-
-</body>
+    <?= $this->renderSection('contenu') ?>
+  </main>
+  <footer>
+    
+        <h2>Nous contacter</h2>
+        <div class = "contact">
+            <ul>
+            <li>Téléphone : 02 34 54 56 89</li>
+            <li>Email : e-pokecard@pokemon.com</li>
+        </ul>
+    </div>
+  </footer>
+ </body>
 </html>

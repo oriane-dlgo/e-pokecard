@@ -2,14 +2,13 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
+use App\Models\UsersModel;
 
 class Connexion extends BaseController
 {
     public function index()
     {
-        // Charge le fichier qui est dans app/Views/connexion.php
-        return view('connexion'); 
+        return view_theme('connexion');
     }
 
     public function auth() {
@@ -27,7 +26,7 @@ class Connexion extends BaseController
         echo "Login reçu : " . esc($login) . "<br>";
         echo "Mot de passe reçu : " . esc($password). "<br>";
         
-        $model = new UserModel();
+        $model = new UsersModel();
         // On cherche l'utilisateur en BDD
         $user = $model->where('login', $login)->first();
 
@@ -50,7 +49,7 @@ class Connexion extends BaseController
         } else {
             // 5. Si c'est raté : on renvoie à la connexion avec une erreur
             $session->setFlashdata('msg', 'Mauvais identifiant ou mot de passe');
-            return redirect()->to('/connexion');
+            return redirect()->to('/connexion_retro');
         }
 
     }

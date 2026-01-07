@@ -1,0 +1,123 @@
+* { font-family: 'VT323', monospace; box-sizing: border-box; }
+
+.produit-wrapper {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* CONTENEUR STYLE "POKÉDEX" */
+.pokedex-container {
+    background-color: #D32F2F; /* Rouge Pokedex */
+    border: 6px solid #111;
+    border-radius: 10px; /* Un tout petit peu arrondi pour le look console */
+    padding: 20px;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* GAUCHE : IMAGE */
+.left-screen {
+    flex: 1;
+    min-width: 300px;
+    background: #e0e0e0; /* Gris */
+    border: 4px solid #111;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Effet écran enfoncé */
+    border-right: 4px solid #fff;
+    border-bottom: 4px solid #fff;
+    border-top: 4px solid #555;
+    border-left: 4px solid #555;
+}
+
+.left-screen img {
+    max-width: 100%;
+    max-height: 400px;
+    image-rendering: pixelated;
+    filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.3));
+}
+
+/* DROITE : INFOS */
+.right-screen {
+    flex: 1.5;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.data-display {
+    background-color: #98c807; /* Vert GameBoy */
+    border: 4px solid #111;
+    padding: 20px;
+    color: #0f380f; /* Vert très sombre pour le texte */
+    font-size: 24px;
+    box-shadow: inset 4px 4px 0px rgba(0,0,0,0.2);
+}
+
+.product-title {
+    font-size: 40px;
+    text-transform: uppercase;
+    border-bottom: 2px dashed #0f380f;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.description-box {
+    margin-top: 20px;
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+.price-tag {
+    font-size: 35px;
+    text-align: right;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* ACTIONS */
+.action-pad {
+    display: flex;
+    gap: 15px;
+    margin-top: auto;
+}
+
+/* BOUTONS SPECIFIQUES */
+.btn-pokedex {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 4px solid #111;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px black;
+    transition: all 0.1s;
+}
+
+.btn-pokedex:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px black; }
+.btn-pokedex:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px black; }
+
+.btn-back { background: #e0e0e0; color: black; }
+.btn-add { background: #FFD700; color: black; } /* Jaune */
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .pokedex-container { flex-direction: column; }
+}

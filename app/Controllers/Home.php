@@ -29,7 +29,7 @@ class Home extends BaseController
 
         //return view('accueil', $data);
             // On tente d'afficher la vue
-             return view('accueil2', $data);
+             return view_theme('accueil', $data);
 
         } catch (\Throwable $e) {
             // EN CAS D'ERREUR, on l'affiche ici :
@@ -44,18 +44,35 @@ class Home extends BaseController
             }
         }
     } 
-public function find(int $id)
-{
-    $model = new ProductModel();
-    $product = $model->find($id);
+    
+    public function find(int $id)
+    {
+        $model = new ProductModel();
+        $product = $model->find($id);
+    
+        if (!$product) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    
+        $data = [
+            'product' => $product
+        ];
 
-    if (!$product) {
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        return view_theme('detail', $data);
+    }   
+
+    public function switchTheme($mode)
+    {
+        $session = session();
+        
+        // On enregistre le choix : 'retro' ou 'standard'
+        if ($mode === 'retro') {
+            $session->set('theme_choisi', 'retro');
+        } else {
+            $session->set('theme_choisi', 'standard'); // ou on supprime la variable
+        }
+
+        // On redirige vers la page d'où l'on vient (refresh)
+        return redirect()->back();
     }
-
-    return view('detail', [
-        'product' => $product
-    ]);
-}
-
 }

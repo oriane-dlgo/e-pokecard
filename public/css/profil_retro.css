@@ -1,0 +1,217 @@
+* {
+    font-family: 'VT323', monospace;
+    box-sizing: border-box; /* IMPORTANT pour éviter les débordements */
+}
+
+.profil-container {
+    max-width: 1100px; /* Un peu plus large pour éviter que ça se serre trop */
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* EN-TETE */
+.trainer-header {
+    background-color: #D32F2F;
+    color: white;
+    padding: 15px;
+    border: 4px solid #111;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.5);
+}
+
+.trainer-header h1 {
+    margin: 0;
+    font-size: 40px;
+    text-shadow: 3px 3px 0px #111;
+}
+
+.trainer-id {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* GRILLE - CORRECTION DU CHEVAUCHEMENT */
+.profil-grid {
+    display: grid;
+    /* On force une largeur min de 400px par colonne, sinon ça passe à la ligne */
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); 
+    gap: 30px; /* Plus d'espace entre les boites */
+    align-items: start; /* Empêche les boites de s'étirer inutilement */
+}
+
+/* CARTES GRISES */
+.profil-card {
+    background-color: #e0e0e0;
+    border: 4px solid #111;
+    padding: 20px;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.5);
+    /* Sécurité anti-débordement */
+    overflow: hidden; 
+}
+
+.card-title {
+    background-color: #111;
+    color: #FFD700;
+    padding: 5px 10px;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* CONTENU IDENTITÉ */
+.content-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start; /* Important pour l'alignement */
+}
+
+/* Si l'écran est petit, l'avatar passe au dessus */
+@media (max-width: 500px) {
+    .content-row {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.avatar-box {
+    background: white;
+    border: 4px solid #555;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0; /* Empêche l'image de s'écraser */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-box img {
+    width: 80px;
+    image-rendering: pixelated;
+}
+
+.info-list {
+    flex: 1;
+    width: 100%; /* S'assure qu'il prend la place dispo */
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px dashed #999;
+    padding: 5px 0;
+    font-size: 20px; /* Légèrement réduit pour éviter que ça dépasse */
+}
+
+.label {
+    color: #555;
+    font-weight: bold;
+}
+
+.value {
+    color: #000;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: right;
+    word-break: break-all; /* Coupe le texte s'il est vraiment trop long (ex: email géant) */
+}
+
+.badge-retro {
+    background: #3498db;
+    color: white;
+    padding: 0 5px;
+    font-size: 18px;
+    border: 2px solid #111;
+}
+
+/* --- NOUVEAU : CONTENEUR DE MENU (COMMANDES) --- */
+.menu-box {
+    margin-top: 20px;
+    border-top: 4px solid #111; /* Séparation visuelle */
+    padding-top: 15px;
+    background: #ccc;
+    padding: 10px;
+}
+
+.menu-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* --- BOUTONS --- */
+
+/* Style de base commun */
+.btn-retro {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    padding: 8px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    border-width: 4px;
+    border-style: solid;
+    box-shadow: 4px 4px 0px black;
+    transition: all 0.1s;
+    cursor: pointer;
+}
+
+.btn-retro:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px black;
+}
+
+.btn-retro:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px black;
+}
+
+/* 1. EDIT (BLEU) */
+.btn-edit {
+    background-color: #3498db;
+    color: white;
+    border-color: #85c1e9 #1f618d #1f618d #85c1e9;
+}
+.btn-edit:hover { background-color: #2980b9; }
+
+/* 2. SAVE (VERT - Demandé) */
+.btn-save {
+    background-color: #2ecc71; /* Vert émeraude */
+    color: white;
+    border-color: #58d68d #1e8449 #1e8449 #58d68d;
+}
+.btn-save:hover { background-color: #27ae60; }
+
+/* 3. LOGOUT (ROUGE) */
+.btn-logout {
+    background-color: #e74c3c;
+    color: white;
+    border-color: #ec7063 #922b21 #922b21 #ec7063;
+}
+.btn-logout:hover { background-color: #c0392b; }
+
+/* 4. CANCEL (GRIS - Demandé pour le edit) */
+.btn-cancel {
+    background-color: #95a5a6;
+    color: white;
+    border-color: #bdc3c7 #7f8c8d #7f8c8d #bdc3c7;
+}
+.btn-cancel:hover { background-color: #7f8c8d; }
+
+
+/* ZONE VIDE */
+.empty-log {
+    text-align: center;
+    font-size: 24px;
+    color: #666;
+    padding: 40px 0;
+    border: 2px inset #999;
+    background: #d0d0d0;
+}

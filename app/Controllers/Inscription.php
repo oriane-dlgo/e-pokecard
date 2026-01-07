@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
+use App\Models\UsersModel;
 
 class Inscription extends BaseController
 {
@@ -10,7 +10,7 @@ class Inscription extends BaseController
     {
         // On charge le helper form pour gérer les erreurs proprement
         helper(['form']);
-        return view('inscription');
+        return view_theme('inscription');
     }
 
     public function register()
@@ -29,13 +29,13 @@ class Inscription extends BaseController
         // 2. Si la validation échoue
         if (! $this->validate($rules)) {
             // On renvoie vers la vue avec les erreurs
-            return view('inscription', [
+            return view_theme('inscription', [
                 'validation' => $this->validator
             ]);
         }
 
         // 3. Si tout est bon, on sauvegarde
-        $userModel = new UserModel();
+        $userModel = new UsersModel();
 
         $newData = [
             'login'    => $this->request->getPost('login'),
@@ -50,8 +50,8 @@ class Inscription extends BaseController
 
         // 4. Redirection vers la connexion avec un message de succès
         $session = session();
-        $session->setFlashdata('msg', 'Inscription réussie ! Connectez-vous.');
+        $session->setFlashdata('success', 'Inscription réussie ! Connectez-vous.');
         
-        return redirect()->to('/connexion');
+        return redirect()->to('/connexion')->with('success', 'Inscription réussie ! Connectez-vous.');
     }
 }

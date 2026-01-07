@@ -1,0 +1,135 @@
+/* On s'assure que tout hérite de la police pixelisée définie dans le layout */
+* {
+    font-family: 'VT323', monospace;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh; /* Centre verticalement sur l'écran */
+    padding: 20px;
+}
+
+/* LA BOITE DE DIALOGUE RETRO */
+.form_area {
+    background-color: #e0e0e0; /* Gris GameBoy */
+    border: 4px solid #111;    /* Bordure noire épaisse */
+    padding: 30px 40px;
+    width: 100%;
+    max-width: 500px;          /* Largeur max pour pas que ce soit trop étiré */
+    
+    /* Ombre dure décalée (Hard Shadow) */
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+    
+    text-align: center;
+}
+
+/* TITRE */
+.title {
+    font-size: 45px;
+    color: #D32F2F; /* Rouge Pokémon */
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    margin-top: 0;
+    text-shadow: 2px 2px 0px #111; /* Ombre rétro */
+    border-bottom: 4px solid #111; /* Ligne de séparation */
+    padding-bottom: 10px;
+}
+
+/* GROUPES DE CHAMPS */
+.group_form {
+    margin-bottom: 20px;
+    text-align: left; /* Les labels alignés à gauche */
+}
+
+label {
+    display: block; /* Force le label au-dessus de l'input */
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #111;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* INPUTS (Champs de texte) */
+.form_style {
+    width: 100%;
+    padding: 10px;
+    font-size: 22px;
+    background-color: #fff;
+    border: 4px solid #555; /* Bordure grise foncée */
+    color: #000;
+    outline: none;
+    box-sizing: border-box; /* Important pour ne pas dépasser la largeur */
+}
+
+.form_style:focus {
+    border-color: #D32F2F; /* Devient rouge quand on clique dedans */
+    background-color: #fff8f8;
+}
+
+/* BOUTON 3D (Même style que la nav) */
+.submit {
+    background-color: #e0e0e0;
+    font-size: 26px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    padding: 10px 40px;
+    color: #111;
+
+    /* Effet 3D sortant (Bordures claires haut/gauche, foncées bas/droite) */
+    border-top: 4px solid #ffffff;
+    border-left: 4px solid #ffffff;
+    border-right: 4px solid #555555;
+    border-bottom: 4px solid #555555;
+
+    /* ETAT INITIAL : Bouton surélevé de 4px */
+    box-shadow: 4px 4px 0px black; 
+    transform: translate(0, 0);
+    transition: all 0.1s ease-in-out;
+}
+
+.submit:hover {
+    background-color: #fff;
+    /* On monte de 2px supplémentaires (donc on passe à 6px de hauteur virtuelle) */
+    transform: translate(-2px, -2px); 
+    box-shadow: 6px 6px 0px black;    
+}
+
+.submit:active {
+    /* Inversion des bordures pour l'effet enfoncé */
+    border-top: 4px solid #555555;
+    border-left: 4px solid #555555;
+    border-right: 4px solid #ffffff;
+    border-bottom: 4px solid #ffffff;
+    
+    /* On descend de 4px par rapport à la base pour "tuer" l'ombre */
+    transform: translate(4px, 4px); 
+    box-shadow: 0px 0px 0px black;
+    
+    /* Petite astuce : on enlève la transition au clic pour que ce soit instantané (snappy) */
+    transition: none; 
+}
+
+
+/* LIEN D'INSCRIPTION */
+.action p {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.link {
+    color: #D32F2F;
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+}
+
+.link:hover {
+    border-bottom: 2px solid #D32F2F; /* Soulignement au survol */
+}
+
+

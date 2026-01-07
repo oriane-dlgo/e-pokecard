@@ -2,7 +2,7 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- 1. Nettoyage (On repart à zéro)
-DROP TABLE IF EXISTS ligne_commandes;
+DROP TABLE IF EXISTS ligne_commande;
 DROP TABLE IF EXISTS commandes;
 DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS extensions;
@@ -57,14 +57,14 @@ CREATE TABLE commandes (
     FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE ligne_commandes (
+CREATE TABLE lignes_commande (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    id_commande INT NOT NULL,
-    id_produit INT NOT NULL,
+    commande_id INT NOT NULL,
+    product_id INT NOT NULL,
     quantite INT NOT NULL,
     prix_unitaire DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (id_commande) REFERENCES commandes(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_produit) REFERENCES produits(id) ON DELETE CASCADE
+    FOREIGN KEY (commande_id) REFERENCES commandes(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES produits(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- 3. Insertion des données de test
