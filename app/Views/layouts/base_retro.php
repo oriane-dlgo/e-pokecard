@@ -105,6 +105,33 @@
 
     
 
+    <footer class="retro-footer">
+        <div class="footer-decoration"></div>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>POKÉ-TRADER '85</h4>
+                <p>Le meilleur du TCG en 8-bits.</p>
+                <p>© 1985 - 2025 Nintendo/Creatures Inc./GAME FREAK inc.</p>
+            </div>
+            <div class="footer-col">
+                <h4>LIENS UTILES</h4>
+                <a href="#">Conditions Générales</a>
+                <a href="#">Livraison</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>FOLLOW US</h4>
+                <p>3615 POKEMON</p>
+                <div class="socials">
+                    <a href="#">FB</a> <a href="#">TW</a> <a href="#">IG</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            INSERT COIN TO CONTINUE...
+        </div>
+    </footer>
+
 </div> 
 </body>
 </html>

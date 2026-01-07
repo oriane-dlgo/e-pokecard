@@ -7,7 +7,7 @@ use App\Models\ProductModel;
 class Home extends BaseController
 {
     public function index()
-    {
+    {/*
         try {
             // On tente d'appeler le modèle
             $model = new ProductModel();
@@ -43,6 +43,37 @@ class Home extends BaseController
                 echo "<br>ASTUCE : La classe App\Models\ProductModel est introuvable. Vérifiez le nom du fichier et le namespace.";
             }
         }
+            */
+
+        $db = \Config\Database::connect();
+        
+        // Constructeur de requête de base (avec Jointures Extensions et Promotions)
+        $builder = $db->table('produits')
+                      ->select('produits.*, extensions.nom as nom_extension, promotions.tauxPromo')
+                      ->join('extensions', 'extensions.id = produits.id_extension', 'left')
+                      ->join('promotions', 'promotions.idPromo = produits.id_promo', 'left');
+
+        // 1. LES NOUVEAUTÉS (Les 4 derniers ajoutés)
+        // On clone le builder pour ne pas mélanger les requêtes
+        $newBuilder = clone $builder;
+        $data['nouveautes'] = $newBuilder->orderBy('produits.id', 'DESC')
+                                         ->limit(4)
+                                         ->get()->getResult();
+
+        // 2. LES PROMOTIONS (3 articles en promo)
+        $promoBuilder = clone $builder;
+        $data['promotions'] = $promoBuilder->where('produits.id_promo IS NOT NULL')
+                                           ->limit(3)
+                                           ->get()->getResult();
+
+        // 3. LES BEST-SELLERS (Simulé : on prend 4 articles au hasard ou par stock inverse)
+        // Dans un vrai cas, on ferait un JOIN avec lignes_commande et un COUNT()
+        $bestBuilder = clone $builder;
+        $data['bestsellers'] = $bestBuilder->orderBy('RAND()') 
+                                           ->limit(4)
+                                           ->get()->getResult();
+
+        return view_theme('accueil', $data);
     } 
     
     public function find(int $id)
