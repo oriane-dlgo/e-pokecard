@@ -93,3 +93,5 @@ $routes->post('admin/commandes/updateStatut', 'Admin\Commandes::updateStatut');
 $routes->get('admin/users', 'Admin\Users::index');
 $routes->post('admin/users/updateRole', 'Admin\Users::updateRole');
 $routes->get('admin/users/delete/(:num)', 'Admin\Users::delete/$1');
+
+$routes->get('promotions','Search::getlistepromotions');

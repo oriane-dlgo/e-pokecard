@@ -60,4 +60,48 @@ class Search extends BaseController
 
         return view_theme('search_result', $data);
     }
+
+    public function getlistepromotions(){
+        $model = new ProductModel();
+
+        // Récupération des filtres GET
+        $type = $this->request->getGet('type');
+        $tri  = $this->request->getGet('tri');
+
+        // Base query : uniquement les produits en promo
+        $model->where('promotion IS NOT NULL')
+            ->where('promotion >', 0);
+
+        // Filtre TYPE
+        if (!empty($type)) {
+            $model->where('type_produit', $type);
+        }
+
+        // TRI
+        switch ($tri) {
+            case 'prix_asc':
+                $model->orderBy('prix', 'ASC');
+                break;
+
+            case 'prix_desc':
+                $model->orderBy('prix', 'DESC');
+                break;
+
+            case 'promo_desc':
+                $model->orderBy('promotion', 'DESC');
+                break;
+        }
+
+        $results = $model->findAll();
+
+        return view('promotions', [
+            'results' => $results,
+            'filters' => [
+                'type' => $type,
+                'tri'  => $tri
+            ]
+        ]);
+    }
+
+
 }
