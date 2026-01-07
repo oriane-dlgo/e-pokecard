@@ -36,6 +36,36 @@ class Profil extends BaseController
         return view_theme('display_profil', $data);
     }
 
+    public function edit()
+    {
+        $session = session();
+        
+        // 1. Sécurité : Si pas connecté, oust !
+        if (!$session->get('isLoggedIn')) {
+            return redirect()->to('/connexion');
+        }
+
+        $userModel = new UsersModel();
+        $userId = $session->get('id');
+
+        // 2. On récupère les infos actuelles de l'utilisateur
+        // C'est indispensable pour que les champs 'value' du formulaire soient remplis
+        $user = $userModel->find($userId);
+
+        // Petite sécurité si l'user n'existe plus en BDD
+        if (!$user) {
+            return redirect()->to('/deconnexion');
+        }
+
+        $data = [
+            'user' => $user
+        ];
+
+        // 3. On affiche la vue d'édition
+        // Note : J'utilise view() standard comme dans ta fonction update()
+        return view_theme('edit_profil', $data);
+    }
+
     public function update()
     {
         $session = session();
@@ -57,7 +87,7 @@ class Profil extends BaseController
 
         if (!$this->validate($rules)) {
             // Si erreur, on retourne au formulaire avec les erreurs
-            return view('edit_profil_retro', [
+            return view_theme('edit_profil', [
                 'user' => $userModel->find($userId),
                 'validation' => $this->validator
             ]);

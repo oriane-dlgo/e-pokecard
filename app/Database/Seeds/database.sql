@@ -52,7 +52,7 @@ CREATE TABLE commandes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_user INT NOT NULL,
     date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
-    statut ENUM('panier', 'validee', 'payee') DEFAULT 'panier',
+    statut ENUM('panier', 'validee', 'expediee','terminee','annulee') DEFAULT 'panier',
     total DECIMAL(10, 2) DEFAULT 0,
     FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
