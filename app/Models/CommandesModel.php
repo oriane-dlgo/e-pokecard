@@ -13,7 +13,7 @@ class CommandesModel extends Model
     protected $returnType       = Commandes::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_user','date_creation','statut','total'];
+    protected $allowedFields    = ['id_user','date_creation','statut','total','type_paiement'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

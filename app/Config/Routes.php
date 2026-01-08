@@ -95,3 +95,7 @@ $routes->post('admin/users/updateRole', 'Admin\Users::updateRole');
 $routes->get('admin/users/delete/(:num)', 'Admin\Users::delete/$1');
 
 $routes->get('promotions','Search::getlistepromotions');
+
+
+$routes->get('paiement/choix/(:num)', 'Paiement::choix/$1');
+$routes->post('paiement/process', 'Paiement::process');

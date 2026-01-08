@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS extensions;
 DROP TABLE IF EXISTS series;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS promotions;
 DROP TABLE IF EXISTS ci_sessions;       -- Si tu utilises la session en BDD
 
 -- 3. On réactive la sécurité
