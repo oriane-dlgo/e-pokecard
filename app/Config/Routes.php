@@ -99,3 +99,4 @@ $routes->get('promotions','Search::getlistepromotions');
 
 $routes->get('paiement/choix/(:num)', 'Paiement::choix/$1');
 $routes->post('paiement/process', 'Paiement::process');
+$routes->get('admin/commandes/undo/(:num)', 'Admin\Commandes::undo/$1');
