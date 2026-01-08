@@ -34,7 +34,7 @@
 
             <div class="logo">
                 <h1><img src="<?= base_url("assets/pokeball.png")?>" 
-                style="width:80px; vertical-align:middle;"> POKÉ-TRADER '85</h1>
+                style="width:80px; vertical-align:middle;"> E-POKECARD</h1>
             </div>
 
         </header>
