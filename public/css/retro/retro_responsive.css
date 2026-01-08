@@ -1,0 +1,23 @@
+@media (max-width: 768px) {
+    .logo h1 { font-size: 40px; }
+    
+    .nav-bar {
+        justify-content: center;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav-links { justify-content: center; width: 100%; }
+    
+    .nav-bar a { font-size: 20px; padding: 5px 10px; }
+    
+    .nav-search-form {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    
+    .admin-access-btn span { display: none; }
+    .admin-access-btn { padding: 5px; left: 10px; }
+}

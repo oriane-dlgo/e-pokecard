@@ -23,7 +23,8 @@ class ProductModel extends Model
         'rarete', 
         'id_extension', 
         'image_url', 
-        'promotion'
+        'id_promo',    
+        'nb_ventes'    
     ];
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

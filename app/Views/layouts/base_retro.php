@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= base_url("css/style_retro.css") ?>">
+    <link rel="stylesheet" href="<?= base_url("css/retro/retro_base.css") ?>">
+    <link rel="stylesheet" href="<?= base_url("css/retro/retro_layout.css") ?>">
+    <link rel="stylesheet" href="<?= base_url("css/retro/retro_components.css") ?>">
+    <link rel="stylesheet" href="<?= base_url("css/retro/retro_responsive.css") ?>">
     <?= $this->renderSection('css') ?>
     <title>E-POKECARD '85</title>
 

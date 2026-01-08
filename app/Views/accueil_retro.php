@@ -29,15 +29,32 @@
     <?php endif; ?>
 
     <div class="catalogue-section">
-        <div class="section-title">
+
+        <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
             <h2>🏆 TOP TRADERS / BESTSELLERS</h2>
+                    
+            <div class="filter-buttons">
+                <a href="<?= base_url('/?filter=all') ?>" 
+                   class="btn-filter <?= ($current_filter != 'week') ? 'active' : '' ?>">
+                   ALL TIME
+                </a>
+                <a href="<?= base_url('/?filter=week') ?>" 
+                   class="btn-filter <?= ($current_filter == 'week') ? 'active' : '' ?>">
+                   THIS WEEK
+                </a>
+            </div>
         </div>
 
         <div class="catalogue-grid">
-            <?php foreach ($bestsellers as $produit): ?>
-                <?= view('partials/card_product', ['produit' => $produit]) ?>
-            <?php endforeach; ?>
-        </div>
+            <?php if(empty($bestsellers)): ?>
+                <p style="grid-column: 1/-1; text-align: center; color: white;">Pas de ventes cette semaine...</p>
+            <?php else: ?>
+                <?php foreach ($bestsellers as $produit): ?>
+                    <?= view('partials/card_product', ['produit' => $produit]) ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>      
+                
     </div>
 
 <?= $this->endSection() ?>

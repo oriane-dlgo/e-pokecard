@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+:root {
+    --pok-red: #D32F2F;
+    --pok-dark-red: #8e0000;
+    --pok-grey: #e0e0e0;
+    --pok-dark-grey: #404040;
+    --pok-darkest-grey: #616161;
+    --pok-black: #111;
+    --border-light: #ffffff;
+    --border-dark: #555555;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'VT323', monospace;
+}
+
+body {
+    background-color: #D32F2F;
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.game-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: transparent; 
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2; /* Passe devant les dragons */
+}
+
+main {
+    background: transparent; 
+    padding: 30px;
+    flex-grow: 1; 
+    position: relative;
+    z-index: 1;
+}

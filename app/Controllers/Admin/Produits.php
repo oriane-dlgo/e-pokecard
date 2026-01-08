@@ -13,38 +13,44 @@ class Produits extends BaseController
 
         $model = new ProductModel();
         
-        // 1. Récupération des filtres
+        // 1. Récupération des filtres de recherche
         $q     = $this->request->getGet('q');
         $type  = $this->request->getGet('type');
-        $stock = $this->request->getGet('stock'); // Nouveau : filtre par état du stock
+        $stock = $this->request->getGet('stock');
 
-        // 2. Construction de la requête
-        // On commence la requête, mais on ne fait pas le findAll tout de suite
+        // 2. Récupération des paramètres de TRI (Nouveau !)
+        $sort  = $this->request->getGet('sort') ?? 'id'; // Par défaut tri par ID
+        $order = $this->request->getGet('order') ?? 'DESC'; // Par défaut décroissant
+
+        // Sécurité pour éviter les injections SQL dans le tri
+        $allowedSorts = ['id', 'nom', 'prix', 'stock', 'nb_ventes', 'type_produit'];
+        if (!in_array($sort, $allowedSorts)) { $sort = 'id'; }
+        if (!in_array(strtoupper($order), ['ASC', 'DESC'])) { $order = 'DESC'; }
+
+        // 3. Construction de la requête
         $model->select('*');
 
         if (!empty($q)) {
             $model->like('nom', $q);
         }
-
         if (!empty($type)) {
             $model->where('type_produit', $type);
         }
-
-        // Filtre intelligent pour le stock
         if ($stock === 'rupture') {
             $model->where('stock', 0);
         } elseif ($stock === 'faible') {
             $model->where('stock >', 0)->where('stock <', 5);
         }
 
-        // 3. Exécution (avec le tri par ID décroissant)
-        $data['produits'] = $model->orderBy('id', 'DESC')->findAll();
+        // Application du tri
+        $model->orderBy($sort, $order);
 
-        // 4. On renvoie les filtres à la vue pour pré-remplir les champs
+        $data['produits'] = $model->findAll();
+
+        // On renvoie les filtres à la vue pour garder la mémoire
         $data['filters'] = [
-            'q' => $q,
-            'type' => $type,
-            'stock' => $stock
+            'q' => $q, 'type' => $type, 'stock' => $stock, 
+            'sort' => $sort, 'order' => $order
         ];
 
         return view('admin/produits', $data);
@@ -53,13 +59,9 @@ class Produits extends BaseController
     public function delete($id)
     {
         if (session()->get('user_role') !== 'admin') { return redirect()->to('/'); }
-
         $model = new ProductModel();
-        
-        // Suppression
         $model->delete($id);
-
-        return redirect()->to('/admin/produits')->with('msg', 'PRODUIT SUPPRIMÉ DE LA BASE DE DONNÉES.');
+        return redirect()->to('/admin/produits')->with('msg', 'ITEM SUPPRIMÉ.');
     }
 
     public function ajouter()
@@ -68,8 +70,18 @@ class Produits extends BaseController
 
         $db = \Config\Database::connect();
         
-        // On récupère les extensions pour le menu déroulant
-        $data['extensions'] = $db->table('extensions')->orderBy('nom', 'ASC')->get()->getResult();
+        // On récupère les extensions AVEC le nom de la série (Join)
+        $data['extensions'] = $db->table('extensions')
+                                 ->select('extensions.*, series.nom as nom_serie')
+                                 ->join('series', 'series.id = extensions.id_serie')
+                                 ->orderBy('series.id', 'DESC')
+                                 ->orderBy('extensions.id', 'DESC')
+                                 ->get()->getResult();
+        
+        $data['promotions'] = $db->table('promotions')
+                                 ->orderBy('tauxPromo', 'DESC')
+                                 ->get()->getResult();
+
 
         return view('admin/produits_add', $data);
     }
@@ -82,40 +94,39 @@ class Produits extends BaseController
 
         // 1. Gestion de l'Image
         $img = $this->request->getFile('image');
-        $nomImage = 'default.png'; // Valeur par défaut si pas d'image
+        $nomImage = 'default.png';
 
         if ($img && $img->isValid() && !$img->hasMoved()) {
-            // On génère un nom aléatoire pour éviter les conflits (ex: 12345_dracaufeu.png)
             $nomImage = $img->getRandomName();
-            
-            // --- AJOUT DE SÉCURITÉ ICI ---
             $path = FCPATH . 'assets/produits';
-        
-            // Si le dossier n'existe pas, on le crée avec les droits d'écriture
-            if (!is_dir($path)) {
-                mkdir($path, 0777, true);
-            }
-            // -----------------------------
-
-
-            // On déplace l'image dans public/assets/produits
-            $img->move(FCPATH . 'assets/produits', $nomImage);
+            if (!is_dir($path)) { mkdir($path, 0777, true); }
+            $img->move($path, $nomImage);
         }
 
-        // 2. Préparation des données
+        // 2. Nettoyage des données (NULL si vide)
+        $id_promo = $this->request->getPost('id_promo');
+        if (empty($id_promo)) { $id_promo = null; }
+
+        $id_extension = $this->request->getPost('id_extension');
+        if (empty($id_extension)) { $id_extension = null; }
+
+        $rarete = $this->request->getPost('rarete');
+        if (empty($rarete)) { $rarete = null; }
+
+        // 3. Préparation
         $data = [
             'nom'          => $this->request->getPost('nom'),
             'type_produit' => $this->request->getPost('type_produit'),
             'prix'         => $this->request->getPost('prix'),
             'stock'        => $this->request->getPost('stock'),
             'description'  => $this->request->getPost('description'),
-            'rarete'       => $this->request->getPost('rarete'),
-            'id_extension' => $this->request->getPost('id_extension'),
-            'image_url'    => $nomImage, // On sauvegarde le nom du fichier
-            // 'promotion' => ... (si tu veux gérer ça plus tard)
+            'rarete'       => $rarete,
+            'id_extension' => $id_extension,
+            'id_promo'     => $id_promo,
+            'image_url'    => $nomImage,
         ];
 
-        // 3. Insertion
+        // 4. Insertion
         $model->insert($data);
 
         return redirect()->to('/admin/produits')->with('msg', 'NOUVEL ITEM AJOUTÉ À LA BASE DE DONNÉES.');
@@ -128,19 +139,24 @@ class Produits extends BaseController
         $model = new ProductModel();
         $db = \Config\Database::connect();
 
-        // 1. On récupère le produit
         $produit = $model->find($id);
-
         if (!$produit) {
             return redirect()->to('/admin/produits')->with('msg', 'PRODUIT INTROUVABLE.');
         }
 
-        // 2. On récupère les extensions (pour la liste déroulante)
-        $extensions = $db->table('extensions')->orderBy('nom', 'ASC')->get()->getResult();
+        // Récupération des extensions ET des promotions pour les listes déroulantes
+        $extensions = $db->table('extensions')
+                         ->select('extensions.*, series.nom as nom_serie') // On sélectionne le nom de la série
+                         ->join('series', 'series.id = extensions.id_serie') // On fait le lien
+                         ->orderBy('series.id', 'DESC') // On trie par série récente d'abord (optionnel, ou par nom)
+                         ->orderBy('extensions.id', 'DESC')
+                         ->get()->getResult();
+        $promotions = $db->table('promotions')->orderBy('tauxPromo', 'DESC')->get()->getResult();
 
         $data = [
             'p' => $produit,
-            'extensions' => $extensions
+            'extensions' => $extensions,
+            'promotions' => $promotions
         ];
 
         return view('admin/produits_edit', $data);
@@ -153,29 +169,36 @@ class Produits extends BaseController
         $model = new ProductModel();
         $id = $this->request->getPost('id');
 
-        // Récupération de l'ancien produit pour avoir le nom de l'ancienne image
+        // --- NOUVELLE VALIDATION LOGIQUE ---
+        $type = $this->request->getPost('type_produit');
+        $rarete = $this->request->getPost('rarete');
+
+        // Si ce n'est PAS une carte ET qu'une rareté est sélectionnée
+        if ($type !== 'carte' && !empty($rarete)) {
+            // On renvoie en arrière avec les données saisies (withInput) et un message d'erreur rouge
+            return redirect()->back()->withInput()->with('error', 'ERREUR LOGIQUE : Un produit de type "'.strtoupper($type).'" ne peut pas avoir de rareté ! Veuillez sélectionner "--- Aucune ---".');
+        }
+        // -----------------------------------
+
         $oldProduct = $model->find($id);
 
-        // 1. Gestion de l'Image (Si une nouvelle est envoyée)
+        // Gestion Image
         $img = $this->request->getFile('image');
-        $nomImage = $oldProduct->image_url; // Par défaut, on garde l'ancienne
+        $nomImage = $oldProduct->image_url;
 
         if ($img && $img->isValid() && !$img->hasMoved()) {
-            // Nouvelle image détectée !
             $nomImage = $img->getRandomName();
-            
             $path = FCPATH . 'assets/produits';
             if (!is_dir($path)) { mkdir($path, 0777, true); }
-            
             $img->move($path, $nomImage);
-
-            // Optionnel : Supprimer l'ancienne image du serveur pour gagner de la place
-            // if ($oldProduct->image_url != 'default.png' && file_exists($path . '/' . $oldProduct->image_url)) {
-            //    unlink($path . '/' . $oldProduct->image_url);
-            // }
         }
 
-        // 2. Préparation des données
+        // Gestion de la Promo (Si vide, on met NULL)
+        $id_promo = $this->request->getPost('id_promo');
+        if (empty($id_promo)) { $id_promo = null; }
+        $id_extension = $this->request->getPost('id_extension');
+        if (empty($id_extension)) { $id_extension = null; }
+
         $data = [
             'nom'          => $this->request->getPost('nom'),
             'type_produit' => $this->request->getPost('type_produit'),
@@ -183,11 +206,11 @@ class Produits extends BaseController
             'stock'        => $this->request->getPost('stock'),
             'description'  => $this->request->getPost('description'),
             'rarete'       => $this->request->getPost('rarete'),
-            'id_extension' => $this->request->getPost('id_extension'),
-            'image_url'    => $nomImage, // Nouvelle ou Ancienne
+            'id_extension' => $id_extension,
+            'id_promo'     => $id_promo, // AJOUT IMPORTANT
+            'image_url'    => $nomImage,
         ];
 
-        // 3. Update
         $model->update($id, $data);
 
         return redirect()->to('/admin/produits')->with('msg', 'ITEM MIS À JOUR AVEC SUCCÈS.');

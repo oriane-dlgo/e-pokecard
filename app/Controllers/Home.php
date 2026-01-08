@@ -47,10 +47,11 @@ class Home extends BaseController
 
         $db = \Config\Database::connect();
         
-        // Constructeur de requête de base (avec Jointures Extensions et Promotions)
+        // Constructeur de requête de base
         $builder = $db->table('produits')
-                      ->select('produits.*, extensions.nom as nom_extension, promotions.tauxPromo')
+                      ->select('produits.*, extensions.nom as nom_extension, extensions.code as code_extension, series.nom as nom_serie, promotions.tauxPromo')
                       ->join('extensions', 'extensions.id = produits.id_extension', 'left')
+                      ->join('series', 'series.id = extensions.id_serie', 'left') // <-- AJOUT DE LA JOINTE SERIE
                       ->join('promotions', 'promotions.idPromo = produits.id_promo', 'left');
 
         // 1. LES NOUVEAUTÉS (Les 4 derniers ajoutés)
@@ -72,6 +73,36 @@ class Home extends BaseController
         $data['bestsellers'] = $bestBuilder->orderBy('RAND()') 
                                            ->limit(4)
                                            ->get()->getResult();
+
+                                           
+        // 4. LES BEST-SELLERS (Avec Filtre Semaine / Toujours)
+        $filter = $this->request->getGet('filter'); // On récupère ?filter=week dans l'URL
+        
+        $bestBuilder = clone $builder;
+
+        if ($filter === 'week') {
+            // LOGIQUE SEMAINE : On doit joindre les commandes pour vérifier la date
+            // Attention : Requête un peu plus complexe
+            $data['bestsellers'] = $db->table('lignes_commande')
+                ->select('produits.*, extensions.nom as nom_extension, extensions.code as code_extension, series.nom as nom_serie, SUM(lignes_commande.quantite) as ventes_hebdo, promotions.tauxPromo')
+                ->join('produits', 'produits.id = lignes_commande.product_id')
+                ->join('commandes', 'commandes.id = lignes_commande.commande_id')
+                ->join('extensions', 'extensions.id = produits.id_extension', 'left')
+                ->join('series', 'series.id = extensions.id_serie', 'left')
+                ->join('promotions', 'promotions.idPromo = produits.id_promo', 'left')
+                ->where('commandes.date_creation >=', date('Y-m-d H:i:s', strtotime('-7 days')))
+                ->groupBy('produits.id')
+                ->orderBy('ventes_hebdo', 'DESC')
+                ->limit(4)
+                ->get()->getResult();
+        } else {
+            // LOGIQUE PAR DÉFAUT (TOUJOURS) : On utilise la colonne nb_ventes
+            $data['bestsellers'] = $bestBuilder->orderBy('nb_ventes', 'DESC')
+                                               ->limit(4)
+                                               ->get()->getResult();
+        }
+
+        $data['current_filter'] = $filter; // Pour savoir quel bouton allumer dans la vue
 
         return view_theme('accueil', $data);
     } 

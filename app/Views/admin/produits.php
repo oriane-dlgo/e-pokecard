@@ -55,19 +55,47 @@
     <table class="bios-table">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>
+                    <a href="<?= base_url('admin/produits?sort=id&order='.($filters['order']=='ASC'?'DESC':'ASC')) ?>" style="color: #000080;text-decoration:none;" >
+                        ID <?= $filters['sort']=='id' ? ($filters['order']=='ASC'?'▲':'▼') : '' ?>
+                    </a>
+                </th>
+                
                 <th>IMG</th>
-                <th>NOM</th>
-                <th>TYPE</th>
-                <th>PRIX</th>
-                <th>STOCK</th>
+                
+                <th>
+                    <a href="<?= base_url('admin/produits?sort=nom&order='.($filters['order']=='ASC'?'DESC':'ASC')) ?>" style="color: #000080; text-decoration:none;" >
+                        NOM <?= $filters['sort']=='nom' ? ($filters['order']=='ASC'?'▲':'▼') : '' ?>
+                    </a>
+                </th>
+                
+                <th>TYPE / RARETÉ</th>
+                
+                <th>
+                    <a href="<?= base_url('admin/produits?sort=prix&order='.($filters['order']=='ASC'?'DESC':'ASC')) ?>" style="color: #000080; text-decoration:none;" >
+                        PRIX <?= $filters['sort']=='prix' ? ($filters['order']=='ASC'?'▲':'▼') : '' ?>
+                    </a>
+                </th>
+                
+                <th>
+                    <a href="<?= base_url('admin/produits?sort=stock&order='.($filters['order']=='ASC'?'DESC':'ASC')) ?>" style="color: #000080; text-decoration:none;" >
+                        STOCK <?= $filters['sort']=='stock' ? ($filters['order']=='ASC'?'▲':'▼') : '' ?>
+                    </a>
+                </th>
+
+                <th>
+                    <a href="<?= base_url('admin/produits?sort=nb_ventes&order='.($filters['order']=='ASC'?'DESC':'ASC')) ?>" style=" color: #000080 ;text-decoration:none;">
+                        VENTES <?= $filters['sort']=='nb_ventes' ? ($filters['order']=='ASC'?'▲':'▼') : '' ?>
+                    </a>
+                </th>
+                
                 <th>ACTIONS</th>
             </tr>
         </thead>
         <tbody>
             <?php if(empty($produits)): ?>
                 <tr>
-                    <td colspan="7" style="text-align:center; padding: 20px; color: yellow;">
+                    <td colspan="8" style="text-align:center; padding: 20px; color: yellow;">
                         AUCUN RÉSULTAT TROUVÉ...
                     </td>
                 </tr>
@@ -78,8 +106,16 @@
                     <td>
                         <img src="<?= base_url('assets/produits/'.$p->image_url) ?>" style="height: 40px; border: 1px solid white;">
                     </td>
-                    <td><?= esc($p->nom) ?></td>
-                    <td><?= esc($p->type_produit) ?></td>
+                    <td>
+                        <?= esc($p->nom) ?>
+                        <?php if($p->id_promo): ?>
+                            <span style="background:red; color:white; font-size:10px; padding:2px;">PROMO</span>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <?= esc($p->type_produit) ?><br>
+                        <small style="color:#aaa;"><?= esc($p->rarete) ?></small>
+                    </td>
                     <td style="color: yellow;">$<?= esc($p->prix) ?></td>
                     
                     <td style="<?= $p->stock == 0 ? 'color:white; background:red; font-weight:bold;' : 
@@ -88,14 +124,15 @@
                         <?= $p->stock ?>
                     </td>
 
+                    <td><?= $p->nb_ventes ?></td>
+
                     <td>
-                        <a href="<?= base_url('admin/produits/edit/'.$p->id) ?>" class="btn-action btn-edit">EDIT</a>
-                        
-                        <a href="<?= base_url('admin/produits/delete/'.$p->id) ?>" 
-                           class="btn-action btn-delete"
-                           onclick="return confirm('CONFIRM DELETION ? Cette action est irréversible !');">
-                           DEL
-                        </a>
+                        <div style="display:flex; gap:5px;">
+                            <a href="<?= base_url('admin/produits/edit/'.$p->id) ?>" class="btn-action btn-edit">EDIT</a>
+                            <a href="<?= base_url('admin/produits/delete/'.$p->id) ?>" 
+                               class="btn-action btn-delete"
+                               onclick="return confirm('SUPPRIMER ?');">DEL</a>
+                        </div>
                     </td>
                 </tr>
                 <?php endforeach; ?>
