@@ -179,3 +179,7 @@ Lorsque vous avez fini de travailler, n'éteignez pas brutalement le terminal ou
 podman-compose down
 ```
 (Ou docker compose down sur machine perso).
+
+```Bash
+podman exec -it sae_php_app chmod -R 777 /var/www/html/public/assets/
+```
