@@ -44,6 +44,48 @@
     box-shadow: 0px 0px 0px black;
 }
 
+/* --- BOUTON HOME SPECIAL (Style Vert Rétro) --- */
+.nav-bar a.btn-home {
+    background-color: #27ae60; /* Vert "Feuille" solide */
+    color: white;
+    font-weight: bold;
+    text-shadow: 2px 2px 0px #145a32; /* Ombre texte vert foncé pour la lisibilité */
+    
+    /* Bordures 3D Vertes */
+    border-top: 4px solid #58d68d; /* Vert clair (Lumière) */
+    border-left: 4px solid #58d68d;
+    border-right: 4px solid #145a32; /* Vert très foncé (Ombre) */
+    border-bottom: 4px solid #145a32;
+    
+    display: flex;
+    align-items: center;
+}
+
+.nav-bar a.btn-home:hover {
+    background-color: #2ecc71; /* Vert Émeraude plus vif au survol */
+    
+    /* On éclaircit les bordures */
+    border-top: 4px solid #82e0aa;
+    border-left: 4px solid #82e0aa;
+    border-right: 4px solid #196f3d;
+    border-bottom: 4px solid #196f3d;
+    
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px black;
+    z-index: 10;
+}
+
+.nav-bar a.btn-home:active {
+    /* Effet enfoncé vert foncé */
+    border-top: 4px solid #145a32;
+    border-left: 4px solid #145a32;
+    border-right: 4px solid #58d68d;
+    border-bottom: 4px solid #58d68d;
+    
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px black;
+}
+
 /* --- BOUTON SPECIAL PROMO --- */
 .nav-bar a.prom {
     color: #FFD700;

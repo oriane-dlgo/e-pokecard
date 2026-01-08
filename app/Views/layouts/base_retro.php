@@ -41,11 +41,14 @@
 
         <nav class="nav-bar">
             <div class="nav-links">
-                <a href="<?= base_url('/')?>">HOME</a>
+                <a href="<?= base_url('/')?>" class="btn-home">
+                    <img src="<?= base_url('assets/pokeball.png') ?>" alt="Home" style="width:20px; margin-right:8px; vertical-align:middle; filter: grayscale(100%) brightness(200%);">    
+                    ACCUEIL</a>
                 <a href="<?= base_url('recherche?type=carte') ?>">CARTES</a>
                 <a href="<?= base_url('recherche?type=booster') ?>">BOOSTERS</a>
                 <a href="#">DISPLAYS</a>
                 <a href="#">ETB</a>
+                <a href="#">ACCESSOIRES</a>
                 <a href="<?= base_url('promotions') ?>" class="prom">
                     <span class="blink"> PROMOTIONS </span>             
                 </a>   

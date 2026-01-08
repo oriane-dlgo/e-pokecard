@@ -8,53 +8,146 @@ class Search extends BaseController
 {
     public function index()
     {
+$db = \Config\Database::connect();
         $model = new ProductModel();
         
-        // 1. Récupération des filtres depuis l'URL (GET)
-        $search   = $this->request->getGet('q');
-        $type     = $this->request->getGet('type');
-        $rarete   = $this->request->getGet('rarete');
-        $tri      = $this->request->getGet('tri'); // prix_asc, prix_desc
+        // --- 1. RÉCUPÉRATION DES PARAMÈTRES ---
+        $q      = $this->request->getGet('q');
+        $types  = $this->request->getGet('type');
+        $raretes= $this->request->getGet('rarete');
+        $tri    = $this->request->getGet('tri');
+        $promos = $this->request->getGet('promo');
+        $exts   = $this->request->getGet('ext');
+
+        $seriesFull = $this->request->getGet('series_full');
+        $oldSeriesFull = $this->request->getGet('old_series_full');
+
+        $allPromos     = $this->request->getGet('all_promos');     
+        $oldAllPromos  = $this->request->getGet('old_all_promos'); 
+
+        // --- 2. BLINDAGE DES TABLEAUX ---
+        if (empty($types)) { $types = []; } elseif (!is_array($types)) { $types = [$types]; }
+        if (empty($raretes)) { $raretes = []; } elseif (!is_array($raretes)) { $raretes = [$raretes]; }
+        if (empty($promos)) { $promos = []; } elseif (!is_array($promos)) { $promos = [$promos]; }
+        if (empty($exts)) { $exts = []; } elseif (!is_array($exts)) { $exts = [$exts]; }
+        if (empty($seriesFull)) { $seriesFull = []; } elseif (!is_array($seriesFull)) { $seriesFull = [$seriesFull]; }
+        if (empty($oldSeriesFull)) { $oldSeriesFull = []; } elseif (!is_array($oldSeriesFull)) { $oldSeriesFull = [$oldSeriesFull]; }
+
+        // --- LOGIQUE "TOUTES LES PROMOS" (DÉCOCHAGE) ---
+        // Si c'était coché avant (old) mais plus maintenant (allPromos est null/vide)
+        if (!empty($oldAllPromos) && empty($allPromos)) {
+            $promos = []; // On vide la sélection
+        }
+
+        // --- LOGIQUE "TOUTES LES PROMOS" (COCHAGE) ---
+        if (!empty($allPromos)) {
+            // On récupère tous les taux distincts existants en base
+            $tousLesTaux = $db->table('promotions')->select('tauxPromo')->distinct()->get()->getResult();
+            
+            foreach($tousLesTaux as $t) {
+                // On ajoute le taux s'il n'est pas déjà dans la liste
+                // (string) pour s'assurer que la comparaison fonctionne bien
+                if (!in_array((string)$t->tauxPromo, $promos)) {
+                    $promos[] = (string)$t->tauxPromo;
+                }
+            }
+        }
+
+        // --- LOGIQUE DE "DÉCOCHAGE" ---
+        // On cherche les séries qui étaient cochées (old) mais ne le sont plus (current)
+        $seriesUnchecked = array_diff($oldSeriesFull, $seriesFull);
         
-        // 2. Construction de la requête
-        // On commence par "tout sélectionner"
-        $model->select('*');
-
-        // Filtre par nom (Recherche textuelle)
-        if (!empty($search)) {
-            $model->like('nom', $search);
+        if (!empty($seriesUnchecked)) {
+            // On récupère les ID des extensions de ces séries décochées
+            $idsToRemove = $db->table('extensions')
+                              ->whereIn('id_serie', $seriesUnchecked)
+                              ->select('id')
+                              ->get()->getResultArray();
+            
+            // On extrait juste les IDs (tableau simple)
+            $idsToRemove = array_column($idsToRemove, 'id');
+            
+            // On retire ces extensions de la liste des extensions cochées ($exts)
+            $exts = array_diff($exts, $idsToRemove);
         }
 
-        // Filtre par Type (Carte, Booster, etc.)
-        if (!empty($type)) {
-            $model->where('type_produit', $type);
+        // --- LOGIQUE "TOUTE LA SÉRIE" (AJOUT) ---
+        if (!empty($seriesFull)) {
+            $extensionsDeCesSeries = $db->table('extensions')
+                                        ->whereIn('id_serie', $seriesFull)
+                                        ->select('id')
+                                        ->get()->getResult();
+            
+            foreach($extensionsDeCesSeries as $e) {
+                if (!in_array($e->id, $exts)) {
+                    $exts[] = $e->id;
+                }
+            }
         }
 
-        // Filtre par Rareté
-        if (!empty($rarete)) {
-            $model->where('rarete', $rarete);
+        // --- 3. PRÉPARATION DONNÉES SIDEBAR (Séries & Extensions) ---
+        // On récupère toutes les séries
+        $rawSeries = $db->table('series')->orderBy('id', 'DESC')->get()->getResult();
+        // On récupère toutes les extensions
+        $rawExts   = $db->table('extensions')->orderBy('id', 'DESC')->get()->getResult();
+
+        // On organise ça en tableau hiérarchique : Série -> [Extensions]
+        $seriesMap = [];
+        foreach($rawSeries as $s) {
+            $seriesMap[$s->id] = [
+                'info' => $s,
+                'extensions' => []
+            ];
+        }
+        foreach($rawExts as $e) {
+            if(isset($seriesMap[$e->id_serie])) {
+                $seriesMap[$e->id_serie]['extensions'][] = $e;
+            }
         }
 
-        // Tri
-        if ($tri === 'prix_asc') {
-            $model->orderBy('prix', 'ASC');
-        } elseif ($tri === 'prix_desc') {
-            $model->orderBy('prix', 'DESC');
-        } else {
-            $model->orderBy('id', 'DESC'); // Par défaut : les plus récents
+        // --- 4. CONSTRUCTION REQUÊTE PRODUITS ---
+        $model->select('produits.*, promotions.tauxPromo');
+        $model->join('promotions', 'promotions.idPromo = produits.id_promo', 'left');
+
+        if (!empty($q)) {
+            $model->groupStart()->like('nom', $q)->orLike('description', $q)->groupEnd();
+        }
+        if (!empty($types)) { $model->whereIn('type_produit', $types); }
+        if (!empty($raretes)) { $model->whereIn('rarete', $raretes); }
+        
+        // FILTRE PROMO
+        if (!empty($promos)) {
+            $model->whereIn('promotions.tauxPromo', $promos);
         }
 
-        // 3. Exécution
+        // NOUVEAU FILTRE EXTENSION
+        if (!empty($exts)) {
+            $model->whereIn('id_extension', $exts);
+        }
+
+        // --- 5. TRI ---
+        switch ($tri) {
+            case 'prix_asc': $model->orderBy('prix', 'ASC'); break;
+            case 'prix_desc': $model->orderBy('prix', 'DESC'); break;
+            case 'pop_desc': $model->orderBy('nb_ventes', 'DESC'); break;
+            case 'promo_desc': $model->orderBy('promotions.tauxPromo', 'DESC'); break;
+            default: $model->orderBy('produits.id', 'DESC'); break;
+        }
+
         $results = $model->findAll();
 
-        // 4. On renvoie les données à la vue
         $data = [
             'results' => $results,
-            'filters' => [ // On renvoie les filtres pour pré-remplir le formulaire
-                'q' => $search,
-                'type' => $type,
-                'rarete' => $rarete,
-                'tri' => $tri
+            'seriesMap' => $seriesMap, // On envoie la hiérarchie à la vue
+            'filters' => [
+                'q' => $q, 
+                'type' => $types, 
+                'rarete' => $raretes, 
+                'tri' => $tri, 
+                'promo' => $promos,
+                'ext' => $exts,
+                'series_full' => $seriesFull,
+                'all_promos' => $allPromos
             ]
         ];
 
