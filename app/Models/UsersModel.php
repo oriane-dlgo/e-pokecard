@@ -8,40 +8,49 @@ use App\Entities\Users;
 class UsersModel extends Model
 {
     protected $table            = 'users';
-    protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
     protected $returnType       = Users::class;
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
     protected $allowedFields    = ['login','password','role','nom','prenom','email','adresse'];
 
-    protected bool $allowEmptyInserts = false;
-    protected bool $updateOnlyChanged = true;
+    // Propriété temporaire pour stocker les données en cours de construction
+    protected $tempData = [];
 
-    protected array $casts = [];
-    protected array $castHandlers = [];
+    /**
+     * Initialise une nouvelle construction d'utilisateur
+     */
+    public function newUser(): self
+    {
+        $this->tempData = ['role' => 'client'];
+        return $this;
+    }
 
-    // Dates
-    protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    public function withCredentials(string $login, string $password): self
+    {
+        $this->tempData['login'] = $login;
+        $this->tempData['password'] = password_hash($password, PASSWORD_DEFAULT);
+        return $this;
+    }
 
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
+    public function withIdentity(string $nom, string $prenom, string $email): self
+    {
+        $this->tempData['nom'] = $nom;
+        $this->tempData['prenom'] = $prenom;
+        $this->tempData['email'] = $email;
+        return $this;
+    }
 
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    public function withRole(string $role): self
+    {
+        $this->tempData['role'] = $role;
+        return $this;
+    }
+
+    /**
+     * Finalise et sauvegarde en base de données
+     */
+    public function create(): bool
+    {
+        $result = $this->save($this->tempData);
+        $this->tempData = [];
+        return $result;
+    }
 }

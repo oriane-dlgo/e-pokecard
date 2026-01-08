@@ -6,52 +6,67 @@ use App\Models\UsersModel;
 
 class Inscription extends BaseController
 {
+    /**
+     * Affiche le formulaire d'inscription
+     */
     public function index()
     {
-        // On charge le helper form pour gérer les erreurs proprement
+        // On charge le helper form pour gérer l'affichage des erreurs dans la vue
         helper(['form']);
         return view_theme('inscription');
     }
 
+    /**
+     * Traite la soumission du formulaire
+     */
     public function register()
     {
         helper(['form']);
-        
-        // 1. Définition des règles de validation
+
+        // Définition des règles de validation
+        // On s'assure que les données respectent le format attendu
         $rules = [
             'login'    => 'required|min_length[3]|max_length[20]|is_unique[users.login]',
-            'password' => 'required|min_length[4]|max_length[255]',
+            'password' => 'required|min_length[4]',
             'nom'      => 'required|min_length[2]',
             'prenom'   => 'required|min_length[2]',
             'email'    => 'required|valid_email|is_unique[users.email]',
         ];
 
-        // 2. Si la validation échoue
+        // Si la validation échoue, on recharge la vue avec les erreurs
         if (! $this->validate($rules)) {
-            // On renvoie vers la vue avec les erreurs
             return view_theme('inscription', [
                 'validation' => $this->validator
             ]);
         }
 
-        // 3. Si tout est bon, on sauvegarde
         $userModel = new UsersModel();
 
-        $newData = [
-            'login'    => $this->request->getPost('login'),
-            'password' => $this->request->getPost('password'), // Note: En prod, on utiliserait password_hash() ici
-            'nom'      => $this->request->getPost('nom'),
-            'prenom'   => $this->request->getPost('prenom'),
-            'email'    => $this->request->getPost('email'),
-            'role'     => 'client' // Par défaut, tout le monde est client
-        ];
+        try {
+            // Construction fluide de l'utilisateur
+            $success = $userModel->newUser()
+                ->withCredentials(
+                    $this->request->getPost('login'),
+                    $this->request->getPost('password')
+                )
+                ->withIdentity(
+                    $this->request->getPost('nom'),
+                    $this->request->getPost('prenom'),
+                    $this->request->getPost('email')
+                )
+                ->withRole('client') // On définit explicitement le rôle
+                ->create();          // Exécute le save() final
 
-        $userModel->save($newData);
+            if ($success) {
+                // 4. Redirection en cas de succès
+                return redirect()->to('/connexion')->with('success', 'Inscription réussie ! Connectez-vous avec vos nouveaux identifiants.');
+            } else {
+                return redirect()->back()->withInput()->with('msg', 'Une erreur est survenue lors de la création du compte.');
+            }
 
-        // 4. Redirection vers la connexion avec un message de succès
-        $session = session();
-        $session->setFlashdata('success', 'Inscription réussie ! Connectez-vous.');
-        
-        return redirect()->to('/connexion')->with('success', 'Inscription réussie ! Connectez-vous.');
+        } catch (\Exception $e) {
+            // En cas d'erreur imprévue
+            return redirect()->back()->withInput()->with('msg', 'Erreur système : ' . $e->getMessage());
+        }
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : mysql
--- Généré le : jeu. 08 jan. 2026 à 02:58
+-- Généré le : jeu. 08 jan. 2026 à 16:46
 -- Version du serveur : 8.0.44
 -- Version de PHP : 8.3.26
 
@@ -33,24 +33,31 @@ CREATE TABLE `commandes` (
                              `date_creation` datetime DEFAULT CURRENT_TIMESTAMP,
                              `statut` enum('panier','validee','expediee','terminee','annulee') DEFAULT 'panier',
                              `total` decimal(10,2) DEFAULT '0.00',
-                             `type_paiement` enum('Paypal','Credit Card')
+                             `type_paiement` enum('Paypal','Credit Card') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `commandes`
 --
 
-INSERT INTO `commandes` (`id`, `id_user`, `date_creation`, `statut`, `total`,`type_paiement`) VALUES
-                                                                                                  (1, 2, '2025-12-08 00:07:27', 'terminee', 240.00,'Credit Card'),
-                                                                                                  (2, 2, '2026-01-06 00:07:27', 'validee', 59.90,'Paypal'),
-                                                                                                  (3, 1, '2026-01-07 00:07:27', 'expediee', 45.00,'Paypal'),
-                                                                                                  (4, 2, '2026-01-08 00:07:27', 'panier', 85.00,'Credit Card'),
-                                                                                                  (5, 2, '2025-11-09 00:12:17', 'terminee', 240.00,'Paypal'),
-                                                                                                  (6, 1, '2025-12-18 00:12:17', 'terminee', 90.00,'Credit Card'),
-                                                                                                  (7, 2, '2026-01-04 00:12:17', 'expediee', 29.95,'Credit Card'),
-                                                                                                  (8, 1, '2026-01-07 00:12:17', 'validee', 114.95,'Paypal'),
-                                                                                                  (9, 2, '2026-01-08 00:12:17', 'validee', 90.00,'Credit Card'),
-                                                                                                  (10, 2, '2026-01-08 00:12:17', 'panier', 140.00,NULl);
+INSERT INTO `commandes` (`id`, `id_user`, `date_creation`, `statut`, `total`, `type_paiement`) VALUES
+                                                                                                   (1, 2, '2025-12-08 00:07:27', 'terminee', 240.00, 'Credit Card'),
+                                                                                                   (2, 2, '2026-01-06 00:07:27', 'validee', 59.90, 'Paypal'),
+                                                                                                   (3, 1, '2026-01-07 00:07:27', 'expediee', 45.00, 'Paypal'),
+                                                                                                   (4, 2, '2026-01-08 00:07:27', 'panier', 85.00, 'Credit Card'),
+                                                                                                   (5, 2, '2025-11-09 00:12:17', 'terminee', 240.00, 'Paypal'),
+                                                                                                   (6, 1, '2025-12-18 00:12:17', 'terminee', 90.00, 'Credit Card'),
+                                                                                                   (7, 2, '2026-01-04 00:12:17', 'expediee', 29.95, 'Credit Card'),
+                                                                                                   (8, 1, '2026-01-07 00:12:17', 'validee', 114.95, 'Paypal'),
+                                                                                                   (9, 2, '2026-01-08 00:12:17', 'validee', 90.00, 'Credit Card'),
+                                                                                                   (10, 2, '2026-01-08 00:12:17', 'panier', 140.00, NULL),
+                                                                                                   (11, 1, '2026-01-08 14:15:11', 'validee', 0.00, NULL),
+                                                                                                   (12, 1, '2026-01-08 14:27:05', '', 12.00, NULL),
+                                                                                                   (13, 1, '2026-01-08 14:28:53', '', 215.99, NULL),
+                                                                                                   (14, 1, '2026-01-08 14:33:06', '', 215.99, NULL),
+                                                                                                   (15, 1, '2026-01-08 14:35:15', '', 12.00, NULL),
+                                                                                                   (16, 1, '2026-01-08 14:37:02', '', 90.99, NULL),
+                                                                                                   (17, 1, '2026-01-08 14:38:33', '', 210.99, NULL);
 
 -- --------------------------------------------------------
 
@@ -117,7 +124,24 @@ INSERT INTO `lignes_commande` (`id`, `commande_id`, `product_id`, `quantite`, `p
                                                                                                    (8, 8, 1, 1, 85.00),
                                                                                                    (9, 8, 9, 5, 5.99),
                                                                                                    (10, 9, 16, 1, 90.00),
-                                                                                                   (11, 10, 14, 1, 140.00);
+                                                                                                   (11, 10, 14, 1, 140.00),
+                                                                                                   (12, 11, 19, 1, 0.00),
+                                                                                                   (13, 12, 17, 1, 12.00),
+                                                                                                   (14, 12, 18, 1, 0.00),
+                                                                                                   (15, 13, 2, 1, 120.00),
+                                                                                                   (16, 13, 3, 1, 5.99),
+                                                                                                   (17, 13, 16, 1, 90.00),
+                                                                                                   (18, 14, 16, 1, 90.00),
+                                                                                                   (19, 14, 2, 1, 120.00),
+                                                                                                   (20, 14, 3, 1, 5.99),
+                                                                                                   (21, 15, 18, 1, 0.00),
+                                                                                                   (22, 15, 17, 1, 12.00),
+                                                                                                   (23, 15, 19, 1, 0.00),
+                                                                                                   (24, 16, 3, 1, 5.99),
+                                                                                                   (25, 16, 1, 1, 85.00),
+                                                                                                   (26, 17, 9, 1, 5.99),
+                                                                                                   (27, 17, 1, 1, 85.00),
+                                                                                                   (28, 17, 2, 1, 120.00);
 
 -- --------------------------------------------------------
 
@@ -145,26 +169,26 @@ CREATE TABLE `produits` (
 --
 
 INSERT INTO `produits` (`id`, `type_produit`, `nom`, `description`, `prix`, `image_url`, `stock`, `rarete`, `numero_carte`, `id_extension`, `id_promo`, `nb_ventes`) VALUES
-                                                                                                                                                                         (1, 'carte', 'U.R Pikachu EX', '', 85.00, '1767838626_b07943e156f2381dd456.webp', 10, 'Ultra Rare', NULL, 11, NULL, 2),
-                                                                                                                                                                         (2, 'display', 'Display - SCR', '', 120.00, '1767839880_6f5e5eba142eaeac35dc.webp', 5, '', NULL, 10, 2, 4),
-                                                                                                                                                                         (3, 'booster', 'Booster - MEW', '', 5.99, '1767838434_43bfaac1b0d6497f80b5.png', 100, '', NULL, 4, 1, 10),
+                                                                                                                                                                         (1, 'carte', 'U.R Pikachu EX', '', 85.00, '1767838626_b07943e156f2381dd456.webp', 8, 'Ultra Rare', NULL, 11, NULL, 2),
+                                                                                                                                                                         (2, 'display', 'Display - SCR', '', 120.00, '1767839880_6f5e5eba142eaeac35dc.webp', 2, '', NULL, 10, 2, 4),
+                                                                                                                                                                         (3, 'booster', 'Booster - MEW', '', 5.99, '1767838434_43bfaac1b0d6497f80b5.png', 97, '', NULL, 4, 1, 10),
                                                                                                                                                                          (4, 'ETB', 'ETB Ronflex - MEW', '', 55.00, '1767838356_d0f6391031d5eaba9296.png', 20, '', NULL, 4, 3, 0),
                                                                                                                                                                          (5, 'carte', 'Mygavolt EX - SCR', '', 45.00, '1767839602_759efec1779ba55a341e.webp', 15, 'Alternative', NULL, 10, NULL, 1),
                                                                                                                                                                          (6, 'accessoire', 'Classeur Malvalame - PAF', '', 35.00, '1767839498_af2ee85929c67796f529.png', 8, '', NULL, 6, NULL, 0),
                                                                                                                                                                          (7, 'carte', 'AR Kecleon - SSP', '', 2.00, '1767839389_c4d9f9b5e5fc35079a09.webp', 50, 'Illu. Rare', NULL, 11, NULL, 0),
                                                                                                                                                                          (8, 'carte', 'Latias EX - SSP', 'Rien', 8.00, '1767839274_10b9fe2ef7a401766209.webp', 40, 'Double Rare', NULL, 11, NULL, 0),
-                                                                                                                                                                         (9, 'booster', 'Booster - SSP', '', 5.99, '1767838189_90a71ddb3a6e5e14c829.png', 150, '', NULL, 11, NULL, 10),
+                                                                                                                                                                         (9, 'booster', 'Booster - SSP', '', 5.99, '1767838189_90a71ddb3a6e5e14c829.png', 149, '', NULL, 11, NULL, 10),
                                                                                                                                                                          (10, 'carte', 'Gold Reshiram EX - WHT', 'Rien', 15.00, '1767838104_219af4cfaca36f662757.webp', 12, 'Gold', NULL, 15, NULL, 0),
                                                                                                                                                                          (11, 'carte', 'Alt Trioxhydre', 'Rien', 25.00, '1767838048_5a61b2a2c21bacc330a4.webp', 5, 'Alternative', NULL, 15, NULL, 0),
                                                                                                                                                                          (12, 'carte', 'Alt Reshiram EX - WHT', 'Rien', 0.50, '1767837957_d6db006764d6698295c2.webp', 200, 'Commune', NULL, 15, NULL, 0),
                                                                                                                                                                          (13, 'carte', 'Alt Dracaufeu EX - OBF', 'Rien', 1.00, '1767837851_da801f645c68f05d8949.webp', 100, 'Alternative', NULL, 3, NULL, 0),
                                                                                                                                                                          (14, 'display', 'Display Flammes Obsidiennes', 'Rien', 140.00, '1767837614_f865395a9478f9611818.jpg', 4, '', NULL, 3, 4, 1),
                                                                                                                                                                          (15, 'carte', 'Phyllali EX - PRE', 'Rien', 60.00, '1767837711_5f499ec12d05c6492032.webp', 24, 'Alternative', NULL, 12, NULL, 0),
-                                                                                                                                                                         (16, 'coffret', 'ETB Suicune - TEF', 'Rien', 90.00, '1767839209_1b00fa8de082038d4a1b.png', 2, '', NULL, 7, 2, 2),
-                                                                                                                                                                         (17, 'ETB', 'ETB PRE', 'Série rétro Méga', 12.00, '1767837461_6b7d5530f6e79814c209.jpg', 30, '', NULL, 12, NULL, 0),
-                                                                                                                                                                         (18, 'carte', 'Rugit-Lune EX - PRE', 'Rien', 0.00, '1767836982_22470c489ca7403584b5.webp', 10, 'Alternative', NULL, 12, NULL, 0),
-                                                                                                                                                                         (19, 'carte', 'Voltli EX - PRE', 'Rien', 0.00, '1767836898_f3205d0f35cced1cf64e.webp', 15, 'Alternative', NULL, 12, NULL, 0),
-                                                                                                                                                                         (20, 'carte', 'Noctali Ex - PRE', 'Rien', 499.99, '1767836503_24f36d896f89baf1976e.webp', 14, 'Alternative', NULL, 12, NULL, 0);
+                                                                                                                                                                         (16, 'coffret', 'ETB Suicune - TEF', 'Rien', 90.00, '1767839209_1b00fa8de082038d4a1b.png', 0, '', NULL, 7, 2, 2),
+                                                                                                                                                                         (17, 'ETB', 'ETB PRE', 'Série rétro Méga', 12.00, '1767837461_6b7d5530f6e79814c209.jpg', 26, '', NULL, 12, NULL, 0),
+                                                                                                                                                                         (18, 'carte', 'Rugit-Lune EX - PRE', 'Rien', 0.00, '1767836982_22470c489ca7403584b5.webp', 4, 'Alternative', NULL, 12, NULL, 0),
+                                                                                                                                                                         (19, 'carte', 'Voltli EX - PRE', 'Rien', 0.00, '1767836898_f3205d0f35cced1cf64e.webp', 5, 'Alternative', NULL, 12, NULL, 0),
+                                                                                                                                                                         (20, 'carte', 'Noctali Ex - PRE', 'Rien', 499.99, '1767836503_24f36d896f89baf1976e.webp', 10, 'Alternative', NULL, 12, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -230,8 +254,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `role`, `nom`, `prenom`, `email`, `adresse`) VALUES
-                                                                                                 (1, 'admin', 'admin', 'admin', 'Administrateur', NULL, NULL, NULL),
-                                                                                                 (2, 'sacha', 'pikachu', 'client', 'Ketchum', NULL, NULL, NULL);
+                                                                                                 (1, 'admin', '$2y$10$4rvjj9ktrVhOcLwU1F19NuWkgWup118LWKF.0b6MQxm/6r.kdblMG', 'admin', 'Administrateur', NULL, NULL, NULL),
+                                                                                                 (2, 'sacha', '$2y$10$KfO2nz9J3H6T34yhLDQI9O1cXYJ1XPXB2YUA2.LTvVlqEYQYHvbUO', 'client', 'Ketchum', NULL, NULL, NULL),
+                                                                                                 (3, 'ronflex', '$2y$12$cvF2b8kDjaKsdosEvcrZSOJyMq85nu0grZvepb/ZHZLmmU9s2KUia', 'client', 'ronflex', 'ronflex', 'ronflex@ronflex.ronflex', NULL);
 
 --
 -- Index pour les tables déchargées
@@ -294,7 +319,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `commandes`
 --
 ALTER TABLE `commandes`
-    MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+    MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT pour la table `extensions`
@@ -306,7 +331,7 @@ ALTER TABLE `extensions`
 -- AUTO_INCREMENT pour la table `lignes_commande`
 --
 ALTER TABLE `lignes_commande`
-    MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+    MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT pour la table `produits`
@@ -330,7 +355,7 @@ ALTER TABLE `series`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-    MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+    MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Contraintes pour les tables déchargées
