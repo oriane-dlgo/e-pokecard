@@ -86,22 +86,83 @@
     box-shadow: 0px 0px 0px black;
 }
 
+
+
 /* --- BOUTON SPECIAL PROMO --- */
 .nav-bar a.prom {
-    color: #FFD700;
+/* 1. Configuration de la couleur (Hex et RGB pour transparence) */
+    --neon-hex: #FFD700;       /* Couleur principale (Or) */
+    --neon-rgb: 255, 215, 0;   /* Version RGB pour les ombres */
+
+    /* --- STYLE DE BASE --- */
     background-color: #222;
+    font-weight: bold;
+    text-transform: uppercase;
+    
+    /* Bordures 3D (Rétro) - Fixes par défaut */
     border-top: 4px solid #666;
     border-left: 4px solid #666;
     border-right: 4px solid #000;
     border-bottom: 4px solid #000;
+
+    /* Ombre 3D noire externe (DOIT RESTER TOUT LE TEMPS) */
+    box-shadow: 2px 2px 0px black;
+
+    /* Animation du texte et de l'intérieur (Blinker) */
+    animation: neon-text-blink 0.7s ease-in-out infinite alternate;
+    
+    /* Transition pour l'effet de survol */
+    transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s;
 }
+
+/* --- ANIMATION TEXTE & INTÉRIEUR SEULEMENT --- */
+@keyframes neon-text-blink {
+    from {
+        /* État "Dim" (Assombri) */
+        color: rgba(var(--neon-rgb), 0.6);
+        text-shadow: 0 0 2px rgba(var(--neon-rgb), 0.3);
+        /* Légère lueur interne */
+        box-shadow: 
+            2px 2px 0px black, /* On garde l'ombre 3D externe fixe ! */
+    }
+    to {
+        /* État "Bright" (Allumé) */
+        color: #fff; /* Cœur blanc */
+        text-shadow: 
+            0 0 5px var(--neon-hex),
+            0 0 10px var(--neon-hex);
+        /* Lueur interne plus forte */
+        box-shadow: 
+            2px 2px 0px black, /* Toujours l'ombre 3D externe */
+            
+    }
+}
+
 .nav-bar a.prom:hover {
     background: #FFD700;
     color: black;
+
+    /* Déplacement bouton (Effet 3D) */
+    transform: translate(-2px, -2px);
+    
+    /* IMPORTANT : On cumule les ombres ici 
+       1. L'ombre 3D noire (agrandie à 4px car le bouton monte)
+       2. La lueur externe du néon (nouvelle !)
+       3. La lueur interne (conservée)
+    */
+    box-shadow: 
+        4px 4px 0px black,                         /* Ombre 3D maintenue */
+        0 0 15px rgba(var(--neon-rgb), 0.6),       /* Halo externe */
+        inset 0 0 20px rgba(var(--neon-rgb), 0.3); /* Halo interne */
+
     border-top: 4px solid #ffffe0;
     border-left: 4px solid #ffffe0;
     border-right: 4px solid #b8860b;
     border-bottom: 4px solid #b8860b;
+
+    --neon-hex: #000000;
+    animation: neon-text-blink 0.5s ease-in-out infinite alternate; /* Un peu plus rapide au survol pour l'effet "actif" */
+    z-index: 10;
 }
 .nav-bar a.prom:active {
 
@@ -195,18 +256,41 @@
     background: var(--pok-grey);
     border: 4px solid var(--pok-black);
     padding: 10px;
-    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2);
+
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.3) !important;
     position: relative;
     
     /* NOUVEAU LAYOUT FLEX */
     display: flex;
     flex-direction: column;
     height: 100%; /* Prend toute la hauteur disponible dans la grille */
+
+    transition: all 0.2s ease;
+}
+
+.carte:hover {
+    /* On déplace la carte de 4px vers le haut et la gauche */
+    transform: translate(-4px, -4px);
+    
+    /* L'ombre grandit de 4px pour compenser le mouvement */
+    /* 8px (base) + 4px (mouvement) = 12px */
+    box-shadow: 12px 12px 0px rgba(0,0,0,0.3) !important;
+    
+    /* On met la carte survolée au premier plan pour qu'elle passe au-dessus des voisines */
+    z-index: 10;
+    
+    /* Bonus : On peut changer légèrement la couleur de la bordure */
+    border-color: #555; 
 }
 
 .carte-promo {
     background: #fff5e6;
     border-color: #d35400;
+}
+
+.carte-promo:hover {
+    background: #fff5e6;
+    border-color: #ff6600;
 }
 
 .carte-img-container {
@@ -282,17 +366,80 @@
     margin-top: auto; /* C'est ÇA qui pousse les boutons tout en bas */
     display: flex; 
     gap: 10px;
+    align-items: stretch;
+}
+
+/* 2. On corrige le formulaire pour qu'il ne crée pas de décalage */
+.card-actions form {
+    flex: 1;       /* Le formulaire prend toute la largeur disponible */
+    display: flex; /* Le formulaire devient lui-même un conteneur */
+    margin: 0;     /* CRUCIAL : supprime les marges fantômes du navigateur */
+}
+
+
+/* --- HEADER DE SECTION (La barre noire complète) --- */
+.section-title {
+    background: var(--pok-black); /* Le fond noir est maintenant sur le conteneur */
+    color: white;
+    padding: 10px 15px; /* Un peu de padding pour aérer */
+    border-left: 10px solid var(--pok-red); /* La barre rouge à gauche */
+    margin-bottom: 20px;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+    
+    /* Flexbox pour aligner Titre à gauche et Boutons à droite */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    flex-wrap: wrap; /* Sécurité si écran très petit */
+    gap: 15px;
 }
 
 /* --- DETAILS & BADGES --- */
 .section-title h2 {
-    background: var(--pok-black);
-    color: white;
-    padding: 10px;
-    border-left: 10px solid var(--pok-red);
+    margin: 0;       /* On enlève les marges par défaut */
+    padding: 0;      /* On enlève le padding car le parent gère l'espace */
+    background: none; /* Plus de fond ici */
+    box-shadow: none; /* Plus d'ombre ici */
+    border: none;    /* Plus de bordure ici */
+    
+    /* On garde uniquement le style de police */
     text-transform: uppercase;
-    margin-bottom: 20px;
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+    font-size: 28px; /* Taille ajustée */
+    line-height: 1;
+}
+
+/* --- BADGE PANIER --- */
+.cart-icon-wrapper {
+    position: relative; /* Indispensable pour positionner le badge */
+    display: inline-block;
+}
+
+.cart-badge {
+    position: absolute;
+    bottom: -8px; /* Décale vers le bas */
+    right: -8px;  /* Décale vers la droite */
+    
+    background-color: #FFD700; /* Jaune Or pour bien ressortir */
+    color: black;
+    
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'VT323', monospace;
+    
+    padding: 2px 6px;
+    border: 2px solid black;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+    
+    z-index: 100; /* Au-dessus de l'image */
+    pointer-events: none; /* LE CLICK PASSE AU TRAVERS ! */
+    
+    animation: pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Petite animation d'apparition */
+@keyframes pop-in {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
 }
 
 .badge-promo {
@@ -352,93 +499,100 @@
     font-weight: bold;
 }
 
-/* --- BOUTONS D'ACTION (ACHAT / INSPECT) --- */
-.btn-achat {
-    display: block;
-    flex: 1;
-    background: #ffcc00;
-    color: black;
-    text-decoration: none;
+/* =========================================
+   BOUTONS D'ACTION (ACHAT / INSPECT / STOCK)
+   Refactorisation complète
+   ========================================= */
+
+/* --- 1. CONFIGURATION COMMUNE (SOCLE) --- */
+.btn-inspect, 
+.btn-achat, 
+.btn-soldout {
+    /* Layout Flexbox (Centrage parfait) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    /* Dimensions & Espacement */
+    height: 100%;          /* S'étire pour s'aligner avec le voisin */
+    min-height: 48px;      /* Hauteur minimale propre (65px était trop gros) */
+    padding: 4px;          /* Padding fin pour laisser place au texte */
+    box-sizing: border-box;
+
+    /* Typographie */
+    font-size: 16px;       /* 16px permet de faire tenir "Ajouter au panier" */
     font-weight: bold;
-    font-size: 20px;
-    padding: 8px;
-    margin-top: 10px;
-    width: 100%;
-    cursor: pointer;
     text-transform: uppercase;
-    border-top: 4px solid #ffff99;
-    border-left: 4px solid #ffff99;
-    border-right: 4px solid #cc9900;
-    border-bottom: 4px solid #cc9900;
+    text-decoration: none;
+    line-height: 1.1;
+
+    /* Design Rétro de base */
+    border: 4px solid;     /* L'épaisseur est commune, la couleur change après */
     box-shadow: 3px 3px 0px black;
     transition: all 0.1s;
 }
+
+/* --- 2. BOUTON ACHAT (JAUNE) --- */
+.btn-achat {
+    flex: 1; /* S'étend pour prendre la place */
+    background: #ffcc00;
+    color: black;
+    
+    cursor: pointer;
+
+    /* Bordures 3D Jaunes (Clair Haut/Gauche, Foncé Bas/Droite) */
+    border-color: #ffff99 #cc9900 #cc9900 #ffff99; 
+}
+
 .btn-achat:hover {
     background-color: #ffe066;
     transform: translate(-2px, -2px);
     box-shadow: 5px 5px 0px black;
 }
+
 .btn-achat:active {
-    border-top: 4px solid #cc9900;
-    border-left: 4px solid #cc9900;
-    border-right: 4px solid #ffff99;
-    border-bottom: 4px solid #ffff99;
+    /* Effet enfoncé : on inverse les bordures et on enlève l'ombre */
+    border-color: #cc9900 #ffff99 #ffff99 #cc9900;
     transform: translate(3px, 3px);
     box-shadow: none;
 }
 
+/* --- 3. BOUTON DÉTAILS (BLEU) --- */
 .btn-inspect {
-    display: block;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 20px;
-    padding: 8px;
-    margin-top: 10px;
-    cursor: pointer;
-    text-transform: uppercase;
     background: #3498db; 
     color: white; 
-    border: 4px solid;
-    border-color: #85c1e9 #1f618d #1f618d #85c1e9; /* Clair Haut/Gauche, Foncé Bas/Droite */
-    box-shadow: 3px 3px 0px black;
-    transition: all 0.1s;
+
+    cursor: pointer;
+    
+    /* Bordures 3D Bleues */
+    border-color: #85c1e9 #1f618d #1f618d #85c1e9;
 }
+
 .btn-inspect:hover { 
     background: #2980b9; 
     transform: translate(-2px, -2px);
     box-shadow: 5px 5px 0px black;
-    z-index: 2;
+    z-index: 2; /* Passe au-dessus si chevauchement */
 }
 
 .btn-inspect:active {
     /* Effet enfoncé */
-    border-top: 4px solid #1f618d;
-    border-left: 4px solid #1f618d;
-    border-right: 4px solid #85c1e9;
-    border-bottom: 4px solid #85c1e9;
-    
+    border-color: #1f618d #85c1e9 #85c1e9 #1f618d;
     transform: translate(3px, 3px);
     box-shadow: 0px 0px 0px black;
 }
 
+/* --- 4. BOUTON HORS STOCK (GRIS) --- */
 .btn-soldout {
-    display: block;
     flex: 1;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 20px;
-    padding: 8px;
-    margin-top: 10px;
-    text-transform: uppercase;
-    background: #3498db; 
-    color: white; 
-    border: 4px solid;
     background: #555;
-    border-color: #777 #333 #333 #777;
     color: #999;
     
-    box-shadow: 3px 3px 0px black;
-    transition: all 0.1s;
+    /* Bordures Grises */
+    border-color: #777 #333 #333 #777;
+    
+    /* Pas d'effet hover/active car il est désactivé */
 }
 
 /* --- BOUTONS FILTRES BESTSELLERS --- */
@@ -471,11 +625,252 @@
     background: white;
 }
 
+/* =========================================
+   TERMINAL DE PAIEMENT RÉTRO
+   ========================================= */
+
+/* Conteneur principal */
+.payment-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f4f4f4;
+    border: 4px solid #111;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+}
+
+/* Titre "TOTAL DUE" */
+.total-due-display {
+    background: #111;
+    color: #FFD700; /* Or */
+    font-size: 32px;
+    text-align: center;
+    padding: 15px;
+    margin: 20px 0 40px 0;
+    border: 4px solid #FFD700;
+    box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.2);
+    font-family: 'VT323', monospace;
+    letter-spacing: 2px;
+}
+
+/* Grille des options de paiement */
+.payment-grid {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+
+/* --- CARTE DE PAIEMENT GÉNÉRIQUE --- */
+.payment-card {
+    width: 350px;
+    padding: 25px;
+    border: 4px solid #111;
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+}
+
+.payment-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 12px 12px 0px rgba(0,0,0,0.4);
+    z-index: 5;
+}
+
+.payment-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px dashed;
+    padding-bottom: 10px;
+}
+
+/* --- STYLE CRÉDIT CARD (Mode Terminal Hacker Vert) --- */
+.card-credit {
+    background: #000;
+    color: #0f0; /* Vert Matrix */
+    border-color: #fff;
+}
+.card-credit .payment-title { border-color: #0f0; color: #0f0; }
+
+/* --- STYLE PAYPAL (Mode Bleu Rétro) --- */
+.card-paypal {
+    background: #001f3f; /* Bleu Nuit */
+    color: #7FDBFF; /* Bleu Cyan */
+    border-color: #0074D9;
+}
+.card-paypal .payment-title { border-color: #7FDBFF; color: #7FDBFF; }
+
+/* --- INPUTS DU FORMULAIRE --- */
+.pay-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    outline: none;
+    border: 2px solid;
+    background: transparent;
+    text-transform: uppercase;
+}
+
+/* Inputs spécifiques Crédit Card */
+.card-credit .pay-input {
+    border-color: #0f0;
+    color: #0f0;
+    box-shadow: inset 2px 2px 0px rgba(0, 255, 0, 0.2);
+}
+.card-credit .pay-input::placeholder { color: rgba(0, 255, 0, 0.5); }
+.card-credit .pay-input:focus { background: rgba(0, 255, 0, 0.1); }
+
+/* Inputs spécifiques PayPal */
+.card-paypal .pay-input {
+    border-color: #7FDBFF;
+    color: white;
+    box-shadow: inset 2px 2px 0px rgba(127, 219, 255, 0.2);
+}
+.card-paypal .pay-input::placeholder { color: rgba(127, 219, 255, 0.5); }
+.card-paypal .pay-input:focus { background: rgba(127, 219, 255, 0.1); }
+
+/* --- BOUTONS DE VALIDATION --- */
+.btn-pay-action {
+    width: 100%;
+    padding: 12px;
+    font-family: 'VT323', monospace;
+    font-size: 22px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 4px solid;
+    margin-top: auto; /* Pousse en bas */
+    transition: all 0.1s;
+    display: flex; justify-content: center; align-items: center;
+}
+
+/* Bouton CC (Blanc sur Noir) */
+.btn-cc {
+    background: #fff;
+    color: #000;
+    border-color: #ccc #999 #999 #ccc;
+    box-shadow: 4px 4px 0px #333;
+}
+.btn-cc:hover { background: #eee; transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #333; }
+.btn-cc:active { transform: translate(2px, 2px); box-shadow: none; }
+
+/* Bouton PayPal (Bleu) */
+.btn-pp {
+    background: #0074D9;
+    color: white;
+    border-color: #39CCCC #001f3f #001f3f #39CCCC;
+    box-shadow: 4px 4px 0px #001f3f;
+}
+.btn-pp:hover { background: #0056a3; transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #001f3f; }
+.btn-pp:active { transform: translate(2px, 2px); box-shadow: none; }
+
+/* Link Retour */
+.link-back {
+    display: inline-block;
+    margin-top: 30px;
+    color: #555;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+}
+.link-back:hover { color: #000; border-bottom-color: #000; }
+
+/* Row pour date/cvv */
+.pay-row { display: flex; gap: 15px; }
+
+
+
 /* --- ANIMATIONS --- */
 .blink { animation: blinker 0.5s infinite alternate; }
 @keyframes blinker { from { opacity: 1; } to { opacity: 0.3; } }
 
-.blink-red { color: red; animation: blinker 1.2s infinite; }
+.zoom-text {
+    font-weight: bold;
+    display: inline-block;
+    
+    /* On utilise une animation spécifique "Soft" */
+    animation: zoom-in 1s ease-in-out infinite alternate;
+}
+
+/* Nouvelle animation calibrée pour les petits textes */
+@keyframes zoom-in {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.2); /* Zoom conservé */
+    }
+}
+
+.neon-litle-text {
+    /* Configuration Couleur */
+    /*--text-neon-hex: #FF0000;  MODIFIABLE*/
+    --text-neon-rgb: 255, 0, 0;
+
+    font-weight: bold;
+    display: inline-block;
+    
+    /* On utilise une animation spécifique "Soft" */
+    animation: neon-little-text-anim 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes neon-little-text-anim {
+    from {
+        /* État Repos : Très lisible, rouge sombre */
+        color: rgba(var(--text-neon-rgb), 0.8);
+        text-shadow: none; 
+        transform: scale(1);
+    }
+    to {
+        /* État Allumé : Lueur contenue */
+        color: #fff; 
+        text-shadow: 
+            0 0 5px var(--text-neon-hex),       /* Halo principal très proche */
+            0 0 10px rgba(var(--text-neon-rgb), 0.4); /* Halo secondaire léger et transparent */
+            /* J'ai supprimé la 3ème couche d'ombre de 20px qui faisait trop de flou */
+            
+        transform: scale(1.05); /* Zoom conservé */
+    }
+}
+
+.neon-text-gold {
+    --text-neon-hex: #FFD700;      /* Or */
+    --text-neon-rgb: 255, 215, 0;  /* Or en RGB */
+
+    font-weight: bold;
+    display: inline-block; /* Important pour que l'animation joue bien */
+    
+    /* L'animation spécifique pour le texte (sans box-shadow) */
+    animation: neon-pure-text-anim 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes neon-pure-text-anim {
+    from {
+        /* État "Faible" */
+        color: rgba(var(--text-neon-rgb), 0.5); /* Texte semi-transparent */
+        text-shadow: 0 0 2px rgba(var(--text-neon-rgb), 0.3); /* Lueur minime */
+        transform: scale(1);
+    }
+    to {
+        /* État "Fort" */
+        color: #fff; /* Cœur blanc incandescent */
+        text-shadow: 
+            0 0 5px var(--text-neon-hex),
+            0 0 15px var(--text-neon-hex),
+            0 0 20px var(--text-neon-hex); /* Gros halo lumineux */
+        transform: scale(1.05); /* Léger effet de pulsation (zoom) */
+    }
+}
+
+
 
 .marquee-content {
     display: inline-block;

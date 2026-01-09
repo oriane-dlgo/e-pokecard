@@ -4,7 +4,7 @@
 
     <div class="catalogue-section">
         <div class="section-title">
-            <h2>🔥 NEW ARRIVALS / NOUVEAUTÉS</h2>
+            <h2>🔥 -- RETROUVE NOS NOUVEAUTÉES</h2>
         </div>
 
         <div class="catalogue-grid">
@@ -17,7 +17,13 @@
     <?php if (!empty($promotions)): ?>
         <div class="promo-banner-container">
             <div class="promo-header">
-                <span class="blink">★ SPECIAL DEALS ★</span> - FLASH SALES - <span class="blink">★ LIMITED TIME ★</span>
+                <span class="neon-text-gold">
+                    ★ --- ★
+                </span> 
+                - OUBLIE PAS NOS PROMOTIONS A TEMPS LIMITÉ - 
+                <span class="neon-text-gold">
+                    ★ --- ★
+                </span>
             </div>
 
             <div class="promo-grid">
@@ -30,17 +36,17 @@
 
     <div class="catalogue-section">
 
-        <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
-            <h2>🏆 TOP TRADERS / BESTSELLERS</h2>
+        <div class="section-title">
+            <h2>🏆 -- NOS PLUS POPULAIRES </h2>
                     
             <div class="filter-buttons">
                 <a href="<?= base_url('/?filter=all') ?>" 
                    class="btn-filter <?= ($current_filter != 'week') ? 'active' : '' ?>">
-                   ALL TIME
+                   TOUT LES TEMPS
                 </a>
                 <a href="<?= base_url('/?filter=week') ?>" 
                    class="btn-filter <?= ($current_filter == 'week') ? 'active' : '' ?>">
-                   THIS WEEK
+                   CETTE SEMAINE
                 </a>
             </div>
         </div>

@@ -38,24 +38,28 @@
     <h3><?= esc($produit->nom) ?></h3>
     
     <div class="prix-container">
-        <?php if ($hasPromo): ?>
-            <span class="prix-final blink-red">$<?= number_format($prixPromo, 2) ?></span>
-            <span class="prix-sup">$<?= esc($produit->prix) ?></span>
-        <?php else: ?>
-            <span class="prix-final">$<?= esc($produit->prix) ?></span>
-        <?php endif; ?>
+        
+            <?php if ($hasPromo): ?>
+                <span class="zoom-text">
+                    <span class="prix-final">$<?= number_format($prixPromo, 2) ?></span>
+                    <span class="prix-sup">$<?= esc($produit->prix) ?></span>
+                </span>
+            <?php else: ?>
+                <span class="prix-final">$<?= esc($produit->prix) ?></span>
+            <?php endif; ?>
+        
     </div>
     
     <div class="card-actions">
-        <a href="<?= base_url('detail/'.$produit->id) ?>" class="btn-inspect">INSPECT</a>
+        <a href="<?= base_url('detail/'.$produit->id) ?>" class="btn-inspect">Détails</a>
         
         <?php if ($produit->stock > 0): ?>
-            <form action="<?= base_url('panier/ajouter') ?>" method="post" style="flex:1;">
+            <form action="<?= base_url('panier/ajouter') ?>" method="post">
                 <input type="hidden" name="id_produit" value="<?= $produit->id ?>">
-                <button class="btn-achat">ADD +</button>
+                <button class="btn-achat">Ajouter au panier</button>
             </form>
         <?php else: ?>
-            <div class="btn-soldout">SOLD OUT</div>
+            <div class="btn-soldout" style="flex:1;">Hors stock</div>
         <?php endif; ?>
     </div>
 </div>

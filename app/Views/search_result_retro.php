@@ -245,50 +245,19 @@
             <?php else: ?>
                 <div class="results-grid">
                     <?php foreach ($results as $p): ?>
-                        <?php 
-                            $isPromo = !empty($p->id_promo);
-                            $prixFinal = $p->prix;
-                            if ($isPromo && isset($p->tauxPromo)) {
-                                $prixFinal = $p->prix * (1 - $p->tauxPromo);
-                            }
-                        ?>
-                        <div class="carte <?= $isPromo ? 'carte-promo' : '' ?>">
-                            <?php if($isPromo): ?>
-                                <div class="badge-promo">-<?= $p->tauxPromo * 100 ?>%</div>
-                            <?php endif; ?>
-
-                            <div class="carte-img-container">
-                                <img src="<?= base_url('assets/produits/' . $p->image_url) ?>" alt="<?= esc($p->nom) ?>">
-                            </div>
-
-                            <div class="tags-row">
-                                <span class="tag-left"><?= strtoupper($p->type_produit) ?></span>
-                                <span class="tag-right"><?= $p->rarete ? strtoupper($p->rarete) : '---' ?></span>
-                            </div>
-                            <hr class="separator">
-                            <h3><?= esc($p->nom) ?></h3>
-
-                            <div class="prix-container">
-                                <?php if($isPromo): ?>
-                                    <span class="prix-barre">$<?= number_format($p->prix, 2) ?></span>
-                                    <span class="prix-final blink-red">$<?= number_format($prixFinal, 2) ?></span>
-                                <?php else: ?>
-                                    <span class="prix-final">$<?= number_format($p->prix, 2) ?></span>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="card-actions">
-                                <a href="<?= base_url('produit/detail/'.$p->id) ?>" class="btn-inspect">INSPECT</a>
-                                <?php if($p->stock > 0): ?>
-                                    <a href="<?= base_url('panier/ajouter/'.$p->id) ?>" class="btn-achat">ADD</a>
-                                <?php else: ?>
-                                    <span class="btn-soldout">OUT</span>
-                                <?php endif; ?>
-                            </div>
-                        </div>
+                        <?php if (!empty($p->tauxPromo)):  ?>
+                            <?= view('partials/card_product', ['produit' => $p, 'isPromo' => true]) ?>
+                        <?php else: ?>
+                            <?= view('partials/card_product', ['produit' => $p]) ?>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
+
+                <div class="pagination-wrapper">
+                        <?= $pager->links('default', 'retro_pagination') ?>
+                </div>
             <?php endif; ?>
+
         </section>
 
     </div>

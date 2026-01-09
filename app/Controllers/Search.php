@@ -134,18 +134,16 @@ $db = \Config\Database::connect();
             default: $model->orderBy('produits.id', 'DESC'); break;
         }
 
-        $results = $model->findAll();
-
+        // --- MODIFICATION POUR PAGINATION ---
+        // Au lieu de findAll(), on utilise paginate(nombre_par_page)
+        // Disons 12 produits par page (c'est un bon chiffre pour des grilles de 3 ou 4 colonnes)
         $data = [
-            'results' => $results,
-            'seriesMap' => $seriesMap, // On envoie la hiérarchie à la vue
+            'results' => $model->paginate(20), // 20 produits par page
+            'pager'   => $model->pager,        
+            'seriesMap' => $seriesMap,
             'filters' => [
-                'q' => $q, 
-                'type' => $types, 
-                'rarete' => $raretes, 
-                'tri' => $tri, 
-                'promo' => $promos,
-                'ext' => $exts,
+                'q' => $q, 'type' => $types, 'rarete' => $raretes, 'tri' => $tri, 'promo' => $promos, 
+                'ext' => $exts, 
                 'series_full' => $seriesFull,
                 'all_promos' => $allPromos
             ]

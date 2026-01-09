@@ -1,26 +1,9 @@
 
-- finaliser page d'accueil : 
-    - plusieurs catégorie dans l'ordre d'affichage suivant : 
-        les nouveautés, les plus vendus
-    - Entre la catégorie nouveautés et les plus vendus faire un gros bouton sous la forme d'une bannières renvoyant vers les promotions avec 3 articles sous promotions. 
-    - ajouter le footer
-    - ajuster la base de donnée  : 
-        - ajout de la table promotion (
-            idPromo, tauxPromo, dateDebut, dateFin
-        )
-        - réglage d'une promotion dans la table produit
-    - Ajustement des affichages des produits 
-        - affichage de l'extension 
-        - affichage de la promotion si promotion 
-        - affichage du type du produit
-        - affichage de la rareté que si type produit = carte
-    - résoudre le problème avec le texte défilant la promotion (après avoir défilé à gauche, se remet au milieu au lieu de commenccer par la droite)
-    
-- filtre (promotion, rareté à afficher si carte)
-- boutons promotion, displays, etb
+
+
+
 - résolution problème duplication image quand nouveau produit ajouté et updaté
 - résoudre problèmes group filtre admin pour les routes
 - résoudre image du produit non supprimé lors de la supression d'un produit
 - résoudre les retours à la ligne dans le contenu dans la description d'un produit
-- afficher rareté dans admin/edit produits que si type == carte sélectionné
-    si type != carte, mettre rareté à aucune
+
