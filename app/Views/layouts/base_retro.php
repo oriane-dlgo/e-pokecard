@@ -119,7 +119,9 @@
             </div>
             <div class="footer-col">
                 <h4>LIENS UTILES</h4>
-                <a href="#">Conditions Générales</a>
+                <a href="<?= base_url('cgv') ?>">Conditions Générales (CGV)</a>
+                <a href="<?= base_url('mentions-legales') ?>">Mentions Légales</a>
+                <a href="<?= base_url('confidentialite') ?>">Confidentialité (RGPD)</a>
                 <a href="#">Livraison</a>
                 <a href="#">Contact</a>
             </div>

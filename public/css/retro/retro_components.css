@@ -787,6 +787,44 @@
 .pay-row { display: flex; gap: 15px; }
 
 
+/* --- PAGES LÉGALES --- */
+.legal-container {
+    font-family: 'VT323', monospace;
+    color: #333;
+    line-height: 1.4;
+}
+
+.legal-title {
+    background: #111;
+    color: white;
+    padding: 10px;
+    font-size: 32px;
+    text-transform: uppercase;
+    text-align: center;
+    border-bottom: 4px solid var(--pok-red);
+    margin-bottom: 30px;
+}
+
+.legal-section {
+    margin-bottom: 30px;
+    border-left: 4px solid #ccc;
+    padding-left: 15px;
+}
+
+.legal-section h3 {
+    color: var(--pok-red);
+    font-size: 24px;
+    text-transform: uppercase;
+    border-bottom: 2px dashed #ccc;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.legal-text {
+    font-size: 18px;
+    text-align: justify;
+}
+
 
 /* --- ANIMATIONS --- */
 .blink { animation: blinker 0.5s infinite alternate; }

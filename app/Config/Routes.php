@@ -94,9 +94,15 @@ $routes->get('admin/users', 'Admin\Users::index');
 $routes->post('admin/users/updateRole', 'Admin\Users::updateRole');
 $routes->get('admin/users/delete/(:num)', 'Admin\Users::delete/$1');
 
-$routes->get('promotions','Search::getlistepromotions');
+$routes->get('admin/commandes/undo/(:num)', 'Admin\Commandes::undo/$1');
+
+
 
 
 $routes->get('paiement/choix/(:num)', 'Paiement::choix/$1');
 $routes->post('paiement/process', 'Paiement::process');
-$routes->get('admin/commandes/undo/(:num)', 'Admin\Commandes::undo/$1');
+
+
+$routes->get('mentions-legales', 'Legal::mentions');
+$routes->get('cgv', 'Legal::cgv');
+$routes->get('confidentialite', 'Legal::privacy');
