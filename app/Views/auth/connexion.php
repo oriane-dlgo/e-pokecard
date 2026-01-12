@@ -9,7 +9,7 @@
     <div class="container">
         <div class="form_area">
             
-            <p class="title">LOGIN</p> 
+            <p class="title">CONNEXION</p> 
             <?php if(session()->getFlashdata('msg')):?>
         <div class="alert alert-error">
          <?= session()->getFlashdata('msg') ?>
@@ -32,7 +32,7 @@
                     <input type="password" id="password" class="form_style" name="password" required>
                 </div>
                 <div class="action">
-                    <button class="submit">START GAME</button> <p>New Player? <a class="link" href="<?= base_url('inscription') ?>">Insert Coin (Inscription)</a></p>
+                    <button class="submit">SE CONNECTER</button> <p>Nouveau joueur? <a class="link" href="<?= base_url('inscription') ?>">Inscription</a></p>
                 </div>
             </form>
         

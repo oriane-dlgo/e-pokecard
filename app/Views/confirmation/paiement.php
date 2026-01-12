@@ -49,7 +49,7 @@
             </div>
 
             <div class="payment-card card-paypal">
-                <div class="payment-title">[ PAYPAL LOGIN ]</div>
+                <div class="payment-title">[ CONNEXION PAYPAL ]</div>
                 
                 <form action="<?= base_url('paiement/process') ?>" method="post">
                     <?= csrf_field() ?>

@@ -42,7 +42,7 @@
             <div class="filter-buttons">
                 <a href="<?= base_url('/?filter=all') ?>" 
                    class="btn-filter <?= ($current_filter != 'week') ? 'active' : '' ?>">
-                   TOUT LES TEMPS
+                   TOUS LES TEMPS
                 </a>
                 <a href="<?= base_url('/?filter=week') ?>" 
                    class="btn-filter <?= ($current_filter == 'week') ? 'active' : '' ?>">

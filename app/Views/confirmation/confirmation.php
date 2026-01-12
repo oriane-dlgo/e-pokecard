@@ -10,7 +10,7 @@
     <div class="success-icon">★ MISSION COMPLETE ★</div>
     <h1 class="order-title">COMMANDE VALIDÉE</h1>
 
-    <p style="font-size: 20px;">Merci dresseur ! Vos objets seront livrés par Pidgey Express.</p>
+    <p style="font-size: 20px;">Merci à toi ! Tes objets seront livrés par Dracaufeu Express.</p>
 
     <div class="receipt-box">
         <div style="text-align:center; margin-bottom:10px;">--- REÇU DE TRANSACTION ---</div>
@@ -24,7 +24,7 @@
             <span><?= date('d/m/Y H:i', strtotime($commande->date_creation)) ?></span>
         </div>
 
-        <div style="margin-top: 15px; font-weight:bold; border-bottom: 2px solid black;">ITEMS:</div>
+        <div style="margin-top: 15px; font-weight:bold; border-bottom: 2px solid black;">PRODUITS:</div>
         
         <?php foreach ($lignes as $ligne): ?>
         <div class="receipt-row">

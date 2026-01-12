@@ -12,14 +12,14 @@
                 <span class="filter-label">FILTRES :</span>
                 <input type="text" name="q" class="filter-input input-w-100" placeholder="ID..." value="<?= esc($filters['q'] ?? '') ?>">
                 <select name="statut" class="filter-select">
-                    <option value="">TOUS STATUTS</option>
+                    <option value="">TOUS LES STATUTS</option>
                     <option value="active" <?= ($filters['statut'] ?? '') == 'active' ? 'selected' : '' ?>>EN COURS</option>
                     <option value="future" <?= ($filters['statut'] ?? '') == 'future' ? 'selected' : '' ?>>PROGRAMMÉE</option>
                     <option value="expired" <?= ($filters['statut'] ?? '') == 'expired' ? 'selected' : '' ?>>TERMINÉE</option>
                 </select>
-                <button type="submit" class="filter-btn">SEARCH</button>
+                <button type="submit" class="filter-btn">RECHERCHER</button>
                 <?php if(!empty($filters['statut']) || !empty($filters['q'])): ?>
-                    <a href="<?= base_url('admin/promotions') ?>" class="reset-link">RESET</a>
+                    <a href="<?= base_url('admin/promotions') ?>" class="reset-link">REINITIALISER</a>
                 <?php endif; ?>
             </form>
         </div>
@@ -49,7 +49,7 @@
                     <?php endif; ?>
                 </td>
                 <td>
-                    <a href="<?= base_url('admin/promotions/edit/'.$p->idPromo) ?>" class="btn-action btn-edit">EDIT</a>
+                    <a href="<?= base_url('admin/promotions/edit/'.$p->idPromo) ?>" class="btn-action btn-edit">MODIFIER</a>
                     <a href="<?= base_url('admin/promotions/delete/'.$p->idPromo) ?>" class="btn-action btn-delete" onclick="return confirm('Supprimer cette promo ?');">X</a>
                 </td>
             </tr>

@@ -53,7 +53,7 @@
             
             <div class="menu-box">
                 <a href="<?= base_url('panier/vider') ?>" class="btn-retro btn-logout">VIDER TOUT</a>
-                <a href="<?= base_url('panier/valider') ?>" class="btn-retro btn-save">VALIDER (PAYER)</a>
+                <a href="<?= base_url('panier/valider') ?>" class="btn-retro btn-save">VALIDER</a>
             </div>
 
             <div class="total-display">

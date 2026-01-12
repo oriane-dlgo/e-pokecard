@@ -108,7 +108,7 @@
                         <div id="preview-name">Aucune sélection</div>
                     </div>
                     <div class="preview-right">
-                        <label class="label-yellow label-small">UPLOAD :</label>
+                        <label class="label-yellow label-small">TELECHARGER :</label>
                         <input type="file" name="image" accept="image/*" onchange="previewUpload(this)" class="input-file-custom">
                     </div>
                 </div>

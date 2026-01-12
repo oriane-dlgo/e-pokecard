@@ -7,7 +7,7 @@
 
 <div class="container">
     <div class="form_area">
-        <p class="title">NEW PLAYER</p> <?php if(isset($validation)):?>
+        <p class="title">NOUVEAU JOUEUR</p> <?php if(isset($validation)):?>
             <div style="background: #ffcccc; color: red; border: 2px solid red; padding: 10px; margin-bottom: 15px; font-weight: bold; text-align: left;">
                 <?= $validation->listErrors() ?>
             </div>
@@ -16,7 +16,7 @@
         <form action="<?= base_url('inscription/register') ?>" method="post">
             
             <div class="group_form">
-                <label class="sub_title" for="login">Identifiant (Pseudo)</label>
+                <label class="sub_title" for="login">Pseudo</label>
                 <input type="text" name="login" id="login" class="form_style" value="<?= set_value('login') ?>">
             </div>
 
@@ -43,7 +43,7 @@
             </div>
 
             <div class="action">
-                <button class="submit">INSERT COIN (Valider)</button>
+                <button class="submit">Valider</button>
                 <p>Déjà un compte ? <a class="link" href="<?= base_url('connexion') ?>">Retour au Login</a></p>
             </div>
         </form>

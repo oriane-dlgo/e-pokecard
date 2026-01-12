@@ -44,7 +44,7 @@
                 <button class="btn-achat">Ajouter au panier</button>
             </form>
         <?php else: ?>
-            <div class="btn-soldout" style="flex:1;">Hors stock</div>
+            <div class="btn-soldout" style="flex:1;">Rupture de stock</div>
         <?php endif; ?>
     </div>
 </div>

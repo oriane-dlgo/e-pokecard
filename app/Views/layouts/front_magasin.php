@@ -22,7 +22,7 @@
         <?php if (session()->get('isLoggedIn') && session()->get('user_role') === 'admin'): ?>
             <a href="<?= base_url('admin/dashboard') ?>" class="admin-access-btn" title="Zone Administrateur">
                 <img src="<?= base_url('assets/utilisateur_icone.png') ?>" alt="Admin">
-                <span>ADMIN SYSTEM</span>
+                <span>SYSTEME ADMIN</span>
             </a>
         <?php endif; ?>
 
@@ -121,7 +121,7 @@
                 <a href="#">Contact</a>
             </div>
             <div class="footer-col">
-                <h4>FOLLOW US</h4>
+                <h4>NOUS RETROUVER</h4>
                 <p>3615 POKEMON</p>
                 <div class="socials">
                     <a href="#">FB</a> <a href="#">TW</a> <a href="#">IG</a>
@@ -129,7 +129,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            INSERT COIN TO CONTINUE...
+            ABONNEZ VOUS A LA NEWSLETTER POUR DES BONUS !!
         </div>
     </footer>
 

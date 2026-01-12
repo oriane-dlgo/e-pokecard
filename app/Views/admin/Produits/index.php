@@ -12,19 +12,19 @@
                 <span class="filter-label">FILTRES :</span>
                 <input type="text" name="q" class="filter-input" placeholder="Nom..." value="<?= esc($filters['q']) ?>">
                 <select name="type" class="filter-select">
-                    <option value="">ALL TYPES</option>
+                    <option value="">TOUT LES TYPES</option>
                     <option value="carte" <?= $filters['type'] == 'carte' ? 'selected' : '' ?>>CARTE</option>
                     <option value="booster" <?= $filters['type'] == 'booster' ? 'selected' : '' ?>>BOOSTER</option>
                     <option value="coffret" <?= $filters['type'] == 'coffret' ? 'selected' : '' ?>>COFFRET</option>
                 </select>
                 <select name="stock" class="filter-select">
-                    <option value="">ALL STOCKS</option>
+                    <option value="">TOUT LE STOCK</option>
                     <option value="rupture" <?= $filters['stock'] == 'rupture' ? 'selected' : '' ?>>RUPTURE (0)</option>
                     <option value="faible" <?= $filters['stock'] == 'faible' ? 'selected' : '' ?>>FAIBLE (< 5)</option>
                 </select>
-                <button type="submit" class="filter-btn">SEARCH</button>
+                <button type="submit" class="filter-btn">RECHERCHER</button>
                 <?php if(!empty($filters['q']) || !empty($filters['type']) || !empty($filters['stock'])): ?>
-                    <a href="<?= base_url('admin/produits') ?>" class="reset-link">RESET</a>
+                    <a href="<?= base_url('admin/produits') ?>" class="reset-link">REINITIALISER</a>
                 <?php endif; ?>
             </form>
         </div>
@@ -59,8 +59,8 @@
                     <td><?= $p->nb_ventes ?></td>
                     <td>
                         <div class="flex-start flex-gap-5">
-                            <a href="<?= base_url('admin/produits/edit/'.$p->id) ?>" class="btn-action btn-edit">EDIT</a>
-                            <a href="<?= base_url('admin/produits/delete/'.$p->id) ?>" class="btn-action btn-delete" onclick="return confirm('SUPPRIMER ?');">DEL</a>
+                            <a href="<?= base_url('admin/produits/edit/'.$p->id) ?>" class="btn-action btn-edit">MODIFIER</a>
+                            <a href="<?= base_url('admin/produits/delete/'.$p->id) ?>" class="btn-action btn-delete" onclick="return confirm('SUPPRIMER ?');">X</a>
                         </div>
                     </td>
                 </tr>

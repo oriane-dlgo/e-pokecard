@@ -7,7 +7,7 @@
 <?= $this->section('contenu') ?>
 <div class="bios-container">
     <div class="admin-header header-flex-container">
-        <div class="header-item-fixed"><h1>EDIT #<?= $p->id ?></h1></div>
+        <div class="header-item-fixed"><h1>MODIFIER #<?= $p->id ?></h1></div>
         <div class="header-item-fluid">
             <div class="product-name-container"><span class="product-name-text"><?= esc($p->nom) ?></span></div>
         </div>
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group"><label>PRIX ($)</label><input type="number" step="0.01" name="prix" required value="<?= esc($p->prix) ?>"></div>
+                    <div class="form-group"><label>PRIX (€)</label><input type="number" step="0.01" name="prix" required value="<?= esc($p->prix) ?>"></div>
                     <div class="form-group"><label>STOCK</label><input type="number" name="stock" required value="<?= esc($p->stock) ?>" min="0"></div>
                 </div>
                 <div class="form-group">
@@ -81,7 +81,7 @@
                         <div id="preview-name">IMAGE ACTUELLE</div>
                     </div>
                     <div class="preview-right">
-                        <label class="label-yellow label-small">UPLOAD :</label>
+                        <label class="label-yellow label-small">TELECHARGER :</label>
                         <input type="file" name="image" accept="image/*" onchange="previewUpload(this)" class="input-file-custom">
                     </div>
                 </div>

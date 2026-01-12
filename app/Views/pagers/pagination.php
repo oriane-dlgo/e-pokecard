@@ -4,10 +4,10 @@
     
     <?php if ($pager->hasPrevious()) : ?>
         <a href="<?= $pager->getPrevious() ?>" class="btn-pagin btn-prev">
-            &lt; PREV
+            &lt; PRECEDENT
         </a>
     <?php else : ?>
-        <span class="btn-pagin btn-disabled">&lt; PREV</span>
+        <span class="btn-pagin btn-disabled">&lt; PRECEDENT</span>
     <?php endif ?>
 
     <div class="pagin-info">
@@ -19,10 +19,10 @@
 
     <?php if ($pager->hasNext()) : ?>
         <a href="<?= $pager->getNext() ?>" class="btn-pagin btn-next">
-            NEXT &gt;
+            SUIVANT &gt;
         </a>
     <?php else : ?>
-        <span class="btn-pagin btn-disabled">NEXT &gt;</span>
+        <span class="btn-pagin btn-disabled">SUIVANT &gt;</span>
     <?php endif ?>
     
 </div>

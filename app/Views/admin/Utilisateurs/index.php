@@ -12,13 +12,13 @@
                 <span class="filter-label">FILTRES :</span>
                 <input type="text" name="q" class="filter-input input-w-250" placeholder="Nom, Email..." value="<?= esc($filters['q']) ?>">
                 <select name="role" class="filter-select">
-                    <option value="">TOUS RÔLES</option>
+                    <option value="">TOUS LES RÔLES</option>
                     <option value="admin" <?= $filters['role'] == 'admin' ? 'selected' : '' ?>>ADMINISTRATEUR</option>
                     <option value="client" <?= $filters['role'] == 'client' ? 'selected' : '' ?>>CLIENT</option>
                 </select>
-                <button type="submit" class="filter-btn">SEARCH</button>
+                <button type="submit" class="filter-btn">RECHERCHER</button>
                 <?php if(!empty($filters['q']) || !empty($filters['role'])): ?>
-                    <a href="<?= base_url('admin/users') ?>" class="reset-link">RESET</a>
+                    <a href="<?= base_url('admin/users') ?>" class="reset-link">REINITIALISER</a>
                 <?php endif; ?>
             </form>
         </div>
@@ -26,12 +26,12 @@
     </div>
 
     <table class="bios-table">
-        <thead><tr><th>ID</th><th>IDENTITÉ</th><th>EMAIL</th><th>RÔLE ACTUEL</th><th>ACTIONS (MODIFIER RÔLE)</th></tr></thead>
+        <thead><tr><th>ID</th><th>IDENTITÉ</th><th>EMAIL</th><th>RÔLE ACTUEL</th><th>MODIFIER RÔLE</th></tr></thead>
         <tbody>
             <?php foreach ($users as $u): ?>
             <tr>
                 <td>#<?= $u->id ?></td>
-                <td><strong><?= esc($u->nom) ?> <?= esc($u->prenom) ?></strong><br><small>Login : <?= esc($u->login) ?></small></td>
+                <td><strong><?= esc($u->nom) ?> <?= esc($u->prenom) ?></strong><br><small>Connexion : <?= esc($u->login) ?></small></td>
                 <td><?= esc($u->email) ?></td>
                 <td>
                     <?php if($u->role == 'admin'): ?> <span class="role-badge role-admin">★ ADMIN</span>

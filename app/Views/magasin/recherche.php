@@ -154,7 +154,7 @@
                                 <?php endif; ?>
 
                                 <span class="checkmark"></span>
-                                <span>TOUT EN PROMO</span>
+                                <span>TOUTES LES PROMOS</span>
                             </label>
                         </div>
 
@@ -232,7 +232,7 @@
                 </div>
 
                 <button type="submit" class="btn-filter-apply">ACTUALISER</button>
-                <a href="<?= base_url('recherche') ?>" class="btn-filter-reset">R.A.Z FILTRES</a>
+                <a href="<?= base_url('recherche') ?>" class="btn-filter-reset">EFFACER FILTRES</a>
 
             </form>
         </aside>

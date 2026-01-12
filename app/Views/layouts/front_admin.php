@@ -33,7 +33,7 @@
 
     <div class="admin-nav">
         <?php $uri = service('uri'); ?>
-        <a href="<?= base_url('admin/dashboard') ?>" class="<?= $uri->getSegment(2) == 'dashboard' ? 'active' : '' ?>">DASHBOARD</a>
+        <a href="<?= base_url('admin/dashboard') ?>" class="<?= $uri->getSegment(2) == 'dashboard' ? 'active' : '' ?>">TABLEAU DE BORD</a>
         <a href="<?= base_url('admin/produits') ?>" class="<?= $uri->getSegment(2) == 'produits' ? 'active' : '' ?>">PRODUITS</a>
         <a href="<?= base_url('admin/promotions') ?>" class="<?= $uri->getSegment(2) == 'promotions' ? 'active' : '' ?>">PROMOTIONS</a>
         <a href="<?= base_url('admin/commandes') ?>" class="<?= $uri->getSegment(2) == 'commandes' ? 'active' : '' ?>">COMMANDES</a>

@@ -19,9 +19,9 @@
                     <option value="terminee" <?= $filters['statut'] == 'terminee' ? 'selected' : '' ?>>TERMINÉE</option>
                     <option value="annulee" <?= $filters['statut'] == 'annulee' ? 'selected' : '' ?>>ANNULÉE</option>
                 </select>
-                <button type="submit" class="filter-btn">SEARCH</button>
+                <button type="submit" class="filter-btn">RECHERCHER</button>
                 <?php if(!empty($filters['q']) || !empty($filters['statut'])): ?>
-                    <a href="<?= base_url('admin/commandes') ?>" class="reset-link">RESET</a>
+                    <a href="<?= base_url('admin/commandes') ?>" class="reset-link">REINITIALISER</a>
                 <?php endif; ?>
             </form>
         </div>

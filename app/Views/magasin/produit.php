@@ -40,34 +40,34 @@
                 <?php endif; ?>
 
                 <div class="description-box">
-                    DATA ENTRY:<br>
+                    DESCRIPTION:<br>
                     <?= esc($product->description) ?>
                 </div>
 
                 <div class="price-tag">
-                    PRICE: $<?= esc($product->prix) ?>
+                    PRIX: $<?= esc($product->prix) ?>
                 </div>
 
                 <div style="text-align: right; font-size: 18px; margin-top: 5px;">
                     STATUS: 
                     <?php if ($product->stock > 0): ?>
-                        <span style="color: #0f380f; font-weight: bold;">IN STOCK (<?= $product->stock ?>)</span>
+                        <span style="color: #0f380f; font-weight: bold;">EN STOCK (<?= $product->stock ?>)</span>
                     <?php else: ?>
-                        <span style="color: red; font-weight: bold; background:black; padding:0 5px;">OUT OF STOCK</span>
+                        <span style="color: red; font-weight: bold; background:black; padding:0 5px;">RUPTURE DE STOCK</span>
                     <?php endif; ?>
                 </div>
             </div>
 
             <div class="action-pad">
                 <a href="<?= base_url('/') ?>" class="btn-pokedex btn-back">
-                    ◄ BACK
+                    ◄ RETOUR
                 </a>
 
                 <?php if ($product->stock > 0): ?>
                     <form action="<?= base_url('panier/ajouter') ?>" method="post" style="flex:1;">
                         <input type="hidden" name="id_produit" value="<?= $product->id ?>">
                         <button class="btn-pokedex btn-add" style="width:100%;">
-                            ADD TO CART
+                            AJOUTER AU PANIER
                         </button>
                     </form>
                 <?php endif; ?>
