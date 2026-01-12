@@ -8,69 +8,38 @@ use App\Entities\Users;
 class UsersModel extends Model
 {
     protected $table            = 'users';
-    protected $returnType       = Users::class;
-    protected $allowedFields    = ['login','password','role','nom','prenom','email','adresse'];
+    protected $primaryKey       = 'id';
+    protected $useAutoIncrement = true;
+    protected $returnType       = Users::class; // Utilisation de l'Entité
+    protected $useSoftDeletes   = false;
+    protected $protectFields    = true;
+    protected $allowedFields    = ['login', 'password', 'nom', 'prenom', 'email', 'adresse', 'cp', 'ville', 'role'];
 
-    // Propriété temporaire pour stocker les données en cours de construction
-    protected $tempData = [];
+    // Dates
+    protected $useTimestamps = false; // ou true si tu as created_at/updated_at
+
+    // =========================================================================
+    // 1. MÉTHODES DE VALIDATION (Celle qui te manque !)
+    // =========================================================================
 
     /**
-     * Récupère un utilisateur pour l'authentification
-     * (Permet d'abstraire la logique de recherche du controller)
+     * Retourne les règles pour l'inscription
+     * Appelée par Inscription::register()
      */
-    public function getUserByLogin(string $login)
+    public function getRegisterRules()
     {
-        return $this->where('login', $login)->first();
-    }
-
-    // --- INTERFACE FLUIDE (BUILDER) ---
-
-    public function newUser(): self
-    {
-        $this->tempData = ['role' => 'client']; // Valeur par défaut
-        return $this;
-    }
-
-    public function withCredentials(string $login, string $password): self
-    {
-        $this->tempData['login'] = $login;
-        // Hashage immédiat
-        $this->tempData['password'] = password_hash($password, PASSWORD_DEFAULT);
-        return $this;
-    }
-
-    public function withIdentity(string $nom, string $prenom, string $email): self
-    {
-        $this->tempData['nom']    = $nom;
-        $this->tempData['prenom'] = $prenom;
-        $this->tempData['email']  = $email;
-        return $this;
-    }
-
-    public function withRole(string $role): self
-    {
-        $this->tempData['role'] = $role;
-        return $this;
+        return [
+            'login'    => 'required|min_length[3]|is_unique[users.login]',
+            'password' => 'required|min_length[6]',
+            'nom'      => 'required|min_length[2]',
+            'prenom'   => 'required|min_length[2]',
+            'email'    => 'required|valid_email|is_unique[users.email]'
+        ];
     }
 
     /**
-     * Finalise et sauvegarde
-     */
-    public function create(): bool
-    {
-        // On sauvegarde les données accumulées
-        // Note: insert() est souvent préférable à save() pour une création pure
-        $result = $this->insert($this->tempData);
-        
-        // Nettoyage après insertion
-        $this->tempData = [];
-        
-        // insert renvoie l'ID (int) ou false. On cast en bool.
-        return ($result !== false);
-    }
-
-    /**
-     * Règles de validation pour la mise à jour du profil
+     * Retourne les règles pour la mise à jour du profil
+     * Appelée par Profil::update()
      */
     public function getUpdateRules($userId)
     {
@@ -81,5 +50,65 @@ class UsersModel extends Model
             'email'   => "required|valid_email|is_unique[users.email,id,{$userId}]",
             'adresse' => 'permit_empty|min_length[5]'
         ];
+    }
+
+    // =========================================================================
+    // 2. MÉTHODES MÉTIER & BUILDER
+    // =========================================================================
+
+    /**
+     * Récupère un utilisateur par son login
+     */
+    public function getUserByLogin($login)
+    {
+        return $this->where('login', $login)->first();
+    }
+
+    // --- DESIGN PATTERN BUILDER (Pour Inscription.php) ---
+    
+    protected $tempUser = [];
+
+    /**
+     * Etape 1 : Initialise la construction
+     */
+    public function newUser()
+    {
+        $this->tempUser = [
+            'role' => 'client' // Rôle par défaut
+        ];
+        return $this;
+    }
+
+    /**
+     * Etape 2 : Ajoute les identifiants
+     */
+    public function withCredentials($login, $password)
+    {
+        $this->tempUser['login'] = $login;
+        // Le hashage est fait ici, dans le modèle !
+        $this->tempUser['password'] = password_hash($password, PASSWORD_DEFAULT);
+        return $this;
+    }
+
+    /**
+     * Etape 3 : Ajoute l'identité
+     */
+    public function withIdentity($nom, $prenom, $email)
+    {
+        $this->tempUser['nom'] = $nom;
+        $this->tempUser['prenom'] = $prenom;
+        $this->tempUser['email'] = $email;
+        return $this;
+    }
+
+    /**
+     * Etape 4 : Finalise et insère en base
+     */
+    public function create()
+    {
+        if (empty($this->tempUser)) {
+            return false;
+        }
+        return $this->insert($this->tempUser);
     }
 }

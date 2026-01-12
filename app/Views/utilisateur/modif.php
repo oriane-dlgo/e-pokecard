@@ -9,7 +9,7 @@
 
 <div class="profil-container">
     <div class="trainer-header">
-        <h1>UPDATE TRAINER CARD</h1>
+        <h1>MODIFIER VOTRE CARTE DE PROFIL</h1>
     </div>
 
     <div class="form_area" style="background: #e0e0e0; border: 4px solid #111; max-width: 800px; margin: 0 auto;">
@@ -51,9 +51,9 @@
 
             <div class="action" style="display:flex; gap:20px; justify-content:center; margin-top: 30px;">
                 
-                <a href="<?= base_url('profil') ?>" class="btn-retro btn-cancel" style="width: auto; padding-left: 30px; padding-right: 30px;">CANCEL</a>
+                <a href="<?= base_url('profil') ?>" class="btn-retro btn-cancel" style="width: auto; padding-left: 30px; padding-right: 30px;">ANNULER</a>
                 
-                <button class="btn-retro btn-save" style="width: auto; padding-left: 30px; padding-right: 30px; margin-bottom: 10px;">SAVE DATA</button>
+                <button class="btn-retro btn-save" style="width: auto; padding-left: 30px; padding-right: 30px; margin-bottom: 10px;"> SAUVEGARDER</button>
             
             </div>
         </form>

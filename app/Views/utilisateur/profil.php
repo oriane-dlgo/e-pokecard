@@ -9,7 +9,7 @@
 <div class="profil-container">
     
     <div class="trainer-header">
-        <h1>TRAINER CARD</h1>
+        <h1>VOTRE CARTE DE PROFIL</h1>
         <div class="trainer-id">ID No. <?= esc($user->id) ?></div>
     </div>
 
@@ -61,7 +61,6 @@
                 
                 <div class="empty-log">
                     <p>Aucune commandes effectuées</p>
-                    <p>GO CATCH SOME CARDS!</p>
                 </div>
 
             <?php else: ?>
