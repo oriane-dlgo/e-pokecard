@@ -132,9 +132,11 @@ class ProductModel extends Model
     public function searchProducts(array $filters, int $perPage = 20)
     {
         // 1. Base de la requête
-        $this->select('produits.*, promotions.tauxPromo')
-             ->join('promotions', 'promotions.idPromo = produits.id_promo', 'left');
-
+        $this->select('produits.*, promotions.tauxPromo, extensions.nom as nom_extension, extensions.code as code_extension, series.nom as nom_serie')
+             ->join('promotions', 'promotions.idPromo = produits.id_promo', 'left')
+             ->join('extensions', 'extensions.id = produits.id_extension', 'left')
+             ->join('series', 'series.id = extensions.id_serie', 'left');
+        
         // 2. Application des filtres
         if (!empty($filters['q'])) {
             $this->groupStart()

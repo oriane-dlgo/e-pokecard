@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use App\Models\ProductModel;
 
+use App\Libraries\ProductDecorator\ConcreteProduct;
+use App\Libraries\ProductDecorator\PromoDecorator;
+
 /**
  * Contrôleur du moteur de recherche avancé
  */
@@ -63,7 +66,7 @@ class Search extends BaseController
         ];
 
         $data = [
-            'results'   => $model->searchProducts($filters, 20),
+            'results'   => $model->searchProducts($filters, 18),
             'pager'     => $model->pager,
             'seriesMap' => $model->getSeriesMap(), // Pour la sidebar
             'filters'   => array_merge($filters, [
