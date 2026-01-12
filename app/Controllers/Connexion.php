@@ -4,59 +4,77 @@ namespace App\Controllers;
 
 use App\Models\UsersModel;
 
+/**
+ * Contrôleur gérant l'authentification (Login / Logout)
+ */
 class Connexion extends BaseController
 {
+    /**
+     * Affiche le formulaire de connexion
+     */
     public function index()
     {
-        // Affiche la vue de connexion (Retro ou standard selon ton dossier)
-        return view_theme('connexion');
+        // UX : Si déjà connecté, on redirige vers l'accueil
+        if (session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
+
+        return view('auth/connexion');
     }
 
     /**
-     * Gère la tentative de connexion
+     * Traite la soumission du formulaire de connexion
      */
     public function auth()
     {
         $session = session();
+        
+        // 1. Validation des champs pour économiser une requête SQL
+        $rules = [
+            'login'    => 'required',
+            'password' => 'required'
+        ];
+
+        if (! $this->validate($rules)) {
+            return redirect()->back()->withInput()->with('msg', 'Veuillez remplir tous les champs.');
+        }
+
+        // 2. Récupération de l'utilisateur via le Modèle
         $model = new UsersModel();
+        $user = $model->getUserByLogin($this->request->getPost('login'));
 
-        // 1. Récupération des identifiants
-        $login    = $this->request->getPost('login');
-        $password = $this->request->getPost('password');
+        // 3. Vérification du mot de passe haché
+        if ($user && password_verify($this->request->getPost('password'), $user->password)) {
 
-        // 2. Recherche de l'utilisateur par son login
-        $user = $model->where('login', $login)->first();
-
-        // 3. Vérification de sécurité
-        // password_verify déchiffre le hash stocké en BDD pour le comparer au texte saisi
-        if ($user && password_verify($password, $user->password)) {
-
-            // 4. Préparation des données de session (isLoggedIn est crucial)
+            // 4. Initialisation de la session
             $ses_data = [
                 'id'         => $user->id,
                 'user_name'  => $user->nom,
-                'user_role'  => $user->role, // 'admin' ou 'client'
+                'user_role'  => $user->role,
                 'isLoggedIn' => true
             ];
-
             $session->set($ses_data);
 
-            // 5. Redirection vers l'accueil ou le tableau de bord
+            // Redirection spécifique pour les admins
+            if($user->role === 'admin') {
+                return redirect()->to('/admin/dashboard')->with('success', 'Bonjour Administrateur ' . $user->prenom);
+            }
+
             return redirect()->to('/')->with('success', 'Ravi de vous revoir, ' . $user->prenom . ' !');
+            
         } else {
-            // 6. Échec : on renvoie à la connexion avec un message flash
+            // 5. Échec de connexion
             $session->setFlashdata('msg', 'Identifiant ou mot de passe incorrect.');
             return redirect()->to('/connexion')->withInput();
         }
     }
 
     /**
-     * Déconnexion propre
+     * Déconnecte l'utilisateur et détruit la session
      */
     public function deconnexion()
     {
-        $session = session();
-        $session->destroy();
+        session()->destroy();
         return redirect()->to('/')->with('success', 'Vous avez été déconnecté avec succès.');
     }
 }

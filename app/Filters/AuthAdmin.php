@@ -2,25 +2,24 @@
 
 namespace App\Filters;
 
+use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Filters\FilterInterface;
 
 class AuthAdmin implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $session = session();
-        
-        // 1. Est-ce qu'il est connecté ?
-        if (!$session->get('isLoggedIn')) {
-            return redirect()->to('/connexion')->with('msg', 'Accès réservé au personnel de la Ligue.');
+        // 1. Vérifier si l'utilisateur est connecté
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/connexion')->with('error', 'Veuillez vous connecter.');
         }
 
-        // 2. Est-ce qu'il est ADMIN ?
-        // (Assure-toi que dans ta BDD, ton user admin a bien le role 'admin')
-        if ($session->get('user_role') !== 'admin') {
-            return redirect()->to('/')->with('msg', 'ACCÈS REFUSÉ : VOUS N\'ÊTES PAS ADMINISTRATEUR.');
+        // 2. Vérifier si l'utilisateur est ADMIN
+        // (Adapte 'user_role' ou 'role' selon ce que tu as mis dans ton contrôleur Connexion)
+        if (session()->get('user_role') !== 'admin') {
+            // Si pas admin, on renvoie à l'accueil avec une erreur
+            return redirect()->to('/')->with('error', 'Accès interdit réservé aux administrateurs.');
         }
     }
 

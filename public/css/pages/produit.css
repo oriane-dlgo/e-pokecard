@@ -1,0 +1,210 @@
+/* =========================================
+   1. GLOBAL & LAYOUT
+   ========================================= */
+* {
+    font-family: 'VT323', monospace;
+    box-sizing: border-box;
+}
+
+.produit-wrapper {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Le Boitier Rouge (Style Pokédex) */
+.pokedex-container {
+    background-color: var(--pok-red, #D32F2F);
+    border: 6px solid var(--pok-black, #111);
+    border-radius: 10px; /* Légèrement arrondi pour le look console */
+    padding: 20px;
+    
+    /* Ombre portée massive */
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+    
+    /* Layout Flex */
+    display: flex;
+    gap: 20px;
+    align-items: stretch; /* Les deux écrans ont la même hauteur */
+}
+
+
+/* =========================================
+   2. ÉCRAN GAUCHE (VISUEL)
+   ========================================= */
+.left-screen {
+    flex: 1;
+    min-width: 300px;
+    background: var(--pok-grey, #e0e0e0);
+    border: 4px solid var(--pok-black, #111);
+    padding: 20px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Effet "Enfoncé" (Bevel Inset) */
+    border-top-color: #555;
+    border-left-color: #555;
+    border-bottom-color: #fff;
+    border-right-color: #fff;
+    
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+}
+
+.left-screen img {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    
+    /* Rendu Pixel Art & Ombre portée */
+    image-rendering: pixelated;
+    filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.3));
+    transition: transform 0.2s;
+}
+
+.left-screen img:hover {
+    transform: scale(1.05); /* Petit zoom au survol */
+}
+
+
+/* =========================================
+   3. ÉCRAN DROITE (DONNÉES GAMEBOY)
+   ========================================= */
+.right-screen {
+    flex: 1.5;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* L'écran vert LCD */
+.data-display {
+    background-color: #98c807; /* Vert GameBoy Light */
+    color: #0f380f;            /* Vert GameBoy Dark */
+    border: 4px solid var(--pok-black, #111);
+    border-radius: 4px;        /* Coin écran LCD */
+    
+    padding: 20px;
+    font-size: 24px;
+    
+    /* Ombre interne pour profondeur */
+    box-shadow: inset 4px 4px 0px rgba(0,0,0,0.2);
+    
+    flex-grow: 1; /* Prend toute la hauteur disponible */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Typographie de l'écran */
+.product-title {
+    font-size: 40px;
+    text-transform: uppercase;
+    border-bottom: 3px dashed #0f380f;
+    margin: 0 0 15px 0;
+    padding-bottom: 5px;
+    line-height: 1;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.description-box {
+    margin-top: 20px;
+    font-size: 22px;
+    line-height: 1.3;
+    border-top: 2px solid rgba(15, 56, 15, 0.3);
+    padding-top: 15px;
+    flex-grow: 1; /* Pousse le prix vers le bas */
+}
+
+.price-tag {
+    font-size: 45px;
+    text-align: right;
+    font-weight: bold;
+    margin-top: 20px;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+
+/* =========================================
+   4. BOUTONS D'ACTION (PAD)
+   ========================================= */
+.action-pad {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+/* Style de base des boutons Pokédex */
+.btn-pokedex {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    
+    border: 4px solid var(--pok-black, #111);
+    cursor: pointer;
+    
+    /* Ombre 3D */
+    box-shadow: 4px 4px 0px black;
+    transition: all 0.1s;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Interaction Boutons */
+.btn-pokedex:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px black;
+    z-index: 5;
+    filter: brightness(1.1); /* Éclaircit légèrement */
+}
+
+.btn-pokedex:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px black;
+}
+
+/* Couleurs Spécifiques */
+.btn-back {
+    background-color: var(--pok-grey, #e0e0e0);
+    color: black;
+}
+
+.btn-add {
+    background-color: #FFD700; /* Jaune Or */
+    color: black;
+}
+
+
+/* =========================================
+   5. RESPONSIVE
+   ========================================= */
+@media (max-width: 900px) {
+    /* Sur tablette/mobile, on empile les écrans */
+    .pokedex-container {
+        flex-direction: column;
+    }
+    
+    /* L'image prend moins de place en hauteur */
+    .left-screen img {
+        max-height: 250px;
+    }
+    
+    .product-title {
+        font-size: 32px;
+    }
+}

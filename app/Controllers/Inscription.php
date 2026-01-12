@@ -2,48 +2,37 @@
 
 namespace App\Controllers;
 
+use App\Controllers\BaseController;
 use App\Models\UsersModel;
 
+/**
+ * Contrôleur gérant la création de compte
+ */
 class Inscription extends BaseController
 {
-    /**
-     * Affiche le formulaire d'inscription
-     */
     public function index()
     {
-        // On charge le helper form pour gérer l'affichage des erreurs dans la vue
         helper(['form']);
-        return view_theme('inscription');
+        return view('auth/inscription');
     }
 
-    /**
-     * Traite la soumission du formulaire
-     */
     public function register()
     {
         helper(['form']);
+        $userModel = new UsersModel();
 
-        // Définition des règles de validation
-        // On s'assure que les données respectent le format attendu
-        $rules = [
-            'login'    => 'required|min_length[3]|max_length[20]|is_unique[users.login]',
-            'password' => 'required|min_length[4]',
-            'nom'      => 'required|min_length[2]',
-            'prenom'   => 'required|min_length[2]',
-            'email'    => 'required|valid_email|is_unique[users.email]',
-        ];
+        // 1. Récupération des règles centralisées dans le Modèle
+        $rules = $userModel->getRegisterRules();
 
-        // Si la validation échoue, on recharge la vue avec les erreurs
+        // 2. Validation
         if (! $this->validate($rules)) {
-            return view_theme('inscription', [
+            return view('auth/inscription', [
                 'validation' => $this->validator
             ]);
         }
 
-        $userModel = new UsersModel();
-
         try {
-            // Construction fluide de l'utilisateur
+            // 3. Construction fluide de l'utilisateur
             $success = $userModel->newUser()
                 ->withCredentials(
                     $this->request->getPost('login'),
@@ -54,19 +43,18 @@ class Inscription extends BaseController
                     $this->request->getPost('prenom'),
                     $this->request->getPost('email')
                 )
-                ->withRole('client') // On définit explicitement le rôle
-                ->create();          // Exécute le save() final
+                ->create();
 
             if ($success) {
-                // 4. Redirection en cas de succès
-                return redirect()->to('/connexion')->with('success', 'Inscription réussie ! Connectez-vous avec vos nouveaux identifiants.');
+                return redirect()->to('/connexion')->with('success', 'Inscription réussie ! Connectez-vous.');
             } else {
-                return redirect()->back()->withInput()->with('msg', 'Une erreur est survenue lors de la création du compte.');
+                return redirect()->back()->withInput()->with('msg', 'Erreur lors de la sauvegarde.');
             }
 
         } catch (\Exception $e) {
-            // En cas d'erreur imprévue
-            return redirect()->back()->withInput()->with('msg', 'Erreur système : ' . $e->getMessage());
+            // 4. Log serveur pour débogage et message générique pour l'user
+            log_message('error', '[INSCRIPTION] ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('msg', 'Une erreur technique est survenue.');
         }
     }
 }

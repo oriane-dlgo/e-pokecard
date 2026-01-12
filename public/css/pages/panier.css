@@ -1,0 +1,226 @@
+/* =========================================
+   1. GLOBAL & LAYOUT
+   ========================================= */
+* {
+    font-family: 'VT323', monospace;
+    box-sizing: border-box;
+}
+
+.cart-retro-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+
+/* =========================================
+   2. EN-TÊTE DU DRESSEUR
+   ========================================= */
+.trainer-header {
+    background-color: var(--pok-red, #D32F2F);
+    color: white;
+    padding: 15px;
+    border: 4px solid var(--pok-black, #111);
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.5);
+}
+
+.trainer-header h1 {
+    margin: 0;
+    font-size: 40px;
+    text-shadow: 3px 3px 0px var(--pok-black, #111);
+    line-height: 1;
+}
+
+.trainer-id {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+/* =========================================
+   3. LISTE D'INVENTAIRE (TABLEAU)
+   ========================================= */
+.inventory-list {
+    background: var(--pok-grey, #e0e0e0);
+    border: 4px solid var(--pok-black, #111);
+    padding: 10px;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.5);
+}
+
+/* En-têtes de colonnes */
+.inventory-header-row {
+    display: flex;
+    background: var(--pok-black, #111);
+    color: #FFD700; /* Or */
+    padding: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Lignes de produits */
+.inventory-row {
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+    border-bottom: 2px dashed #999;
+    font-size: 22px;
+    background: white;
+}
+.inventory-row:last-child { border-bottom: none; }
+
+/* Gestion des Colonnes Flex */
+.col-item { 
+    flex: 2; 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    font-weight: bold; 
+}
+.col-price { flex: 1; text-align: center; color: #555; }
+.col-qty   { flex: 1; text-align: center; }
+.col-total { flex: 1; text-align: right; color: var(--pok-red, #D32F2F); font-weight: bold; }
+.col-action { width: 50px; text-align: right; }
+
+/* Image miniature */
+.pixel-img {
+    width: 50px; 
+    height: 50px; 
+    object-fit: contain; 
+    image-rendering: pixelated; 
+    border: 2px solid #ccc;
+}
+
+
+/* =========================================
+   4. ACTIONS SPÉCIFIQUES (CROIX, VIDER)
+   ========================================= */
+/* Bouton Supprimer (Croix rouge) */
+.btn-cross {
+    color: red;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 24px;
+    border: 2px solid red;
+    padding: 0 8px;
+    display: inline-block;
+    transition: all 0.1s;
+}
+.btn-cross:hover { 
+    background: red; 
+    color: white; 
+}
+
+
+/* =========================================
+   5. RÉSUMÉ & TOTAL
+   ========================================= */
+.cart-summary {
+    display: flex;
+    justify-content: flex-end; /* Pousse tout le bloc vers la DROITE */
+    align-items: center;       /* Aligne verticalement au centre */
+    gap: 20px;                 /* L'espace entre les boutons et le total (pour les "coller" mais pas trop) */
+    margin-top: 20px;
+    
+    /* Responsive : sur mobile, on empile */
+    flex-wrap: wrap; 
+}
+
+/* Le rectangle noir du Total */
+.total-display {
+    font-size: 40px;
+    background: var(--pok-black, #111);
+    color: #FFD700; /* Or */
+    text-shadow: 2px 2px 0px black;
+    
+    padding: 10px 30px;
+    
+    display: inline-block;
+    border: 4px solid white;
+    outline: 4px solid var(--pok-black, #111);
+    
+    /* On enlève les marges car Flexbox gère l'espacement via 'gap' */
+    margin: 0; 
+}
+
+
+/* =========================================
+   6. PANIER VIDE
+   ========================================= */
+.empty-cart-retro {
+    text-align: center;
+    padding: 50px;
+    background: var(--pok-grey, #e0e0e0);
+    border: 4px solid var(--pok-black, #111);
+    font-size: 30px;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.5);
+}
+
+
+/* =========================================
+   7. BOUTONS D'ACTION (NAVIGATION)
+   ========================================= */
+.menu-box {
+    /* Le conteneur des boutons */
+    display: flex;
+    gap: 15px; /* Espace entre "Vider" et "Valider" */
+    margin: 0;
+}
+
+/* Style de base Bouton Rétro */
+.btn-retro {
+    display: inline-block;
+    text-align: center;
+    font-size: 24px;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    
+    border-width: 4px;
+    border-style: solid;
+    box-shadow: 4px 4px 0px black;
+    transition: all 0.1s;
+    
+    background-color: #eee;
+    color: black;
+}
+
+.btn-retro:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px black;
+    filter: brightness(1.1);
+}
+
+.btn-retro:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px black;
+}
+
+/* Couleurs Spécifiques (Bordures 3D simulées par border-color) */
+
+/* VERT (Payer) */
+.btn-save { 
+    background-color: #2ecc71; 
+    color: white;
+    border-color: #58d68d #1e8449 #1e8449 #58d68d;
+}
+
+/* ROUGE (Vider) */
+.btn-logout { 
+    background-color: #e74c3c;
+    color: white;
+    border-color: #ec7063 #922b21 #922b21 #ec7063;
+}
+
+/* BLEU (Retour Boutique) */
+.btn-edit { 
+    background-color: #3498db;
+    color: white;
+    border-color: #85c1e9 #1f618d #1f618d #85c1e9;
+}

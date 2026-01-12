@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/base_retro') ?>
+<?= $this->extend('layouts/front_magasin') ?>
 
 <?= $this->section('contenu') ?>
 <div class="legal-container" style="background: #f4f4f4; padding: 40px; border: 4px solid #111; box-shadow: 10px 10px 0px rgba(0,0,0,0.5);">

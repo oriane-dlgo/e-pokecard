@@ -1,0 +1,652 @@
+/* =========================================
+   1. GLOBAL & TYPOGRAPHIE
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+:root {
+    --pok-red: #D32F2F;
+    --pok-dark-red: #8e0000;
+    --pok-grey: #e0e0e0;
+    --pok-dark-grey: #404040;
+    --pok-darkest-grey: #616161;
+    --pok-black: #111;
+    --border-light: #ffffff;
+    --border-dark: #555555;
+    
+    /* Neon Colors */
+    --neon-gold-hex: #FFD700;
+    --neon-gold-rgb: 255, 215, 0;
+    --neon-red-hex: #FF0000;
+    --neon-red-rgb: 255, 0, 0;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'VT323', monospace;
+}
+
+/* =========================================
+   2. LOGO & HEADER
+   ========================================= */
+.logo h1 {
+    font-size: 60px;
+    color: var(--pok-red);
+    text-shadow: 4px 4px 0px var(--pok-black);
+    margin: 0;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    line-height: 1.1;
+}
+
+.section-title {
+    background: var(--pok-black);
+    color: white;
+    padding: 10px 15px;
+    border-left: 10px solid var(--pok-red);
+    margin-bottom: 20px;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.section-title h2 {
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    font-size: 28px;
+    line-height: 1;
+}
+
+
+/* =========================================
+   3. NAVIGATION (NAV BAR)
+   ========================================= */
+.nav-bar a {
+    text-decoration: none;
+    color: black;
+    background: var(--pok-grey);
+    padding: 8px 15px;
+    font-size: 24px;
+    font-weight: bold;
+    border-top: 4px solid var(--border-light);
+    border-left: 4px solid var(--border-light);
+    border-right: 4px solid var(--border-dark);
+    border-bottom: 4px solid var(--border-dark);
+    display: flex;
+    align-items: center;
+    position: relative;
+    box-shadow: 2px 2px 0px black;
+    transition: all 0.1s;
+}
+
+.nav-bar a:hover {
+    background: white;
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px black;
+    z-index: 10;
+}
+
+.nav-bar a:active {
+    border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px black;
+}
+
+/* Bouton HOME (Vert) */
+.nav-bar a.btn-home {
+    background-color: #27ae60;
+    color: white;
+    text-shadow: 2px 2px 0px #145a32;
+    border-color: #58d68d #145a32 #145a32 #58d68d;
+}
+.nav-bar a.btn-home:hover {
+    background-color: #2ecc71;
+    border-color: #82e0aa #196f3d #196f3d #82e0aa;
+}
+.nav-bar a.btn-home:active {
+    border-color: #145a32 #58d68d #58d68d #145a32;
+}
+
+/* Bouton PROMO (Or/Néon) */
+.nav-bar a.prom {
+    background-color: #222;
+    color: white;
+    text-transform: uppercase;
+    border-color: #666 #000 #000 #666;
+    box-shadow: 2px 2px 0px black;
+    animation: neon-text-blink 0.7s ease-in-out infinite alternate;
+}
+.nav-bar a.prom:hover {
+    background: #FFD700;
+    color: black;
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px black, 0 0 15px rgba(255, 215, 0, 0.6), inset 0 0 20px rgba(255, 215, 0, 0.3);
+    border-color: #ffffe0 #b8860b #b8860b #ffffe0;
+    animation: neon-text-blink 0.5s ease-in-out infinite alternate;
+}
+.nav-bar a.prom:active {
+    border-color: #b8860b #ffffe0 #ffffe0 #b8860b;
+}
+
+/* Bouton DECONNEXION (Rouge) */
+.nav-bar a.btn-quit {
+    background-color: #ff3333;
+    color: white !important;
+    font-size: 18px;
+    padding: 4px 10px;
+    border: 3px solid;
+    border-color: #ff9999 #990000 #990000 #ff9999;
+}
+.nav-bar a.btn-quit:hover { background-color: #ff0000; }
+
+/* Bouton ACCÈS ADMIN (Flottant) */
+.admin-access-btn {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex; align-items: center; gap: 10px;
+    background-color: #000080;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    font-size: 20px;
+    border: 2px solid white;
+    box-shadow: 4px 4px 0px black;
+    z-index: 100;
+    transition: all 0.1s;
+}
+.admin-access-btn:hover {
+    background-color: #0000ff;
+    transform: translateY(-50%) translate(-2px, -2px);
+    box-shadow: 6px 6px 0px black;
+}
+.admin-access-btn img { width: 24px; height: 24px; filter: invert(1); }
+
+
+/* =========================================
+   4. FORMULAIRE DE RECHERCHE (NAV)
+   ========================================= */
+.nav-search-form {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 5px;
+    margin: 0 20px;
+}
+.retro-input {
+    font-size: 20px;
+    padding: 5px 10px;
+    border: 4px solid #111;
+    width: 200px;
+    outline: none;
+    box-shadow: inset 2px 2px 0px rgba(0,0,0,0.2);
+}
+.retro-search-btn {
+    font-size: 20px;
+    font-weight: bold;
+    background: #3498db;
+    color: white;
+    border: 4px solid #111;
+    cursor: pointer;
+    padding: 5px 10px;
+    box-shadow: 3px 3px 0px black;
+}
+.retro-search-btn:hover {
+    background: #2980b9;
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px black;
+}
+.retro-search-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px black;
+}
+
+
+/* =========================================
+   5. FILTRES (BOUTONS)
+   ========================================= */
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    margin-right: 10px;
+}
+.btn-filter {
+    text-decoration: none;
+    color: #555;
+    background: #ccc;
+    padding: 5px 10px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid #555;
+    box-shadow: inset 1px 1px 0px white;
+}
+.btn-filter.active {
+    background: #ffff00;
+    color: black;
+    border-color: black;
+    box-shadow: 2px 2px 0px black;
+    transform: translate(-1px, -1px);
+}
+.btn-filter:hover { background: white; }
+
+
+/* =========================================
+   6. CARTES PRODUITS (GRID ITEM)
+   ========================================= */
+.carte {
+    background: var(--pok-grey);
+    border: 4px solid var(--pok-black);
+    padding: 10px;
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.3);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: all 0.2s ease;
+}
+
+.carte:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 12px 12px 0px rgba(0,0,0,0.3);
+    z-index: 10;
+    border-color: #555; 
+}
+
+.carte-promo {
+    background: #fff5e6;
+    border-color: #d35400;
+}
+.carte-promo:hover {
+    background: #fff5e6;
+    border-color: #ff6600;
+}
+
+/* Image */
+.carte-img-container {
+    background: white;
+    border: 4px solid var(--pok-dark-red);
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.carte img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    display: block;
+}
+
+/* Infos Texte */
+.carte h3 {
+    font-size: 20px;
+    margin: 0 0 5px 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: left;
+    line-height: 1.1;
+    min-height: 44px;
+}
+
+.tags-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+.separator {
+    border: 0;
+    border-top: 2px dashed #999;
+    margin: 5px 0 10px 0;
+    width: 100%;
+}
+
+/* Prix */
+.prix-container {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.prix-final {
+    font-size: 28px;
+    color: var(--pok-dark-red);
+    font-weight: bold;
+}
+.prix-sup {
+    vertical-align: super;
+    font-size: 16px;
+    text-decoration: line-through;
+    color: #777;
+    margin-left: 5px;
+}
+.prix-barre { /* Alias pour compatibilité */
+    text-decoration: line-through; color: #777; font-size: 18px; margin-right: 10px; 
+}
+
+/* Actions (Boutons en bas de carte) */
+.card-actions {
+    margin-top: auto;
+    display: flex; 
+    gap: 10px;
+    align-items: stretch;
+}
+.card-actions form {
+    flex: 1;
+    display: flex;
+    margin: 0;
+}
+
+
+/* =========================================
+   7. BOUTONS D'ACTION (PRODUIT)
+   ========================================= */
+.btn-inspect, .btn-achat, .btn-soldout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    min-height: 48px;
+    padding: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    line-height: 1.1;
+    border: 4px solid;
+    box-shadow: 3px 3px 0px black;
+    transition: all 0.1s;
+}
+
+/* Bouton Achat (Jaune) */
+.btn-achat {
+    flex: 1;
+    background: #ffcc00;
+    color: black;
+    cursor: pointer;
+    border-color: #ffff99 #cc9900 #cc9900 #ffff99; 
+}
+.btn-achat:hover {
+    background-color: #ffe066;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px black;
+}
+.btn-achat:active {
+    border-color: #cc9900 #ffff99 #ffff99 #cc9900;
+    transform: translate(3px, 3px);
+    box-shadow: none;
+}
+
+/* Bouton Détails (Bleu) */
+.btn-inspect {
+    background: #3498db; 
+    color: white; 
+    cursor: pointer;
+    border-color: #85c1e9 #1f618d #1f618d #85c1e9;
+}
+.btn-inspect:hover { 
+    background: #2980b9; 
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px black;
+    z-index: 2;
+}
+.btn-inspect:active {
+    border-color: #1f618d #85c1e9 #85c1e9 #1f618d;
+    transform: translate(3px, 3px);
+    box-shadow: 0px 0px 0px black;
+}
+
+/* Bouton Hors Stock (Gris) */
+.btn-soldout {
+    flex: 1;
+    background: #555;
+    color: #999;
+    border-color: #777 #333 #333 #777;
+}
+
+
+/* =========================================
+   8. BADGES & ÉTIQUETTES
+   ========================================= */
+/* Badge Panier (Compteur) */
+.cart-icon-wrapper { position: relative; display: inline-block; }
+.cart-badge {
+    position: absolute;
+    bottom: -8px; right: -8px;
+    background-color: #FFD700;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border: 2px solid black;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+    z-index: 100;
+    pointer-events: none;
+    animation: pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Badge Promo (Coin carte) */
+.badge-promo {
+    position: absolute;
+    top: -10px; right: -10px;
+    background: #ff0000;
+    color: white;
+    padding: 5px 10px;
+    font-size: 24px;
+    font-weight: bold;
+    border: 2px solid white;
+    box-shadow: 2px 2px 0px black;
+    z-index: 10;
+    transform: rotate(10deg);
+}
+
+/* Tags Détails Produit */
+.carte-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+.info-tag {
+    font-size: 14px;
+    padding: 2px 5px;
+    border: 1px solid #333;
+    text-transform: uppercase;
+}
+.type-tag { background: #eee; }
+.ext-tag { background: #3498db; color: white; }
+.rarete-tag { background: #9b59b6; color: white; }
+
+
+/* =========================================
+   9. PROMO BANNER (ACCUEIL)
+   ========================================= */
+.promo-banner-container {
+    background: repeating-linear-gradient(45deg, #f1c40f, #f1c40f 10px, #f39c12 10px, #f39c12 20px);
+    padding: 20px;
+    border: 4px solid black;
+    margin: 40px 0;
+    box-shadow: 8px 8px 0px black;
+    position: relative;
+    z-index: 5;
+}
+.promo-header {
+    text-align: center;
+    background: black;
+    color: #FFD700;
+    font-size: 30px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid white;
+    font-weight: bold;
+}
+
+
+/* =========================================
+   10. PAIEMENT & TERMINAL
+   ========================================= */
+.payment-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f4f4f4;
+    border: 4px solid #111;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+}
+
+.total-due-display {
+    background: #111;
+    color: #FFD700;
+    font-size: 32px;
+    text-align: center;
+    padding: 15px;
+    margin: 20px 0 40px 0;
+    border: 4px solid #FFD700;
+    box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.2);
+    letter-spacing: 2px;
+}
+
+.payment-grid {
+    display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; align-items: stretch;
+}
+
+.payment-card {
+    width: 350px;
+    padding: 25px;
+    border: 4px solid #111;
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
+    display: flex; flex-direction: column;
+    transition: transform 0.2s;
+}
+.payment-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 12px 12px 0px rgba(0,0,0,0.4);
+    z-index: 5;
+}
+
+.payment-title {
+    font-size: 24px; margin-bottom: 20px;
+    text-transform: uppercase; font-weight: bold; text-align: center;
+    border-bottom: 2px dashed; padding-bottom: 10px;
+}
+
+/* Styles Cartes */
+.card-credit { background: #000; color: #0f0; border-color: #fff; }
+.card-credit .payment-title { border-color: #0f0; color: #0f0; }
+
+.card-paypal { background: #001f3f; color: #7FDBFF; border-color: #0074D9; }
+.card-paypal .payment-title { border-color: #7FDBFF; color: #7FDBFF; }
+
+/* Inputs Paiement */
+.pay-input {
+    width: 100%; padding: 10px; margin-bottom: 15px;
+    font-size: 18px; outline: none; border: 2px solid;
+    background: transparent; text-transform: uppercase;
+}
+.pay-row { display: flex; gap: 15px; }
+
+.card-credit .pay-input { border-color: #0f0; color: #0f0; box-shadow: inset 2px 2px 0px rgba(0, 255, 0, 0.2); }
+.card-credit .pay-input::placeholder { color: rgba(0, 255, 0, 0.5); }
+.card-credit .pay-input:focus { background: rgba(0, 255, 0, 0.1); }
+
+.card-paypal .pay-input { border-color: #7FDBFF; color: white; box-shadow: inset 2px 2px 0px rgba(127, 219, 255, 0.2); }
+.card-paypal .pay-input::placeholder { color: rgba(127, 219, 255, 0.5); }
+.card-paypal .pay-input:focus { background: rgba(127, 219, 255, 0.1); }
+
+/* Boutons Validation Paiement */
+.btn-pay-action {
+    width: 100%; padding: 12px; font-size: 22px; font-weight: bold; text-transform: uppercase;
+    cursor: pointer; border: 4px solid; margin-top: auto; transition: all 0.1s;
+    display: flex; justify-content: center; align-items: center;
+}
+.btn-cc {
+    background: #fff; color: #000; border-color: #ccc #999 #999 #ccc; box-shadow: 4px 4px 0px #333;
+}
+.btn-cc:hover { background: #eee; transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #333; }
+.btn-cc:active { transform: translate(2px, 2px); box-shadow: none; }
+
+.btn-pp {
+    background: #0074D9; color: white; border-color: #39CCCC #001f3f #001f3f #39CCCC; box-shadow: 4px 4px 0px #001f3f;
+}
+.btn-pp:hover { background: #0056a3; transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #001f3f; }
+.btn-pp:active { transform: translate(2px, 2px); box-shadow: none; }
+
+.link-back {
+    display: inline-block; margin-top: 30px; color: #555; text-decoration: none;
+    font-size: 20px; font-weight: bold; border-bottom: 2px solid transparent;
+}
+.link-back:hover { color: #000; border-bottom-color: #000; }
+
+
+/* =========================================
+   11. PAGES LÉGALES & TEXTES
+   ========================================= */
+.legal-container { color: #333; line-height: 1.4; }
+.legal-title {
+    background: #111; color: white; padding: 10px; font-size: 32px;
+    text-transform: uppercase; text-align: center;
+    border-bottom: 4px solid var(--pok-red); margin-bottom: 30px;
+}
+.legal-section { margin-bottom: 30px; border-left: 4px solid #ccc; padding-left: 15px; }
+.legal-section h3 {
+    color: var(--pok-red); font-size: 24px; text-transform: uppercase;
+    border-bottom: 2px dashed #ccc; display: inline-block; margin-bottom: 10px;
+}
+.legal-text { font-size: 18px; text-align: justify; }
+
+
+/* =========================================
+   12. ANIMATIONS (KEYFRAMES & CLASSES)
+   ========================================= */
+@keyframes neon-text-blink {
+    from {
+        color: rgba(var(--neon-gold-rgb), 0.6);
+        text-shadow: 0 0 2px rgba(var(--neon-gold-rgb), 0.3);
+    }
+    to {
+        color: #fff;
+        text-shadow: 0 0 5px var(--neon-gold-hex), 0 0 10px var(--neon-gold-hex);
+    }
+}
+
+@keyframes zoom-in {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+@keyframes scroll-left { 
+    0% { transform: translateX(0); } 100% { transform: translateX(-100%); } 
+}
+
+@keyframes blinker { 
+    from { opacity: 1; } to { opacity: 0.3; } 
+}
+
+/* Animations Néon spécifiques */
+@keyframes neon-little-text-anim {
+    from { color: rgba(255, 0, 0, 0.8); text-shadow: none; transform: scale(1); }
+    to { color: #fff; text-shadow: 0 0 5px #f00, 0 0 10px rgba(255, 0, 0, 0.4); transform: scale(1.05); }
+}
+
+@keyframes neon-pure-text-anim {
+    from { color: rgba(255, 215, 0, 0.5); text-shadow: 0 0 2px rgba(255, 215, 0, 0.3); transform: scale(1); }
+    to { color: #fff; text-shadow: 0 0 5px #ffd700, 0 0 15px #ffd700, 0 0 20px #ffd700; transform: scale(1.05); }
+}
+
+/* Classes Utilitaires Animation */
+.blink { animation: blinker 0.5s infinite alternate; }
+.zoom-text { font-weight: bold; display: inline-block; animation: zoom-in 1s ease-in-out infinite alternate; }
+.neon-litle-text { font-weight: bold; display: inline-block; animation: neon-little-text-anim 1.5s ease-in-out infinite alternate; }
+.neon-text-gold { font-weight: bold; display: inline-block; animation: neon-pure-text-anim 1.5s ease-in-out infinite alternate; }
+
+.marquee-content { display: inline-block; padding-left: 100%; animation: scroll-left 20s linear infinite; }
+.footer-bottom { animation: blinker 1.5s infinite; }

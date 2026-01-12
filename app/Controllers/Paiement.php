@@ -3,81 +3,74 @@
 namespace App\Controllers;
 
 use App\Models\CommandesModel;
+use App\Libraries\Payment\PaymentFactory;
 
-
-interface PaymentStrategyInterface {
-    public function pay(int $commandeId): void;
-}
-
-abstract class BasePaymentStrategy implements PaymentStrategyInterface {
-    protected $db;
-    public function __construct() {
-        $this->db = \Config\Database::connect();
-    }
-
-    protected function completeOrder(int $commandeId, string $label): void {
-        $this->db->table('commandes')
-            ->where('id', $commandeId)
-            ->update([
-                'type_paiement' => $label,
-                'statut'        => 'validee'
-            ]);
-    }
-}
-
-class CreditCardPayment extends BasePaymentStrategy {
-    public function pay(int $commandeId): void {
-        $this->completeOrder($commandeId, 'Credit Card');
-    }
-}
-
-class PayPalPayment extends BasePaymentStrategy {
-    public function pay(int $commandeId): void {
-        $this->completeOrder($commandeId, 'Paypal');
-    }
-}
-
-class PaymentFactory {
-    public static function create(string $type): PaymentStrategyInterface {
-        return match(strtolower($type)) {
-            'card'   => new CreditCardPayment(),
-            'paypal' => new PayPalPayment(),
-            default  => throw new \Exception("Mode inconnu"),
-        };
-    }
-}
-
+/**
+ * Contrôleur gérant le processus de paiement (Design Pattern Strategy)
+ */
 class Paiement extends BaseController
 {
+    /**
+     * Étape 1 : Choix du mode de paiement
+     */
     public function choix($idCommande)
     {
-        $commandeModel = new CommandesModel();
-        $commande = $commandeModel->find($idCommande);
-
-        if (!$commande || $commande->id_user != session()->get('id')) {
-            return redirect()->to('/panier')->with('msg', 'Commande introuvable.');
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/connexion');
         }
 
-        return view_theme('paiement_retro', [
+        $commandeModel = new CommandesModel();
+        
+        // Vérification que la commande appartient bien à l'user connecté
+        $commande = $commandeModel->getCommandeUtilisateur($idCommande, session()->get('id'));
+
+        if (!$commande) {
+            return redirect()->to('/profil')->with('msg', 'Commande introuvable ou accès refusé.');
+        }
+
+        // (Optionnel) Vérifier si déjà payé ici...
+
+        return view('confirmation/paiement', [
             'commande'     => $commande,
             'total_global' => $commande->total
         ]);
     }
 
+    /**
+     * Étape 2 : Traitement du paiement
+     */
     public function process()
     {
+        $session = session();
+        if (!$session->get('isLoggedIn')) {
+            return redirect()->to('/connexion');
+        }
+
+        // 1. Validation des inputs
+        $rules = [
+            'commande_id'   => 'required|integer',
+            'type_paiement' => 'required|in_list[card,paypal]'
+        ];
+
+        if (! $this->validate($rules)) {
+            return redirect()->back()->with('msg', 'Données de paiement invalides.');
+        }
+
         $commandeId   = $this->request->getPost('commande_id');
         $typePaiement = $this->request->getPost('type_paiement');
 
         try {
+            // 2. Appel de la Factory pour obtenir la bonne stratégie
             $strategy = PaymentFactory::create($typePaiement);
+            
+            // 3. Exécution du paiement (Mise à jour BDD via le modèle appelé par la stratégie)
             $strategy->pay((int)$commandeId);
 
             return redirect()->to('/commande/confirmation/' . $commandeId)
-                ->with('success', 'PAIEMENT REÇU !');
+                ->with('success', 'PAIEMENT ACCEPTÉ ! MERCI DRESSEUR.');
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('msg', 'ERREUR DE TERMINAL : ' . $e->getMessage());
+            return redirect()->back()->with('msg', 'ERREUR TERMINAL : ' . $e->getMessage());
         }
     }
 }

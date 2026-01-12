@@ -2,42 +2,49 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
+use App\Models\CommandesModel;
+use App\Models\LignesCommandeModel;
 
+/**
+ * Contrôleur gérant l'affichage post-commande
+ */
 class Commande extends BaseController
 {
+    /**
+     * Affiche la page de confirmation d'une commande spécifique.
+     * Accessible uniquement si l'utilisateur est connecté et propriétaire de la commande.
+     *
+     * @param int $idCommande
+     * @return \CodeIgniter\HTTP\RedirectResponse|string
+     */
     public function confirmation($idCommande)
     {
         $session = session();
+
+        // 1. Sécurité : Connexion requise
         if (!$session->get('isLoggedIn')) {
             return redirect()->to('/connexion');
         }
 
-        $db = \Config\Database::connect();
-        
-        // 1. Récupérer les infos de la commande
-        $commande = $db->table('commandes')
-                       ->where('id', $idCommande)
-                       ->where('id_user', $session->get('id')) // Sécurité : on vérifie que c'est bien SA commande
-                       ->get()
-                       ->getRow();
+        // Instanciation des modèles
+        $commandeModel = new CommandesModel();
+        $lignesModel   = new LignesCommandeModel();
+
+        // 2. Récupérer la commande (Vérification propriétaire incluse dans le modèle)
+        $commande = $commandeModel->getCommandeUtilisateur($idCommande, $session->get('id'));
 
         if (!$commande) {
-            return redirect()->to('/profil')->with('msg', 'Commande introuvable.');
+            return redirect()->to('/profil')->with('msg', 'Commande introuvable ou accès refusé.');
         }
 
-        // 2. Récupérer les lignes (produits)
-        $lignes = $db->table('lignes_commande')
-                     ->join('produits', 'produits.id = lignes_commande.product_id')
-                     ->where('commande_id', $idCommande)
-                     ->get()
-                     ->getResult();
+        // 3. Récupérer le détail des produits achetés
+        $lignes = $lignesModel->getDetailsCommande($idCommande);
 
         $data = [
             'commande' => $commande,
             'lignes'   => $lignes
         ];
 
-        return view_theme('confirmation', $data);
+        return view('confirmation/confirmation', $data);
     }
 }

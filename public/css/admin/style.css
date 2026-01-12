@@ -1,0 +1,371 @@
+/* =========================================
+   1. GLOBAL & TYPOGRAPHIE
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+body {
+    background-color: #000033; /* Bleu BIOS */
+    color: white;
+    font-family: 'VT323', monospace;
+    padding: 20px;
+    margin: 0;
+}
+
+/* Conteneur principal */
+.bios-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    border: 4px double white;
+    padding: 20px;
+    min-height: 90vh;
+    background: #000080;
+    box-shadow: 10px 10px 0px black;
+}
+
+
+/* =========================================
+   2. EN-TÊTE (HEADER)
+   ========================================= */
+/* Le h1 sert de conteneur Flex pour le header admin */
+h1 { 
+    display: flex;               
+    justify-content: space-between; 
+    align-items: center;        
+    border-bottom: 4px solid white; 
+    padding-bottom: 15px; 
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+/* Colonnes du Header */
+.header-left { flex: 1; text-align: left; font-size: 18px; }
+.header-center { flex: 2; text-align: center; color: #ffff00; text-transform: uppercase; line-height: 1.2; }
+.header-right { flex: 1; text-align: right; font-size: 18px; font-weight: normal; }
+
+/* Lien "Retour au site" */
+.header-left a {
+    color: white;
+    text-decoration: none;
+    border: 1px solid white;
+    padding: 5px 10px;
+    transition: 0.3s;
+}
+.header-left a:hover { background: white; color: #000080; }
+
+/* Animation "En ligne" */
+.status-blink {
+    color: #00ff00; /* Vert Néon */
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ff00;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+
+/* =========================================
+   3. NAVIGATION (TABS)
+   ========================================= */
+.admin-nav {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 30px;
+    background: white;
+    padding: 5px;
+}
+
+.admin-nav a {
+    color: #000080;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 5px 15px;
+    border: 2px solid transparent;
+}
+
+.admin-nav a:hover, .admin-nav a.active {
+    background: #000080;
+    color: white;
+    border: 2px solid white;
+}
+
+
+/* =========================================
+   4. BARRE D'OUTILS & FILTRES (Nouvelle version)
+   ========================================= */
+.admin-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    background: #000050;
+    padding: 10px;
+    border: 2px solid white;
+}
+
+/* Zone Gauche (Filtres) */
+.toolbar-filters {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Zone Droite (Actions) */
+.toolbar-actions {
+    flex: 0 0 auto;
+}
+
+/* Formulaire de filtre */
+.filter-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.filter-label {
+    color: yellow;
+    font-weight: bold;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+/* Inputs & Selects communs (Filtres + Recherche) */
+.filter-input, .filter-select, .admin-search-bar input, .admin-search-bar select {
+    padding: 5px 10px;
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    border: 2px solid white;
+    background: #000033; /* ou #000040 selon préférence */
+    color: white;
+}
+
+.filter-btn, .admin-search-bar button {
+    background: #000080; /* Bleu par défaut */
+    color: white;
+    border: 2px solid white;
+    padding: 5px 15px;
+    cursor: pointer;
+    font-family: 'VT323';
+    font-size: 18px;
+}
+.filter-btn:hover, .admin-search-bar button:hover { 
+    background: white; 
+    color: #000080; 
+}
+
+.reset-link {
+    color: #ff5555;
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+
+/* =========================================
+   5. TABLEAUX DE DONNÉES
+   ========================================= */
+.bios-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.bios-table th {
+    background: white;
+    color: #000080;
+    text-align: left;
+    padding: 10px;
+}
+
+.bios-table td {
+    border: 1px solid white;
+    padding: 8px;
+}
+
+.bios-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+/* =========================================
+   6. BOUTONS
+   ========================================= */
+/* Boutons d'action (Tableaux) */
+.btn-action {
+    text-decoration: none;
+    padding: 2px 8px;
+    font-weight: bold;
+    color: white;
+    border: 1px solid white;
+    margin-right: 5px;
+    display: inline-block;
+}
+.btn-edit { background: #008000; } /* Vert */
+.btn-delete { background: #ff0000; } /* Rouge */
+
+/* Bouton Ajout Standard (Toolbar) */
+.btn-add-std {
+    background: #ffff00;
+    color: black;
+    padding: 8px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    border: 2px solid white;
+    display: inline-block;
+    white-space: nowrap;
+}
+.btn-add-std:hover { background: white; }
+
+/* Ancien Bouton Ajout (Block centré) - À garder si utilisé ailleurs */
+.btn-add {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    background: #ffff00;
+    color: black;
+    padding: 10px 20px;
+    font-size: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    border: 4px solid white;
+}
+
+
+/* =========================================
+   7. ANCIENNE BARRE DE RECHERCHE (Legacy)
+   ========================================= */
+/* Gardé pour compatibilité si certaines vues ne sont pas encore migrées vers .admin-toolbar */
+.admin-search-bar {
+    background: white;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border: 2px solid white;
+    background-color: #000080;
+}
+
+.admin-search-bar input, .admin-search-bar select {
+    background: #000040; /* Spécifique ancienne barre */
+}
+
+.admin-search-bar button {
+    background: #ffff00; /* Jaune spécifique ancienne barre */
+    color: black;
+    font-weight: bold;
+}
+
+.admin-search-bar a {
+    color: white;
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+/* =========================================
+   5. MESSAGES D'ALERTE
+   ========================================= */
+.alert {
+    padding: 10px;
+    margin: 15px 0;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    border-width: 4px;
+    border-style: solid;
+}
+
+.alert-error {
+    background: #ffcccc;
+    color: red;
+    border-color: red;
+}
+
+.alert-success {
+    background: #ccffcc;
+    color: green;
+    border-color: green;
+}
+
+/* =========================================
+   12. UTILITAIRES & NETTOYAGE (Refactoring)
+   ========================================= */
+
+/* --- Espacements --- */
+.mt-0 { margin-top: 0 !important; }
+.mt-10 { margin-top: 10px; }
+.mt-15 { margin-top: 15px; }
+.mt-20 { margin-top: 20px; }
+.mt-30 { margin-top: 30px; }
+.mb-0 { margin-bottom: 0 !important; }
+.mb-15 { margin-bottom: 15px; }
+
+/* --- Flexbox Helpers --- */
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-start { display: flex; align-items: center; justify-content: flex-start; }
+.flex-gap-5 { gap: 5px; }
+.flex-gap-10 { gap: 10px; }
+.flex-gap-15 { gap: 15px; }
+.flex-gap-20 { gap: 20px; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-grow { flex: 1; }
+.flex-shrink-0 { flex-shrink: 0; }
+
+/* --- Textes & Couleurs --- */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-bold { font-weight: bold; }
+.text-uppercase { text-transform: uppercase; }
+.text-decoration-none { text-decoration: none; }
+
+.text-white { color: white !important; }
+.text-gray { color: #ccc; }
+.text-lime { color: lime; }
+.text-orange { color: orange; }
+.text-red { color: red; }
+.text-blue-dark { color: #000080; }
+
+/* --- Badges (Statuts Commandes & Users) --- */
+.badge { padding: 5px 10px; color: white; font-weight: bold; border: 1px solid white; display: inline-block; min-width: 80px; text-align: center; }
+.badge-validee { background: #008000; } 
+.badge-expediee { background: #ffa500; color: black; } 
+.badge-terminee { background: #808080; } 
+.badge-annulee { background: #ff0000; } 
+.badge-vide { background: #000000; border: 1px dashed #555; color: #aaa; }
+
+.role-badge { font-weight: bold; padding: 2px 5px; }
+.role-admin { color: yellow; text-shadow: 1px 1px 0 #000; }
+.role-client { color: #00ff00; }
+
+/* --- Badges (Promotions) --- */
+.status-active { color: #00ff00; font-weight: bold; }
+.status-expired { color: #ff0000; font-weight: bold; }
+.status-future { color: #ffff00; font-weight: bold; }
+
+/* --- Tableaux & Listes --- */
+.td-img-thumb { height: 40px; border: 1px solid white; vertical-align: middle; }
+.td-img-medium { height: 50px; border: 2px solid #333; }
+.badge-promo-mini { background: red; color: white; font-size: 10px; padding: 2px; margin-left: 5px; }
+.row-disabled { opacity: 0.5; }
+.sort-link { color: #000080; text-decoration: none; font-weight: bold; }
+.sort-link:hover { text-decoration: underline; }
+
+/* --- Inputs spécifiques Listes --- */
+.input-w-100 { width: 100px; }
+.input-w-250 { width: 250px; }
+.role-select { background: black; color: white; border: 1px solid white; font-family: 'VT323'; font-size: 16px; padding: 2px; }
+
+/* --- Boutons spécifiques --- */
+.btn-detail { background: yellow; color: black; border: none; padding: 5px 10px; font-weight: bold; text-decoration: none; }
+.btn-detail:hover { background: white; }

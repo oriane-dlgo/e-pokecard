@@ -4,137 +4,104 @@ namespace App\Controllers;
 
 use App\Models\ProductModel;
 
+use App\Libraries\ProductDecorator\ConcreteProduct;
+use App\Libraries\ProductDecorator\PromoDecorator;
+
+/**
+ * Contrôleur de la page d'accueil (Vitrine)
+ */
 class Home extends BaseController
 {
+    /**
+     * Affiche l'accueil avec Nouveautés, Promos et Best-Sellers
+     */
     public function index()
-    {/*
-        try {
-            // On tente d'appeler le modèle
-            $model = new ProductModel();
-            // On tente de récupérer les données
-           $lesProduits = $model->findAll();
+    {
+        $model = new ProductModel();
+        $data = [];
 
-        // Coffrets uniquement
-        $lesCoffrets = $model->where('type_produit', 'coffret')->findAll();
-        $lesBoosters = $model->where('type_produit', 'booster')->findAll();
-        $lesCartes = $model->where('type_produit', 'carte')->findAll();
+        // --- A. LES NOUVEAUTÉS ---
+        $rawNouveautes = $model->getAvecDetails()
+                               ->orderBy('produits.id', 'DESC')
+                               ->findAll(4);
+        // On applique le décorateur pour gérer l'affichage du prix
+        $data['nouveautes'] = $this->applyDecorator($rawNouveautes);
 
-        // Préparer le tableau pour la vue
-        $data = [
-            'lesProduits' => $lesProduits,
-            'lesCoffrets' => $lesCoffrets,
-            'lesBoosters'=>$lesBoosters,
-            'lesCartes'=>$lesCartes
-        ];
 
-        //return view('accueil', $data);
-            // On tente d'afficher la vue
-             return view_theme('accueil', $data);
+        // --- B. LES PROMOTIONS ---
+        $rawPromotions = $model->getAvecDetails()
+                               ->where('produits.id_promo IS NOT NULL')
+                               ->findAll(3);
+        $data['promotions'] = $this->applyDecorator($rawPromotions);
 
-        } catch (\Throwable $e) {
-            // EN CAS D'ERREUR, on l'affiche ici :
-            echo "<div style='color:red; font-weight:bold; padding:20px; border:2px solid red;'>";
-            echo "ERREUR : " . $e->getMessage() . "<br><br>";
-            echo "Fichier : " . $e->getFile() . " à la ligne " . $e->getLine();
-            echo "</div>";
-            
-            // Pour voir si c'est un problème de classe non trouvée
-            if (!class_exists('App\Models\ProductModel')) {
-                echo "<br>ASTUCE : La classe App\Models\ProductModel est introuvable. Vérifiez le nom du fichier et le namespace.";
-            }
-        }
-            */
 
-        $db = \Config\Database::connect();
-        
-        // Constructeur de requête de base
-        $builder = $db->table('produits')
-                      ->select('produits.*, extensions.nom as nom_extension, extensions.code as code_extension, series.nom as nom_serie, promotions.tauxPromo')
-                      ->join('extensions', 'extensions.id = produits.id_extension', 'left')
-                      ->join('series', 'series.id = extensions.id_serie', 'left') // <-- AJOUT DE LA JOINTE SERIE
-                      ->join('promotions', 'promotions.idPromo = produits.id_promo', 'left');
-
-        // 1. LES NOUVEAUTÉS (Les 4 derniers ajoutés)
-        // On clone le builder pour ne pas mélanger les requêtes
-        $newBuilder = clone $builder;
-        $data['nouveautes'] = $newBuilder->orderBy('produits.id', 'DESC')
-                                         ->limit(4)
-                                         ->get()->getResult();
-
-        // 2. LES PROMOTIONS (3 articles en promo)
-        $promoBuilder = clone $builder;
-        $data['promotions'] = $promoBuilder->where('produits.id_promo IS NOT NULL')
-                                           ->limit(3)
-                                           ->get()->getResult();
-
-        // 3. LES BEST-SELLERS (Simulé : on prend 4 articles au hasard ou par stock inverse)
-        // Dans un vrai cas, on ferait un JOIN avec lignes_commande et un COUNT()
-        $bestBuilder = clone $builder;
-        $data['bestsellers'] = $bestBuilder->orderBy('RAND()') 
-                                           ->limit(4)
-                                           ->get()->getResult();
-
-                                           
-        // 4. LES BEST-SELLERS (Avec Filtre Semaine / Toujours)
-        $filter = $this->request->getGet('filter'); // On récupère ?filter=week dans l'URL
-        
-        $bestBuilder = clone $builder;
+        // --- C. LES BEST-SELLERS ---
+        $filter = $this->request->getGet('filter');
 
         if ($filter === 'week') {
-            // LOGIQUE SEMAINE : On doit joindre les commandes pour vérifier la date
-            // Attention : Requête un peu plus complexe
-            $data['bestsellers'] = $db->table('lignes_commande')
-                ->select('produits.*, extensions.nom as nom_extension, extensions.code as code_extension, series.nom as nom_serie, SUM(lignes_commande.quantite) as ventes_hebdo, promotions.tauxPromo')
-                ->join('produits', 'produits.id = lignes_commande.product_id')
-                ->join('commandes', 'commandes.id = lignes_commande.commande_id')
-                ->join('extensions', 'extensions.id = produits.id_extension', 'left')
-                ->join('series', 'series.id = extensions.id_serie', 'left')
-                ->join('promotions', 'promotions.idPromo = produits.id_promo', 'left')
-                ->where('commandes.date_creation >=', date('Y-m-d H:i:s', strtotime('-7 days')))
-                ->groupBy('produits.id')
-                ->orderBy('ventes_hebdo', 'DESC')
-                ->limit(4)
-                ->get()->getResult();
+            $rawBestsellers = $model->getBestSellersSemaine(4);
         } else {
-            // LOGIQUE PAR DÉFAUT (TOUJOURS) : On utilise la colonne nb_ventes
-            $data['bestsellers'] = $bestBuilder->orderBy('nb_ventes', 'DESC')
-                                               ->limit(4)
-                                               ->get()->getResult();
+            $rawBestsellers = $model->getAvecDetails()
+                                    ->orderBy('nb_ventes', 'DESC')
+                                    ->findAll(4);
         }
+        $data['bestsellers'] = $this->applyDecorator($rawBestsellers);
 
-        $data['current_filter'] = $filter; // Pour savoir quel bouton allumer dans la vue
+        $data['current_filter'] = $filter;
 
-        return view_theme('accueil', $data);
+        return view('magasin/accueil', $data);
     } 
     
+    /**
+     * Affiche le détail d'un produit
+     */
     public function find(int $id)
     {
         $model = new ProductModel();
-        $product = $model->find($id);
+        $product = $model->find($id); // Attention: find() de base n'a pas les promos jointes ici
+        
+        // Pour le détail, il vaut mieux utiliser ta méthode getAvecDetails() pour avoir le tauxPromo
+        // Sinon le décorateur ne saura pas qu'il y a une promo
+        $productWithDetails = $model->getAvecDetails()->find($id);
     
-        if (!$product) {
+        if (!$productWithDetails) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
-    
-        $data = [
-            'product' => $product
-        ];
 
-        return view_theme('detail', $data);
+        // On décore aussi le produit unique
+        $decoratedArray = $this->applyDecorator([$productWithDetails]);
+        
+        return view('magasin/produit', ['product' => $decoratedArray[0]]);
     }   
 
-    public function switchTheme($mode)
+
+    // -------------------------------------------------------------------------
+    // MÉTHODE PRIVÉE POUR APPLIQUER LE PATTERN
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Applique le Pattern Decorator sur une liste de produits.
+     * Cette méthode injecte une propriété 'prix_html' dans chaque objet produit.
+     * * @param array $products Liste d'objets produits
+     * @return array Liste modifiée
+     */
+    private function applyDecorator(array $products): array
     {
-        $session = session();
-        
-        // On enregistre le choix : 'retro' ou 'standard'
-        if ($mode === 'retro') {
-            $session->set('theme_choisi', 'retro');
-        } else {
-            $session->set('theme_choisi', 'standard'); // ou on supprime la variable
+        foreach ($products as $p) {
+            // 1. On crée le composant de base (ConcreteProduct)
+            $component = new ConcreteProduct($p);
+
+            // 2. Si le produit a un taux de promo, on l'emballe dans le PromoDecorator
+            // (C'est ici que la magie du pattern opère : on change le comportement dynamiquement)
+            if (!empty($p->tauxPromo) && $p->tauxPromo > 0) {
+                $component = new PromoDecorator($component, (float)$p->tauxPromo);
+            }
+
+            // 3. On demande au composant (décoré ou non) de nous donner le HTML du prix
+            // On injecte ce HTML dans une nouvelle propriété temporaire de l'objet
+            $p->prix_html = $component->getHtmlDisplay();
         }
 
-        // On redirige vers la page d'où l'on vient (refresh)
-        return redirect()->back();
+        return $products;
     }
 }
