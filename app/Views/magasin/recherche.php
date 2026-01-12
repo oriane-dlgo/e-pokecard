@@ -16,7 +16,7 @@
     <div class="search-layout">
         
         <aside class="search-sidebar">
-            <div class="sidebar-title">CONFIG RADAR</div>
+            <div class="sidebar-title">CONFIGURATION RADAR</div>
             
             <form action="<?= base_url('recherche') ?>" method="get">
                 

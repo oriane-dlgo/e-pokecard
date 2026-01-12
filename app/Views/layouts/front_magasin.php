@@ -49,7 +49,7 @@
         </div>
 
         <form action="<?= base_url('recherche') ?>" method="get" class="nav-search-form">
-            <input type="text" name="q" placeholder="SEARCH..." class="retro-input">
+            <input type="text" name="q" placeholder="RECHERCHER..." class="retro-input">
             <button type="submit" class="retro-search-btn">GO</button>
         </form>
 

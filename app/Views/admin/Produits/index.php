@@ -12,7 +12,7 @@
                 <span class="filter-label">FILTRES :</span>
                 <input type="text" name="q" class="filter-input" placeholder="Nom..." value="<?= esc($filters['q']) ?>">
                 <select name="type" class="filter-select">
-                    <option value="">TOUT LES TYPES</option>
+                    <option value="">TOUS LES TYPES</option>
                     <option value="carte" <?= $filters['type'] == 'carte' ? 'selected' : '' ?>>CARTE</option>
                     <option value="booster" <?= $filters['type'] == 'booster' ? 'selected' : '' ?>>BOOSTER</option>
                     <option value="coffret" <?= $filters['type'] == 'coffret' ? 'selected' : '' ?>>COFFRET</option>
