@@ -6,97 +6,159 @@ use App\Models\ProductModel;
 use App\Models\CommandesModel;
 use App\Models\UsersModel;
 
+use App\Libraries\OrderChain\Handlers\OrderCreationHandler;
+use App\Libraries\OrderChain\Handlers\StockCheckHandler;
+use App\Libraries\OrderChain\Handlers\StockUpdateHandler;
+
 /**
  * Contrôleur gérant le Panier (Session) et la transformation en Commande
  */
 class Panier extends BaseController
 {
     /**
-     * Affiche le contenu du panier
+     * Affiche le panier
+     * FORMAT ATTENDU SESSION : [id_produit => quantite, id_produit => quantite]
      */
     public function index()
     {
         $session = session();
         $panier = $session->get('panier') ?? [];
-        $items = [];
-        $total = 0;
+        
+        // --- 1. NETTOYAGE / MIGRATION DU FORMAT (Sécurité) ---
+        // Si jamais on a un vieux format (liste simple [0 => id]), on le convertit
+        if (!empty($panier) && array_values($panier) === $panier) {
+             $newPanier = [];
+             foreach($panier as $id) {
+                 $newPanier[$id] = ($newPanier[$id] ?? 0) + 1;
+             }
+             $panier = $newPanier;
+             $session->set('panier', $panier);
+        }
+
+        $articles = []; // Renommé pour correspondre à la Vue ($articles)
+        $total_global = 0; // Renommé pour correspondre à la Vue ($total_global)
 
         $productModel = new ProductModel();
-
-        // 1. OPTIMISATION : On récupère tous les IDs d'un coup
+        
+        // On récupère les clés (les IDs des produits)
         $ids = array_keys($panier);
-
+        
         if (!empty($ids)) {
-            // 2. UNE SEULE REQUÊTE SQL (WHERE id IN (1, 5, 12...))
-            // On utilise getAvecDetails() pour avoir les promos et infos séries
+            // Requête SQL optimisée
             $produits = $productModel->getAvecDetails()
                                      ->whereIn('produits.id', $ids)
                                      ->findAll();
 
-            // 3. ALGORITHME DE MAPPING (PHP)
-            // On associe chaque produit trouvé à sa quantité en session
+            // Construction du tableau pour la VUE
             foreach ($produits as $produit) {
-                // On récupère la quantité depuis la session grâce à l'ID du produit
-                if (isset($panier[$produit->id])) {
-                    $qty = $panier[$produit->id];
-                    
-                    // On injecte la quantité directement dans l'objet (propriété dynamique)
-                    $produit->quantite = $qty;
+                // On récupère la quantité depuis la session (dictionnaire)
+                $qty = (int)($panier[$produit->id] ?? 1);
 
-                    // Calcul du prix (gestion promo incluse via ton décorateur ou logique simple)
-                    $prix = $produit->prix;
-                    if (!empty($produit->tauxPromo)) {
-                        $prix = $produit->prix * (1 - $produit->tauxPromo);
-                    }
-                    
-                    $total += $prix * $qty;
-                    $items[] = $produit;
+                // Gestion du prix (Promo ou Normal)
+                $prixUnitaire = $produit->prix;
+                if (!empty($produit->tauxPromo)) {
+                    $prixUnitaire = $produit->prix * (1 - $produit->tauxPromo);
                 }
+                
+                $totalLigne = $prixUnitaire * $qty;
+                $total_global += $totalLigne;
+
+                // STRUCTURE STRICTE ATTENDUE PAR TA VUE
+                $articles[] = [
+                    'produit'     => $produit,     // Pour $item['produit']->nom
+                    'quantite'    => $qty,         // Pour $item['quantite']
+                    'total_ligne' => $totalLigne   // Pour $item['total_ligne']
+                ];
             }
         }
 
-        // On passe les données à la vue
+        // On passe les variables avec les noms EXACTS de la vue
         return view('magasin/panier', [
-            'items' => $items,
-            'total' => $total
+            'articles'     => $articles,
+            'total_global' => $total_global
         ]);
     }
 
     /**
-     * Ajoute un article au panier (Session)
+     * Ajoute un produit au panier
+     * FORMAT CIBLE : [id => qte]
      */
     public function ajouter()
     {
+        $id = (int)$this->request->getPost('id_produit');
+        $qty = (int)$this->request->getPost('quantite');
+        if ($qty <= 0) $qty = 1;
+
         $session = session();
-        $panier = $session->get('panier') ?? [];
-        $id = $this->request->getPost('id_produit');
-        
-        // Incrémentation ou initialisation
+        $panier = $session->get('panier');
+
+        // Initialisation ou conversion si format incorrect
+        if (!is_array($panier) || ( !empty($panier) && array_values($panier) === $panier )) {
+            $panier = []; 
+            // Note: Si tu veux migrer les anciens paniers ici, tu peux, 
+            // mais le plus simple est de repartir sur une base propre [id=>qty]
+        }
+
+        // Logique Dictionnaire : [ID => QTE]
         if (isset($panier[$id])) {
-            $panier[$id]++;
+            $panier[$id] += $qty;
         } else {
-            $panier[$id] = 1;
+            $panier[$id] = $qty;
         }
 
         $session->set('panier', $panier);
-        $session->setFlashdata('msg', 'Produit ajouté au panier !');
 
-        return redirect()->back();
+        return redirect()->to('/panier')->with('success', 'Produit ajouté !');
     }
 
-    public function supprimer($id)
+    /**
+     * Met à jour la quantité
+     */
+    public function update()
     {
+        // On force le typage int pour être sûr des clés
+        $id = (int)$this->request->getPost('id'); 
+        $action = $this->request->getPost('action');
+        
         $session = session();
         $panier = $session->get('panier');
 
         if (isset($panier[$id])) {
-            unset($panier[$id]);
-            $session->set('panier', $panier);
+            if ($action === 'increase') {
+                $panier[$id]++;
+            } elseif ($action === 'decrease') {
+                $panier[$id]--;
+                if ($panier[$id] <= 0) {
+                    unset($panier[$id]); // Suppression du dictionnaire
+                }
+            }
         }
 
+        $session->set('panier', $panier);
         return redirect()->to('/panier');
     }
 
+    /**
+     * Supprime un article
+     */
+    public function supprimer($id)
+    {
+        $id = (int)$id; // Sécurité
+        $session = session();
+        $panier = $session->get('panier');
+
+        // Suppression dans le dictionnaire
+        if (isset($panier[$id])) {
+            unset($panier[$id]);
+        }
+
+        $session->set('panier', $panier);
+        return redirect()->to('/panier');
+    }
+    
+    /**
+     * Vide le panier
+     */
     public function vider()
     {
         session()->remove('panier');
@@ -104,14 +166,13 @@ class Panier extends BaseController
     }
 
     /**
-     * Transforme le panier en Commande (Statut: Attente)
-     * Vérifie les stocks et délègue la transaction SQL au Modèle
+     * Transforme le panier en Commande
      */
     public function valider()
     {
         $session = session();
 
-        // 1. Vérifications (Auth & Panier vide)
+        // 1. Vérifications
         if (!$session->get('isLoggedIn')) {
             return redirect()->to('/connexion')->with('msg', 'Veuillez vous connecter pour passer commande.');
         }
@@ -121,45 +182,40 @@ class Panier extends BaseController
             return redirect()->to('/panier');
         }
 
-        // 2. Vérification Session User (Au cas où l'user a été supprimé)
+        // 2. Vérification Session User
         $userModel = new UsersModel();
         if (!$userModel->find($session->get('id'))) {
             $session->destroy();
             return redirect()->to('/connexion')->with('msg', 'Session expirée.');
         }
 
-        // 3. Vérification Préliminaire des Stocks (Feedback UX)
+        // 3. Vérification Préliminaire des Stocks
         $productModel = new ProductModel();
+        
+        // ICI : La boucle fonctionne bien car $panier est [id => qty]
         foreach ($panier as $idProduit => $qty) {
             $produit = $productModel->find($idProduit);
-            if ($qty > $produit->stock) {
-                return redirect()->to('/panier')->with('msg', "Stock insuffisant pour : {$produit->nom} (Restant : {$produit->stock})");
+            if (!$produit || $qty > $produit->stock) {
+                return redirect()->to('/panier')->with('msg', "Stock insuffisant pour : " . ($produit->nom ?? 'Produit inconnu'));
             }
         }
 
-        // 4. Transaction SQL via le Modèle
-        $commandeModel = new CommandesModel();
-
+        // 4. Transaction SQL via Chain of Responsibility
         try {
-            // 1. Initialisation de la chaîne
             $stockCheck = new StockCheckHandler();
             $orderCreate = new OrderCreationHandler();
             $stockUpdate = new StockUpdateHandler();
     
-            // 2. Chaînage : Stock -> Création -> Update Stock
             $stockCheck->setNext($orderCreate)->setNext($stockUpdate);
     
-            // 3. Lancement
             $context = [
                 'userId' => session()->get('id'),
-                'panier' => session()->get('panier')
+                'panier' => $panier // On passe le dictionnaire complet
             ];
             
-            // Le résultat contient le contexte enrichi avec commandeId
             $resultContext = $stockCheck->handle($context); 
             $commandeId = $resultContext['commandeId'];
     
-            // 4. Succès
             session()->remove('panier');
             return redirect()->to('/paiement/choix/' . $commandeId);
     

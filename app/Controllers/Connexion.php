@@ -46,6 +46,9 @@ class Connexion extends BaseController
         // 3. Vérification du mot de passe haché
         if ($user && password_verify($this->request->getPost('password'), $user->password)) {
 
+            // Sauvegarde du panier actuel 
+            $panierSauvegarde = $session->get('panier');
+            
             // 4. Initialisation de la session
             $ses_data = [
                 'id'         => $user->id,
@@ -54,6 +57,11 @@ class Connexion extends BaseController
                 'isLoggedIn' => true
             ];
             $session->set($ses_data);
+
+            // Si l'invité avait un panier, on le réinject dans la session
+            if (!empty($panierSauvegarde)) {
+                $session->set('panier', $panierSauvegarde);
+            }
 
             // Redirection spécifique pour les admins
             if($user->role === 'admin') {
