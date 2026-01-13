@@ -195,6 +195,33 @@ class CommandesModel extends Model
         return $result->id;
     }
 
+    /**
+     * Récupère les commandes avec les infos du client associé (Jointure).
+     * Retourne le Builder pour permettre la pagination dans le contrôleur.
+     */
+    public function getCommandesAvecClient($filters = [])
+    {
+        // On sélectionne les champs de la commande + le nom/email du client
+        $this->select('commandes.*, users.nom as client_nom, users.prenom as client_prenom, users.email as client_email')
+             ->join('users', 'users.id = commandes.id_user', 'left');
+
+        // Application des filtres
+        if (!empty($filters['statut'])) {
+            $this->where('commandes.statut', $filters['statut']);
+        }
+
+        if (!empty($filters['q'])) {
+            $this->groupStart()
+                 ->like('users.nom', $filters['q'])
+                 ->orLike('users.email', $filters['q'])
+                 ->orLike('commandes.id', $filters['q']) // Recherche par ID commande
+                 ->groupEnd();
+        }
+
+        // On retourne $this (le builder) pour pouvoir enchaîner ->paginate() plus tard
+        return $this;
+    }
+
     // --- CONFIGURATIONS STANDARDS ---
 
     protected bool $allowEmptyInserts = false;

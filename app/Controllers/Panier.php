@@ -18,35 +18,48 @@ class Panier extends BaseController
     {
         $session = session();
         $panier = $session->get('panier') ?? [];
-
-        $productModel = new ProductModel();
-        $articles = [];
+        $items = [];
         $total = 0;
 
-        // Récupération des détails pour chaque ID stocké en session
-        if (!empty($panier)) {
-            foreach ($panier as $idProduit => $quantite) {
-                $produit = $productModel->find($idProduit);
-                
-                if ($produit) {
-                    $prixLigne = $produit->prix * $quantite;
-                    $total += $prixLigne;
+        $productModel = new ProductModel();
 
-                    $articles[] = [
-                        'produit'     => $produit,
-                        'quantite'    => $quantite,
-                        'total_ligne' => $prixLigne
-                    ];
+        // 1. OPTIMISATION : On récupère tous les IDs d'un coup
+        $ids = array_keys($panier);
+
+        if (!empty($ids)) {
+            // 2. UNE SEULE REQUÊTE SQL (WHERE id IN (1, 5, 12...))
+            // On utilise getAvecDetails() pour avoir les promos et infos séries
+            $produits = $productModel->getAvecDetails()
+                                     ->whereIn('produits.id', $ids)
+                                     ->findAll();
+
+            // 3. ALGORITHME DE MAPPING (PHP)
+            // On associe chaque produit trouvé à sa quantité en session
+            foreach ($produits as $produit) {
+                // On récupère la quantité depuis la session grâce à l'ID du produit
+                if (isset($panier[$produit->id])) {
+                    $qty = $panier[$produit->id];
+                    
+                    // On injecte la quantité directement dans l'objet (propriété dynamique)
+                    $produit->quantite = $qty;
+
+                    // Calcul du prix (gestion promo incluse via ton décorateur ou logique simple)
+                    $prix = $produit->prix;
+                    if (!empty($produit->tauxPromo)) {
+                        $prix = $produit->prix * (1 - $produit->tauxPromo);
+                    }
+                    
+                    $total += $prix * $qty;
+                    $items[] = $produit;
                 }
             }
         }
 
-        $data = [
-            'articles'     => $articles,
-            'total_global' => $total
-        ];
-
-        return view('magasin/panier', $data);
+        // On passe les données à la vue
+        return view('magasin/panier', [
+            'items' => $items,
+            'total' => $total
+        ]);
     }
 
     /**

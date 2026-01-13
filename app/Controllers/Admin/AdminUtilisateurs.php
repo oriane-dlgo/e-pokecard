@@ -35,7 +35,8 @@ class AdminUtilisateurs extends BaseController
         }
 
         // 3. Tri et Exécution
-        $data['users'] = $builder->orderBy('id', 'DESC')->findAll();
+        $data['users'] = $builder->orderBy('id', 'DESC')->paginate(10);
+        $data['pager'] = $builder->pager;
         
         $data['filters'] = ['q' => $q, 'role' => $role];
 

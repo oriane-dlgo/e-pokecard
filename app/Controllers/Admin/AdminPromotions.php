@@ -34,7 +34,8 @@ class AdminPromotions extends BaseController
         }
         
         // On récupère tout, trié par date de fin (les plus récentes en premier)
-        $data['promotions'] = $model->orderBy('dateFin', 'DESC')->findAll();
+        $data['promotions'] = $model->orderBy('dateFin', 'DESC')->paginate(10);
+        $data['pager'] = $model->pager;
         $data['filters'] = ['statut' => $statut, 'q' => $q];
 
         return view('admin/Promotions/index', $data);

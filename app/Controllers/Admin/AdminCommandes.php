@@ -12,34 +12,24 @@ class AdminCommandes extends BaseController
      */
     public function index()
     {
-        if (session()->get('user_role') !== 'admin') { return redirect()->to('/'); }
+        $model = new CommandesModel();
 
-        $db = \Config\Database::connect();
-
-        $q = $this->request->getGet('q');
-        $statut = $this->request->getGet('statut');
-
-        $builder = $db->table('commandes')
-            ->select('commandes.*, users.nom as client_nom, users.email as client_email')
-            ->join('users', 'users.id = commandes.id_user')
-            ->where('statut !=', 'panier');
-
-        if (!empty($q)) {
-            $builder->groupStart()
-                ->like('users.nom', $q)
-                ->orLike('commandes.id', $q)
-                ->groupEnd();
-        }
-
-        if (!empty($statut)) {
-            $builder->where('statut', $statut);
-        }
-
-        $query = $builder->orderBy('commandes.id', 'DESC')->get();
+        // Récupération des filtres depuis l'URL
+        $filters = [
+            'q'      => $this->request->getGet('q'),
+            'statut' => $this->request->getGet('statut')
+        ];
 
         $data = [
-            'commandes' => $query->getResult(),
-            'filters'   => ['q' => $q, 'statut' => $statut]
+            // 1. Appel de la méthode du modèle (qui fait les JOIN)
+            // 2. Tri par date décroissante
+            // 3. Pagination (10 par page)
+            'commandes' => $model->getCommandesAvecClient($filters)
+                                 ->orderBy('commandes.date_creation', 'DESC')
+                                 ->paginate(10),
+                                 
+            'pager'     => $model->pager,
+            'filters'   => $filters
         ];
 
         return view('admin/Commandes/index', $data);

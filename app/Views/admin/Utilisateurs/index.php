@@ -55,4 +55,9 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <div class="pagination-container" style="margin-top: 20px; display: flex; justify-content: center;">
+        <?= $pager->links('default', 'pagination') ?>
+    </div>
+
 <?= $this->endSection() ?>

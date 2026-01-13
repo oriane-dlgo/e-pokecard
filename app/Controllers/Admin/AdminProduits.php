@@ -45,7 +45,8 @@ class AdminProduits extends BaseController
         // Application du tri
         $model->orderBy($sort, $order);
 
-        $data['produits'] = $model->findAll();
+        $data['produits'] = $model->orderBy('id', 'DESC')->paginate(10);
+        $data['pager'] = $model->pager;
 
         // On renvoie les filtres à la vue pour garder la mémoire
         $data['filters'] = [
