@@ -54,7 +54,7 @@
                     <td><img src="<?= base_url('assets/produits/'.$p->image_url) ?>" class="td-img-thumb"></td>
                     <td><?= esc($p->nom) ?><?php if($p->id_promo): ?> <span class="badge-promo-mini">PROMO</span><?php endif; ?></td>
                     <td><?= esc($p->type_produit) ?><br><small class="text-gray"><?= esc($p->rarete) ?></small></td>
-                    <td class="text-yellow">$<?= esc($p->prix) ?></td>
+                    <td class="text-yellow"><?= esc($p->prix) ?>€</td>
                     <td style="<?= $p->stock == 0 ? 'color:white; background:red;' : ($p->stock < 5 ? 'color:orange;' : '') ?>"><?= $p->stock ?></td>
                     <td><?= $p->nb_ventes ?></td>
                     <td>

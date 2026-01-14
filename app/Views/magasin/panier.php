@@ -57,9 +57,9 @@
             </div>
 
             <div class="total-display">
-                TOTAL: $<?= $total_global ?> 
+                TOTAL: <?= $total_global ?>€ 
             </div>
-            
+            €
         </div>
 
     <?php endif; ?>

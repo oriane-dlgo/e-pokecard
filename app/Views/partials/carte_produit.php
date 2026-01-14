@@ -32,7 +32,7 @@
     <h3><?= esc($produit->nom) ?></h3>
     
     <div class="prix-container">
-        <?= $produit->prix_html ?>
+        <?= $produit->prix_html ?? ('<span class="prix-final">'.number_format($produit->prix, 2).'€</span>') ?>
     </div>
     
     <div class="card-actions">
