@@ -66,7 +66,8 @@ class Panier extends BaseController
                 // STRUCTURE STRICTE ATTENDUE PAR TA VUE
                 $articles[] = [
                     'produit'     => $produit,     // Pour $item['produit']->nom
-                    'quantite'    => $qty,         // Pour $item['quantite']
+                    'quantite'    => $qty,          // Pour $item['quantite']
+                    'tva'         => round($totalLigne/1.2*0.2, 2),  // Pour afficher la TVA       
                     'total_ligne' => $totalLigne   // Pour $item['total_ligne']
                 ];
             }

@@ -29,6 +29,7 @@
                 <span class="col-item">ARTICLE</span>
                 <span class="col-price">PRIX</span>
                 <span class="col-qty">QTE</span>
+                 <span class="col-total">TVA</span>
                 <span class="col-total">TOTAL</span>
                 <span class="col-action"></span>
             </div>
@@ -41,6 +42,7 @@
                 </div>
                 <div class="col-price"><?= esc($item['produit']->prix) ?>€</div>
                 <div class="col-qty">x<?= esc($item['quantite']) ?></div>
+                <div class="col-total"><?= esc($item['tva']) ?>€</div>
                 <div class="col-total"><?= esc($item['total_ligne']) ?>€</div>
                 <div class="col-action">
                     <a href="<?= base_url('panier/supprimer/' . $item['produit']->id) ?>" class="btn-cross">X</a>
