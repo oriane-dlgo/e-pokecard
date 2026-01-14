@@ -140,17 +140,17 @@ class ProductModel extends Model
         // 2. Application des filtres
         if (!empty($filters['q'])) {
             $this->groupStart()
-                 ->like('nom', $filters['q'])
-                 ->orLike('description', $filters['q'])
+                 ->like('produits.nom', $filters['q'])
+                 ->orLike('produits.description', $filters['q'])
                  ->groupEnd();
         }
 
         if (!empty($filters['type'])) {
-            $this->whereIn('type_produit', $filters['type']);
+            $this->whereIn('produits.type_produit', $filters['type']);
         }
 
         if (!empty($filters['rarete'])) {
-            $this->whereIn('rarete', $filters['rarete']);
+            $this->whereIn('produits.rarete', $filters['rarete']);
         }
 
         if (!empty($filters['promo'])) {
@@ -158,14 +158,14 @@ class ProductModel extends Model
         }
 
         if (!empty($filters['ext'])) {
-            $this->whereIn('id_extension', $filters['ext']);
+            $this->whereIn('produits.id_extension', $filters['ext']);
         }
 
         // 3. Tri
         switch ($filters['tri'] ?? '') {
-            case 'prix_asc':   $this->orderBy('prix', 'ASC'); break;
-            case 'prix_desc':  $this->orderBy('prix', 'DESC'); break;
-            case 'pop_desc':   $this->orderBy('nb_ventes', 'DESC'); break;
+            case 'prix_asc':   $this->orderBy('produits.prix', 'ASC'); break;
+            case 'prix_desc':  $this->orderBy('produits.prix', 'DESC'); break;
+            case 'pop_desc':   $this->orderBy('produits.nb_ventes', 'DESC'); break;
             case 'promo_desc': $this->orderBy('promotions.tauxPromo', 'DESC'); break;
             default:           $this->orderBy('produits.id', 'DESC'); break;
         }
