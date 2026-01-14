@@ -14,7 +14,7 @@
         
         <div class="dash-card">
             <h3 style="margin:0; color:#aaa;">CHIFFRE D'AFFAIRES</h3>
-            <div class="dash-number text-green">$<?= number_format($ca, 2) ?></div>
+            <div class="dash-number text-green"><?= number_format($ca, 2) ?>€</div>
             <small>Total cumulé</small>
         </div>
 

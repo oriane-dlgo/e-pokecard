@@ -42,7 +42,7 @@
                 <tr>
                     <td>#<?= $c->id ?></td>
                     <td><?= esc($c->client_nom) ?><br><small class="text-gray" style="font-size: 0.8em;"><?= esc($c->client_email) ?></small></td>
-                    <td class="text-yellow">$<?= number_format($c->total, 2) ?></td>
+                    <td class="text-yellow"><?= number_format($c->total, 2) ?>€</td>
                     <td>
                         <?php 
                             $badgeClass = 'badge-terminee'; 
