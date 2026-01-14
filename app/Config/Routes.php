@@ -18,7 +18,7 @@ $routes->get('detail/(:num)', 'Home::find/$1'); // Détail produit
 $routes->get('mentions-legales', 'Legal::mentions');
 $routes->get('cgv', 'Legal::cgv');
 $routes->get('confidentialite', 'Legal::privacy');
-
+$routes->get('cgu', 'Legal::cgu');
 
 // --------------------------------------------------------------------
 // 2. AUTHENTIFICATION (Connexion / Inscription)
@@ -29,6 +29,7 @@ $routes->get('deconnexion', 'Connexion::deconnexion');
 
 $routes->get('inscription', 'Inscription::index');
 $routes->post('inscription/register', 'Inscription::register');
+
 
 
 // --------------------------------------------------------------------

@@ -48,6 +48,13 @@
             </div>
 
             <div class="action">
+                <p>
+                    <input type="checkbox" name="cgu" id="cgu" value="1">
+                    <label for="cgu" class="label_cgu"> J'accepte les<a class="link" href="<?= base_url('cgu') ?>"> Conditions Générales d'Utilisation</a></label>
+                </p>    
+            </div>
+
+            <div class="action">
                 <button class="submit">Valider</button>
                 <p>Déjà un compte ? <a class="link" href="<?= base_url('connexion') ?>">Retour au Login</a></p>
             </div>

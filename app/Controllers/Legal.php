@@ -18,4 +18,9 @@ class Legal extends BaseController
     {
         return view('legal/privacy');
     }
+
+    public function cgu()
+    {
+        return view('legal/cgu');
+    }
 }

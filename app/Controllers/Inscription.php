@@ -52,6 +52,9 @@ class Inscription extends BaseController
             'verify_password' => [
                 'required' => 'Veuillez vérifier votre mot de passe.',
                 'matches'  => 'Les mots de passe ne sont pas identiques'
+            ],
+            'cgu' => [
+                'required' => 'Veuillez accepter les conditions générales d\'utilisation pour finaliser votre inscription.'
             ]
         ];
 
