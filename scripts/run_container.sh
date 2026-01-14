@@ -2,6 +2,8 @@
 
 echo "🚀 Démarrage du projet SAE (Podman)..."
 
+podman-compose down
+
 # 1. On lance les conteneurs
 podman-compose up -d --build
 
