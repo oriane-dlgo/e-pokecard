@@ -23,6 +23,10 @@
             <span>DATE:</span>
             <span><?= date('d/m/Y H:i', strtotime($commande->date_creation)) ?></span>
         </div>
+        <div class="receipt-row">
+            <span>ADRESSE DE LIVRAISON:</span>
+            <span><?= esc($adresse) ?></span>
+        </div>
 
         <div style="margin-top: 15px; font-weight:bold; border-bottom: 2px solid black;">PRODUITS:</div>
 
@@ -33,11 +37,11 @@
                 <span><?= number_format($ligne->prix_unitaire * $ligne->quantite, 2) ?>€</span>
             </div>
         <?php endforeach; ?>
-        <div class = "TVA">
+        <div class="TVA">
             <span>TOTAL TVA:</span>
             <span><?= number_format(($commande->total) / 1.2 * 0.2, 2) ?>€</span>
         </div>
-        
+
         <div class="receipt-total">
 
             <span>TOTAL PAYÉ:</span>

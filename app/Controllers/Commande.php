@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\CommandesModel;
 use App\Models\LignesCommandeModel;
+use App\Models\UsersModel;
 
 /**
  * Contrôleur gérant l'affichage post-commande
@@ -28,7 +29,13 @@ class Commande extends BaseController
 
         // Instanciation des modèles
         $commandeModel = new CommandesModel();
-        $lignesModel   = new LignesCommandeModel();
+        $lignesModel = new LignesCommandeModel();
+        $userModel = new UsersModel();
+
+
+        //Récupération adresse
+        $user = $userModel->find($session->get('id'));
+        $adresse = $user->adresse;
 
         // 2. Récupérer la commande (Vérification propriétaire incluse dans le modèle)
         $commande = $commandeModel->getCommandeUtilisateur($idCommande, $session->get('id'));
@@ -42,7 +49,8 @@ class Commande extends BaseController
 
         $data = [
             'commande' => $commande,
-            'lignes'   => $lignes
+            'lignes' => $lignes,
+            'adresse' => $adresse
         ];
 
         return view('confirmation/confirmation', $data);
