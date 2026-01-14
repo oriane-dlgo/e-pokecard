@@ -65,8 +65,27 @@ class Search extends BaseController
             'tri' => $tri
         ];
 
+        // Récupération des résultats bruts de la recherche avec pagination
+        $results = $model->searchProducts($filters, 18);
+
+        // --- 4. DÉCORATION ---
+        // On passe sur chaque produit pour générer le bon affichage de prix
+        foreach ($results as $product) {
+            // 1. On crée le composant de base
+            $component = new ConcreteProduct($product);
+
+            // 2. Si le produit a une promo, on l'emballe dans le décorateur
+            if (!empty($product->tauxPromo)) {
+                $component = new PromoDecorator($component, (float)$product->tauxPromo);
+            }
+
+            // 3. On génère le HTML (prix barré ou normal) et on l'injecte dans l'objet
+            // La vue 'carte_produit.php' attend cette propriété 'prix_html'
+            $product->prix_html = $component->getHtmlDisplay();
+        }
+
         $data = [
-            'results'   => $model->searchProducts($filters, 18),
+            'results'   => $results,
             'pager'     => $model->pager,
             'seriesMap' => $model->getSeriesMap(), // Pour la sidebar
             'filters'   => array_merge($filters, [
