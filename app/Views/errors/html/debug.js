@@ -3,7 +3,7 @@ var contentDivs = new Array();
 
 function init()
 {
-    // Grab the tab links and content divs from the page
+    // Récupère le tabLinks et le contentDivs de la page
     var tabListItems = document.getElementById('tabs').childNodes;
     console.log(tabListItems);
     for (var i = 0; i < tabListItems.length; i ++)
