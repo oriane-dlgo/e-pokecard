@@ -61,4 +61,10 @@ else
 fi
 # ------------------------------------
 
+# Dis à Git : "Arrête de surveiller si un fichier est exécutable ou non, je suis sous Windows, je m'en fiche."
+git config core.filemode false
+# Dis à Git : "Gére intelligemment les conversions ou ignore les."
+git config core.autocrlf true
+
+
 echo "✅ SITE ACCESSIBLE : http://localhost:8080"

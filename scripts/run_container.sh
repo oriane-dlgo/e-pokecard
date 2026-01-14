@@ -48,4 +48,10 @@ else
 fi
 # ------------------------------------
 
+# Dit à Git : "Ne regarde pas si le fichier est exécutable ou non, ignore les chmod"
+git config core.filemode false
+# Dit à Git : "Si jamais tu trouves du CRLF (venant de Windows), convertis-le en LF. Sinon ne touche à rien."
+git config core.autocrlf input
+
+
 echo "✅ SITE ACCESSIBLE : http://localhost:8080"
