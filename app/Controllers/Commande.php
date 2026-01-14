@@ -47,10 +47,13 @@ class Commande extends BaseController
         // 3. Récupérer le détail des produits achetés
         $lignes = $lignesModel->getDetailsCommande($idCommande);
 
+        //frais livraison
+        $frais = 3.00;
         $data = [
             'commande' => $commande,
             'lignes' => $lignes,
-            'adresse' => $adresse
+            'adresse' => $adresse,
+            'frais' => $frais
         ];
 
         return view('confirmation/confirmation', $data);

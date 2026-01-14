@@ -38,15 +38,20 @@
             </div>
         <?php endforeach; ?>
         <div class="TVA">
+            <span>FRAIS DE LIVRAISON:</span>
+            <span><?= number_format($frais / 1.2 * 0.2, 2) ?>€</span>
+            <span><?= number_format($frais, 2) ?>€</span>
+        </div>
+        <div class="TVA">
             <span>TOTAL TVA:</span>
-            <span><?= number_format(($commande->total) / 1.2 * 0.2, 2) ?>€</span>
+            <span><?= number_format((($commande->total) + 3) / 1.2 * 0.2, 2) ?>€</span>
         </div>
 
         <div class="receipt-total">
 
             <span>TOTAL PAYÉ:</span>
 
-            <span style="color:#D32F2F;"><?= esc($commande->total) ?>€</span>
+            <span style="color:#D32F2F;"><?= esc($commande->total) + 3 ?>€</span>
         </div>
 
 
