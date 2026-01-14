@@ -23,7 +23,7 @@
                     <input type="number" name="tauxPromo" required min="1" max="100" placeholder="Ex: 20" class="input-promo-rate">
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>DATE DE DÉBUT</label><input type="date" name="dateDebut" required value="<?= date('Y-m-d') ?>"></div>
+                    <div class="form-group"><label>DATE DE DÉBUT</label><input type="date" name="dateDebut" required value="<?= date('d-m-Y') ?>"></div>
                     <div class="form-group"><label>DATE DE FIN</label><input type="date" name="dateFin" required></div>
                 </div>
             </div>

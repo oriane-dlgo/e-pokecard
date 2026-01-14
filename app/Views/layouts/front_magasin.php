@@ -65,7 +65,7 @@
                     <a href="<?= base_url('deconnexion') ?>" title="Quitter la partie" class="btn-quit">OFF</a>
                 </div>
              <?php else: ?>
-                <a href="<?= base_url('connexion')?>" title="Se connecter / Start Game">
+                <a href="<?= base_url('connexion')?>" title="Se connecter">
                     <img src="<?= base_url("assets/utilisateur_icone.png")?>" alt="Connexion">
                 </a>
              <?php endif; ?>

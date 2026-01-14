@@ -29,7 +29,7 @@
                     <input type="hidden" name="type_paiement" value="card">
 
                     <label>NUMÉRO DE CARTE</label>
-                    <input type="text" name="cc_num" placeholder="XXXX XXXX XXXX XXXX" class="pay-input">
+                    <input type="number" name="cc_num" placeholder="XXXX XXXX XXXX XXXX" class="pay-input">
                     
                     <div class="pay-row">
                         <div style="flex:1">
@@ -38,7 +38,7 @@
                         </div>
                         <div style="flex:1">
                             <label>CVV</label>
-                            <input type="text" name="cc_cvv" placeholder="123" class="pay-input">
+                            <input type="number" name="cc_cvv" placeholder="123" class="pay-input">
                         </div>
                     </div>
 
