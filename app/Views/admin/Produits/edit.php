@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group"><label>PRIX (€)</label><input type="number" step="0.01" name="prix" required value="<?= esc($p->prix) ?>"></div>
+                    <div class="form-group"><label>PRIX (€)</label><input type="number" step="0.01" name="prix" required value="<?= esc($p->prix) ?>"min="0"></div>
                     <div class="form-group"><label>STOCK</label><input type="number" name="stock" required value="<?= esc($p->stock) ?>" min="0"></div>
                 </div>
                 <div class="form-group">

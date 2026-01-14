@@ -60,8 +60,8 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>PRIX ($)</label>
-                        <input type="number" step="0.01" name="prix" required placeholder="0.00" value="<?= old('prix') ?>">
+                        <label>PRIX (€)</label>
+                        <input type="number" step="0.01" min="0" name="prix" required placeholder="0.00" value="<?= old('prix') ?>">
                     </div>
                     <div class="form-group">
                         <label>STOCK</label>
