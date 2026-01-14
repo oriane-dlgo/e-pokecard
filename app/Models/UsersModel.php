@@ -34,7 +34,8 @@ class UsersModel extends Model
             'verify_password' => 'required|matches[password]',
             'nom'      => 'required|min_length[2]',
             'prenom'   => 'required|min_length[2]',
-            'email'    => 'required|valid_email|is_unique[users.email]'
+            'email'    => 'required|valid_email|is_unique[users.email]',
+            'cgu'      => 'required'
         ];
     }
 

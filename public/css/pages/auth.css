@@ -102,6 +102,21 @@ label {
     background-color: #fff8f8;
 }
 
+.label_cgu {
+    display: inline;          /* Permet de rester à côté de la case */
+    text-transform: none;     /* Enlève les majuscules */
+    font-weight: normal;      /* Enlève le gras si tu préfères */
+    font-size: 20px;          /* La même taille que ton texte du bas */
+    color: #333;              /* La même couleur que ton texte du bas */
+    cursor: pointer;
+}
+
+/* Optionnel : pour aligner verticalement la case et le texte */
+/* .action input[type="checkbox"] {
+    vertical-align: middle;
+    margin-right: 5px;
+} */
+
 
 /* =========================================
    4. BOUTON 3D (SUBMIT)
