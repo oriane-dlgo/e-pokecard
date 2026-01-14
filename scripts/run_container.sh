@@ -10,6 +10,12 @@ podman-compose up -d --build
 echo "📦 Installation des dépendances PHP..."
 podman exec -it sae_php_app composer install
 
+# Vérification et création du fichier .env s'il n'existe pas
+if [ ! -f .env ]; then
+    echo "📄 Création du fichier .env à partir de env.example..."
+    cp env.example .env
+fi
+
 # Correction des permissions (on tente, même si ça râle parfois sous Podman)
 echo "🔧 Correction des permissions..."
 podman exec -it sae_php_app chmod -R 755 /var/www/html || echo "⚠️  Petit souci de permission ignoré"
