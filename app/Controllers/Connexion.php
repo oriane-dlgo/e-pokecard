@@ -35,6 +35,7 @@ class Connexion extends BaseController
             'password' => 'required'
         ];
 
+        
         if (! $this->validate($rules)) {
             return redirect()->back()->withInput()->with('msg', 'Veuillez remplir tous les champs.');
         }
