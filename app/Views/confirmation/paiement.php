@@ -15,7 +15,7 @@
         <?php endif;?>
 
         <div class="total-due-display">
-            TOTAL DÛ : <span class="blink">$<?= number_format($total_global, 2) ?></span>
+            TOTAL DÛ : <span class="blink"><?= number_format($total_global, 2) ?>€</span>
         </div>
 
         <div class="payment-grid">

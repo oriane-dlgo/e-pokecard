@@ -15,6 +15,6 @@ class ConcreteProduct implements ProductComponentInterface {
     // C'est ici qu'on définit le HTML "Standard" (sans promo)
     public function getHtmlDisplay(): string {
         // Correspond à ton 'else' : <span class="prix-final">$...</span>
-        return '<span class="prix-final">$' . number_format($this->product->prix, 2) . '</span>';
+        return '<span class="prix-final">' . number_format($this->product->prix, 2) . '€</span>';
     }
 }

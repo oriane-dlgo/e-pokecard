@@ -19,7 +19,7 @@
 
         <div class="admin-panel panel-glass info-col">
             <h3 class="panel-title title-white">RÉSUMÉ FINANCIER</h3>
-            <p><strong>TOTAL COMMANDE :</strong> <span class="price-display-large">$<?= number_format($c->total, 2) ?></span></p>
+            <p><strong>TOTAL COMMANDE :</strong> <span class="price-display-large"><?= number_format($c->total, 2) ?>€</span></p>
             
             <div class="mt-15" style="border-top: 1px solid #555; padding-top: 10px;">
                 <strong>STATUT ACTUEL :</strong> 
@@ -60,9 +60,9 @@
                 </td>
                 <td style="font-size: 20px;"><?= esc($ligne->nom) ?></td>
                 <td class="text-gray"><?= esc($ligne->type_produit) ?></td>
-                <td>$<?= number_format($ligne->prix_unitaire, 2) ?></td>
+                <td><?= number_format($ligne->prix_unitaire, 2) ?>€</td>
                 <td>x <?= $ligne->quantite ?></td>
-                <td class="text-yellow text-bold">$<?= number_format($ligne->prix_unitaire * $ligne->quantite, 2) ?></td>
+                <td class="text-yellow text-bold"><?= number_format($ligne->prix_unitaire * $ligne->quantite, 2) ?>€</td>
             </tr>
         <?php endforeach; ?>
         </tbody>

@@ -39,9 +39,9 @@
                     <img src="<?= base_url('assets/produits/' . esc($item['produit']->image_url ?? 'default.png')) ?>" class="pixel-img">
                     <span><?= esc($item['produit']->nom) ?></span>
                 </div>
-                <div class="col-price">$<?= esc($item['produit']->prix) ?></div>
+                <div class="col-price"><?= esc($item['produit']->prix) ?>€</div>
                 <div class="col-qty">x<?= esc($item['quantite']) ?></div>
-                <div class="col-total">$<?= esc($item['total_ligne']) ?></div>
+                <div class="col-total"><?= esc($item['total_ligne']) ?>€</div>
                 <div class="col-action">
                     <a href="<?= base_url('panier/supprimer/' . $item['produit']->id) ?>" class="btn-cross">X</a>
                 </div>

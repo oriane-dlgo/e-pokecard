@@ -20,8 +20,8 @@ class PromoDecorator extends ProductDecorator {
 
         // Correspond exactement à ton 'if ($hasPromo)'
         return '<span class="zoom-text">' .
-               '    <span class="prix-final">$' . number_format($newPrice, 2) . '</span>' .
-               '    <span class="prix-sup">$' . number_format($oldPrice, 2) . '</span>' .
+               '    <span class="prix-final">' . number_format($newPrice, 2) . '€</span>' .
+               '    <span class="prix-sup">' . number_format($oldPrice, 2) . '€</span>' .
                '</span>';
     }
 }

@@ -29,13 +29,13 @@
         <?php foreach ($lignes as $ligne): ?>
         <div class="receipt-row">
             <span><?= esc($ligne->nom) ?> (x<?= $ligne->quantite ?>)</span>
-            <span>$<?= number_format($ligne->prix_unitaire * $ligne->quantite, 2) ?></span>
+            <span><?= number_format($ligne->prix_unitaire * $ligne->quantite, 2) ?>€</span>
         </div>
         <?php endforeach; ?>
 
         <div class="receipt-total">
             <span>TOTAL PAYÉ:</span>
-            <span style="color:#D32F2F;">$<?= esc($commande->total) ?></span>
+            <span style="color:#D32F2F;"><?= esc($commande->total) ?>€</span>
         </div>
     </div>
 

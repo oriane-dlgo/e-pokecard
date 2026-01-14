@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="price-tag">
-                    PRIX: €<?= esc($product->prix) ?>
+                    PRIX: <?= esc($product->prix) ?>€
                 </div>
 
                 <div style="text-align: right; font-size: 18px; margin-top: 5px;">

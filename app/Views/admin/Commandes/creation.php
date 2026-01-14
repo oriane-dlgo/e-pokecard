@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>MONTANT TOTAL ($)</label>
+                        <label>MONTANT TOTAL (€)</label>
                         <input type="number" name="total" step="0.01" min="0" required placeholder="0.00" class="input-total">
                     </div>
                 </div>

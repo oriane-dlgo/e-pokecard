@@ -69,7 +69,7 @@
                         <td>#<?= $ord->id ?></td>
                         <td><?= esc($ord->client_nom) ?></td>
                         <td><?= date('d/m/Y H:i', strtotime($ord->date_creation ?? 'now')) ?></td>
-                        <td class="text-yellow">$<?= number_format($ord->total, 2) ?></td>
+                        <td class="text-yellow"><?= number_format($ord->total, 2) ?>€</td>
                         <td>
                             <?php 
                                 $color = 'white';
