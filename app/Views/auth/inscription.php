@@ -42,6 +42,11 @@
                 <input type="password" name="password" id="password" class="form_style">
             </div>
 
+            <div class="group_form">
+                <label class="sub_title" for="password">Confirmer le mot de passe</label>
+                <input type="password" name="verify_password" id="verify_password" class="form_style">
+            </div>
+
             <div class="action">
                 <button class="submit">Valider</button>
                 <p>Déjà un compte ? <a class="link" href="<?= base_url('connexion') ?>">Retour au Login</a></p>

@@ -31,6 +31,7 @@ class UsersModel extends Model
         return [
             'login'    => 'required|min_length[3]|is_unique[users.login]',
             'password' => 'required|min_length[6]',
+            'verify_password' => 'required|matches[password]',
             'nom'      => 'required|min_length[2]',
             'prenom'   => 'required|min_length[2]',
             'email'    => 'required|valid_email|is_unique[users.email]'
