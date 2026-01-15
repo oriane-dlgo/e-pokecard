@@ -32,6 +32,11 @@
                 </div>
             </div>
 
+             <div class="group_form">
+                <label class="sub_title" for="adresse">Adresse</label>
+                <input type="adresse" name="adresse" id="adresse" class="form_style" value="<?= set_value('adresse') ?>">
+            </div>
+
             <div class="group_form">
                 <label class="sub_title" for="email">Email</label>
                 <input type="email" name="email" id="email" class="form_style" value="<?= set_value('email') ?>">

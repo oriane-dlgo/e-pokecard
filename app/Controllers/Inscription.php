@@ -82,7 +82,8 @@ class Inscription extends BaseController
                 ->withIdentity(
                     $this->request->getPost('nom'),
                     $this->request->getPost('prenom'),
-                    $this->request->getPost('email')
+                    $this->request->getPost('email'),
+                    $this->request->getPost('adresse')
                 )
                 ->create();
 

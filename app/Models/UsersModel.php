@@ -35,7 +35,8 @@ class UsersModel extends Model
             'nom'      => 'required|min_length[2]',
             'prenom'   => 'required|min_length[2]',
             'email'    => 'required|valid_email|is_unique[users.email]',
-            'cgu'      => 'required'
+            'cgu'      => 'required',
+            'adresse'  => 'required|min_length[10]|'
         ];
     }
 
@@ -95,11 +96,12 @@ class UsersModel extends Model
     /**
      * Etape 3 : Ajoute l'identité
      */
-    public function withIdentity($nom, $prenom, $email)
+    public function withIdentity($nom, $prenom, $email, $adresse)
     {
         $this->tempUser['nom'] = $nom;
         $this->tempUser['prenom'] = $prenom;
         $this->tempUser['email'] = $email;
+        $this->tempUser['adresse'] = $adresse;
         return $this;
     }
 
