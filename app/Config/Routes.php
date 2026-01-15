@@ -30,6 +30,8 @@ $routes->get('deconnexion', 'Connexion::deconnexion');
 $routes->get('inscription', 'Inscription::index');
 $routes->post('inscription/register', 'Inscription::register');
 
+$routes->get('mdpoublie', 'MdpOublie::mdpoublie');
+
 
 
 // --------------------------------------------------------------------

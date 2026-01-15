@@ -57,7 +57,7 @@
                     <input type="hidden" name="type_paiement" value="paypal">
 
                     <label>EMAIL PAYPAL</label>
-                    <input type="text" name="paypal_email" placeholder="ASH@KETO.CH" class="pay-input">
+                    <input type="email" name="paypal_email" placeholder="ASH@KETO.CH" class="pay-input">
                     
                     <label>MOT DE PASSE</label>
                     <input type="password" name="paypal_pass" placeholder="******" class="pay-input">
