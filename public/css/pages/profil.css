@@ -1,0 +1,336 @@
+/* =========================================
+   1. GLOBAL & LAYOUT
+   ========================================= */
+* {
+    font-family: 'VT323', monospace;
+    box-sizing: border-box;
+}
+
+.profil-container {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+
+/* =========================================
+   2. EN-TÊTE DU DRESSEUR (HEADER)
+   ========================================= */
+.trainer-header {
+    background-color: var(--pok-red, #D32F2F);
+    color: white;
+    padding: 15px;
+    border: 4px solid var(--pok-black, #111);
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.5);
+}
+
+.trainer-header h1 {
+    margin: 0;
+    font-size: 40px;
+    text-shadow: 3px 3px 0px var(--pok-black, #111);
+    line-height: 1;
+}
+
+.trainer-id {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+/* =========================================
+   3. GRILLE & CARTES
+   ========================================= */
+.profil-grid {
+    display: grid;
+    /* Largeur min ajustée pour éviter les colonnes trop étroites */
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); 
+    gap: 30px; 
+    align-items: start;
+}
+
+.profil-card {
+    background-color: var(--pok-grey, #e0e0e0);
+    border: 4px solid var(--pok-black, #111);
+    padding: 20px;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.5);
+    overflow: hidden; /* Sécurité */
+}
+
+.card-title {
+    background-color: var(--pok-black, #111);
+    color: #FFD700; /* Or */
+    padding: 5px 10px;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+
+/* =========================================
+   4. CONTENU : IDENTITÉ & INFO
+   ========================================= */
+.content-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Avatar Pixel Art */
+.avatar-box {
+    background: white;
+    border: 4px solid #555;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-box img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+/* Liste des infos */
+.info-list {
+    flex: 1;
+    width: 100%;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px dashed #999;
+    padding: 5px 0;
+    font-size: 20px;
+}
+
+.label {
+    color: #555;
+    font-weight: bold;
+}
+
+.value {
+    color: var(--pok-black, #000);
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: right;
+    word-break: break-all; /* Gestion des textes longs */
+}
+
+.badge-retro {
+    background: #3498db;
+    color: white;
+    padding: 0 5px;
+    font-size: 18px;
+    border: 2px solid var(--pok-black, #111);
+}
+
+
+/* =========================================
+   5. MENU & ACTIONS (COMMANDES)
+   ========================================= */
+.menu-box {
+    margin-top: 20px;
+    border-top: 4px solid var(--pok-black, #111);
+    padding-top: 15px;
+    background: #ccc;
+    padding: 10px;
+}
+
+.menu-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* Zone vide (Pas de commande) */
+.empty-log {
+    text-align: center;
+    font-size: 24px;
+    color: #666;
+    padding: 40px 0;
+    border: 2px inset #999;
+    background: #d0d0d0;
+}
+
+
+/* =========================================
+   6. BOUTONS
+   ========================================= */
+/* Style de base commun */
+.btn-retro {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    padding: 8px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    
+    border-width: 4px;
+    border-style: solid;
+    box-shadow: 4px 4px 0px black;
+    transition: all 0.1s;
+    cursor: pointer;
+}
+
+.btn-retro:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px black;
+    filter: brightness(1.1);
+}
+
+.btn-retro:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px black;
+}
+
+/* --- Variantes de couleur --- */
+
+/* EDIT (BLEU) */
+.btn-edit {
+    background-color: #3498db;
+    color: white;
+    border-color: #85c1e9 #1f618d #1f618d #85c1e9;
+}
+
+/* SAVE (VERT) */
+.btn-save {
+    background-color: #2ecc71;
+    color: white;
+    border-color: #58d68d #1e8449 #1e8449 #58d68d;
+}
+
+/* LOGOUT (ROUGE) */
+.btn-logout {
+    background-color: #e74c3c;
+    color: white;
+    border-color: #ec7063 #922b21 #922b21 #ec7063;
+}
+
+/* CANCEL (GRIS) */
+.btn-cancel {
+    background-color: #95a5a6;
+    color: white;
+    border-color: #bdc3c7 #7f8c8d #7f8c8d #bdc3c7;
+}
+
+/* =========================================
+   7. HISTORIQUE & SCROLLBAR (NOUVEAU)
+   ========================================= */
+
+/* Le conteneur de la liste scrollable */
+.history-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px; /* Petit espace pour ne pas coller à la scrollbar */
+    
+    /* Pour Firefox (Barre fine) */
+    scrollbar-width: thin;
+    scrollbar-color: var(--pok-black, #111) var(--pok-grey, #e0e0e0);
+}
+
+/* --- SCROLLBAR PERSONNALISÉE (Chrome, Edge, Safari) --- */
+.history-list::-webkit-scrollbar {
+    width: 8px; /* Largeur réduite */
+}
+
+.history-list::-webkit-scrollbar-track {
+    background: #ccc; /* Fond du rail */
+    border: 1px solid #999;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+    background-color: var(--pok-black, #111); /* La barre elle-même */
+    border: 1px solid white; /* Petit effet relief */
+}
+
+.history-list::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+/* --- STYLE D'UNE LIGNE DE COMMANDE --- */
+.history-row {
+    background: white;
+    border: 2px solid #555;
+    padding: 10px;
+    margin-bottom: 10px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+    transition: transform 0.1s;
+}
+
+.history-row:hover {
+    border-color: black;
+    transform: translateX(2px); /* Petit effet interactif */
+}
+
+/* Infos Gauche (Numéro, Date) */
+.history-info-title {
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+}
+.history-info-sub {
+    color: #666;
+    font-size: 16px;
+    margin-top: 2px;
+}
+
+/* Infos Droite (Prix, Statut) */
+.history-price-val {
+    color: var(--pok-red, #D32F2F);
+    font-weight: bold;
+    font-size: 22px;
+    text-align: right;
+}
+.history-status {
+    font-size: 14px;
+    background: #2ecc71; /* Vert par défaut */
+    color: white;
+    padding: 0 5px;
+    display: inline-block;
+    border: 1px solid black;
+    margin-top: 2px;
+    text-transform: uppercase;
+}
+
+/* Variante de couleur pour statut */
+.status-validee { background: #2ecc71; }
+.status-expediee { background: #f39c12; }
+.status-annulee { background: #e74c3c; }
+
+/* =========================================
+   8. RESPONSIVE
+   ========================================= */
+@media (max-width: 600px) {
+    .content-row {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .profil-grid {
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+    }
+    
+    .avatar-box {
+        margin-bottom: 20px;
+    }
+}

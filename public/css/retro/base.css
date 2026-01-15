@@ -1,0 +1,129 @@
+/* =========================================
+   1. IMPORTS & VARIABLES
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+:root {
+    /* Palette Pokémon / Gameboy */
+    --pok-red: #D32F2F;
+    --pok-dark-red: #8e0000;
+    --pok-grey: #e0e0e0;
+    --pok-dark-grey: #404040;
+    --pok-darkest-grey: #616161;
+    --pok-black: #111;
+    
+    /* Bordures */
+    --border-light: #ffffff;
+    --border-dark: #555555;
+}
+
+
+/* =========================================
+   2. RESET GLOBAL & BODY
+   ========================================= */
+* {
+    box-sizing: border-box;
+    font-family: 'VT323', monospace;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    
+    /* Fond Rouge avec Grille subtile */
+    background-color: var(--pok-red);
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+
+/* =========================================
+   3. STRUCTURE DU LAYOUT
+   ========================================= */
+/* Wrapper Global */
+.game-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: transparent; 
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2; /* Passe devant les éléments de fond si besoin */
+}
+
+/* Conteneur Principal (Colonne Centrale) */
+main {
+    /* Dimensions et centrage */
+    max-width: 1400px;
+    width: 95%; 
+    margin: 0 auto;
+    
+    /* Layout Flex pour pousser le footer */
+    flex-grow: 1; 
+    
+    /* Styles visuels */
+    background-color: transparent; 
+    border: none;
+    padding: 40px; 
+    
+    /* Positionnement */
+    position: relative; 
+    z-index: 10;
+    min-height: 50vh;
+}
+
+
+/* =========================================
+   4. DÉCORATION (RAILS LATÉRAUX)
+   ========================================= */
+/* Barres latérales communes */
+main::before,
+main::after {
+    content: "";
+    position: absolute;
+    width: 20px;     
+    background-color: #222;
+    z-index: -1; 
+    
+    /* Positionnement Vertical : Remonte pour toucher la Nav */
+    top: -85px; 
+    bottom: 0;
+    
+    /* Ombres pour effet de profondeur */
+    box-shadow: 
+        inset 0 0 10px rgba(0, 0, 0, 0.4),
+        -10px 0 20px rgba(0,0,0,0.4),
+         10px 0 20px rgba(0,0,0,0.4);
+}
+
+/* Positionnement Horizontal */
+main::before { left: 0; }
+main::after  { right: 0; }
+
+/* =========================================
+   5. MESSAGES D'ALERTE
+   ========================================= */
+.alert {
+    padding: 10px;
+    margin: 15px 0;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    border-width: 4px;
+    border-style: solid;
+}
+
+.alert-error {
+    background: #ffcccc;
+    color: red;
+    border-color: red;
+}
+
+.alert-success {
+    background: #ccffcc;
+    color: green;
+    border-color: green;
+}

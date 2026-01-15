@@ -1,0 +1,165 @@
+/* =========================================
+   1. LAYOUT & CONTENEUR
+   ========================================= */
+/* Héritage de la police */
+* {
+    font-family: 'VT323', monospace;
+    box-sizing: border-box;
+}
+
+/* Centrage vertical et horizontal */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    padding: 20px;
+}
+
+/* La Boite "GameBoy" */
+.form_area {
+    background-color: var(--pok-grey, #e0e0e0); /* Fallback si variable non chargée */
+    border: 4px solid var(--pok-black, #111);
+    padding: 30px 40px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    
+    /* Ombre portée dure (Hard Shadow) */
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+}
+
+
+/* =========================================
+   2. TYPOGRAPHIE
+   ========================================= */
+.title {
+    font-size: 45px;
+    color: var(--pok-red, #D32F2F);
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0px var(--pok-black, #111);
+    
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    
+    border-bottom: 4px solid var(--pok-black, #111);
+    line-height: 1;
+}
+
+.action p {
+    font-size: 20px;
+    margin-top: 20px;
+    color: #333;
+}
+
+.link {
+    color: var(--pok-red, #D32F2F);
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.link:hover {
+    border-bottom: 2px solid var(--pok-red, #D32F2F);
+}
+
+
+/* =========================================
+   3. CHAMPS DE FORMULAIRE (INPUTS)
+   ========================================= */
+.group_form {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: var(--pok-black, #111);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.form_style {
+    width: 100%;
+    padding: 10px;
+    font-size: 22px;
+    background-color: #fff;
+    color: black;
+    
+    /* Bordures épaisses */
+    border: 4px solid var(--border-dark, #555);
+    outline: none;
+    font-family: 'VT323', monospace;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.form_style:focus {
+    border-color: var(--pok-red, #D32F2F);
+    background-color: #fff8f8;
+}
+
+.label_cgu {
+    display: inline;          /* Permet de rester à côté de la case */
+    text-transform: none;     /* Enlève les majuscules */
+    font-weight: normal;      /* Enlève le gras si tu préfères */
+    font-size: 20px;          /* La même taille que ton texte du bas */
+    color: #333;              /* La même couleur que ton texte du bas */
+    cursor: pointer;
+}
+
+/* Optionnel : pour aligner verticalement la case et le texte */
+/* .action input[type="checkbox"] {
+    vertical-align: middle;
+    margin-right: 5px;
+} */
+
+
+/* =========================================
+   4. BOUTON 3D (SUBMIT)
+   ========================================= */
+.submit {
+    /* Style de base */
+    background-color: var(--pok-grey, #e0e0e0);
+    color: var(--pok-black, #111);
+    font-size: 26px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    
+    /* Dimensions */
+    margin-top: 10px;
+    padding: 10px 40px;
+    
+    /* Bordures 3D (Clair en haut/gauche, Foncé en bas/droite) */
+    border-top: 4px solid var(--border-light, #fff);
+    border-left: 4px solid var(--border-light, #fff);
+    border-right: 4px solid var(--border-dark, #555);
+    border-bottom: 4px solid var(--border-dark, #555);
+
+    /* État Initial : Surélevé */
+    box-shadow: 4px 4px 0px var(--pok-black, #111); 
+    transform: translate(0, 0);
+    transition: all 0.1s ease-in-out;
+}
+
+.submit:hover {
+    background-color: white;
+    /* Le bouton monte vers la lumière */
+    transform: translate(-2px, -2px); 
+    box-shadow: 6px 6px 0px var(--pok-black, #111);    
+}
+
+.submit:active {
+    /* Effet enfoncé : On inverse les bordures */
+    border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+    
+    /* Le bouton descend physiquement */
+    transform: translate(4px, 4px); 
+    box-shadow: 0px 0px 0px var(--pok-black, #111);
+    
+    transition: none; /* Instantané */
+}

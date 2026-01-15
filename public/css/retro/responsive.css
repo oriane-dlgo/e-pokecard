@@ -1,0 +1,108 @@
+/* =========================================
+   19. RESPONSIVE / MEDIA QUERIES
+   ========================================= */
+
+/* --- TABLETTES & PETITS ÉCRANS (max-width: 1000px) --- */
+@media (max-width: 1000px) {
+    
+    /* Le logo réduit pour ne pas écraser le reste */
+    .logo h1 { 
+        font-size: 40px; 
+    }
+    
+    /* La Nav Bar passe en mode "Empilé" */
+    .nav-bar {
+        flex-wrap: wrap; /* Autorise le retour à la ligne */
+        justify-content: center;
+        height: auto; /* S'adapte au contenu empilé */
+        gap: 15px;
+    }
+    
+    /* Les liens prennent toute la largeur pour centrer */
+    .nav-links { 
+        justify-content: center; 
+        width: 100%; 
+        margin-bottom: 10px; 
+    }
+    
+    /* Boutons de navigation un peu plus petits */
+    .nav-bar a { 
+        font-size: 20px; 
+        padding: 5px 10px; 
+    }
+    
+    /* La barre de recherche passe en dessous de tout (Order 3) */
+    .nav-search-form {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin: 10px 0 0 0;
+        padding-right: 0; /* Reset du padding desktop */
+    }
+}
+
+/* --- TABLETTES PORTRAIT (max-width: 900px) --- */
+@media (max-width: 900px) {
+    
+    /* On nettoie le conteneur principal pour gagner de l'espace */
+    main {
+        width: 100%;        /* Prend toute la largeur */
+        border: none;       /* On enlève les bordures */
+        padding: 15px;      /* Padding réduit */
+        box-shadow: none;
+        margin: 0;
+    }
+
+    /* Grille Principale (Fond Gris) */
+    .catalogue-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+/* --- TABLETTES PORTRAIT (max-width: 768px) --- */
+@media (max-width: 768px) {
+    
+    /* On nettoie le conteneur principal pour gagner de l'espace */
+    main {
+        width: 100%;        /* Prend toute la largeur */
+        border: none;       /* On enlève les bordures */
+        padding: 15px;      /* Padding réduit */
+        box-shadow: none;
+        margin: 0;
+    }
+
+    /* IMPORTANT : On cache les rails latéraux (before/after) qui gênent sur mobile */
+    main::before,
+    main::after {
+        display: none;
+    }
+}
+
+
+/* --- MOBILE (max-width: 700px) --- */
+@media (max-width: 700px) {
+    
+    /* Bouton Admin : On le compacte (Icône seule) */
+    .admin-access-btn { 
+        padding: 5px; 
+        left: 10px; 
+    }
+    
+    .admin-access-btn span { 
+        display: none; /* Cache le texte "ADMIN" */
+    }
+    
+    /* Ajustement des grilles pour le mobile (1 colonne) */
+    .catalogue-grid, 
+    .promo-grid, 
+    .payment-grid {
+        grid-template-columns: 1fr; /* Une seule colonne */
+    }
+    
+    /* Le footer s'empile verticalement */
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
