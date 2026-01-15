@@ -28,9 +28,6 @@ git clone https://gitlab.univ-nantes.fr/pub/but/but2/sae/groupe4/eq_4_04_delgado
 # 2. Entrer dans le dossier
 cd eq_4_04_delgado-oriane_guillard-nhael_renard-clara_semaoune-ryan
 
-# 3. Se placer sur la branche de développement (Code stable)
-git checkout dev
-
 ```
 
 ### 2. Démarrage Automatisé
