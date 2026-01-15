@@ -67,7 +67,8 @@
 
                 <div class="history-list">
                     <?php foreach ($commandes as $cmd): ?>
-                        <div class="history-row">
+                        <a href="<?= base_url('profil/commande/' . $cmd->id) ?>" style="text-decoration: none;">
+                        <div class="history-row" style="display: flex; align-items: center; justify-content: space-between;">
                             
                             <div class="history-info">
                                 <div class="history-info-title">
@@ -77,23 +78,26 @@
                                     <?= date('d/m/Y', strtotime($cmd->date_creation)) ?> • <?= $cmd->nb_articles ?> Article(s)
                                 </div>
                             </div>
-
-                            <div class="history-price" style="text-align: right;">
-                                <div class="history-price-val">
-                                    $<?= esc($cmd->total) ?>
-                                </div>
-                                
-                                <?php 
-                                    $statusClass = 'status-validee';
-                                    if($cmd->statut == 'expediee') $statusClass = 'status-expediee';
-                                    if($cmd->statut == 'annulee') $statusClass = 'status-annulee';
-                                ?>
-                                <div class="history-status <?= $statusClass ?>">
-                                    <?= strtoupper($cmd->statut) ?>
+                            
+                            <div class="history-right" style="display: flex; align-items: center; gap: 15px;">
+                                <div class="history-price" style="text-align: right;">
+                                    <div class="history-price-val">
+                                        <?= number_format($cmd->total, 2) ?> €
+                                    </div>
+                                    
+                                    <?php 
+                                        $statusClass = 'status-validee'; // Défaut (vert)
+                                        if($cmd->statut == 'attente') $statusClass = 'status-attente'; // Ex: orange
+                                        if($cmd->statut == 'annulee') $statusClass = 'status-annulee'; // Ex: rouge
+                                    ?>
+                                    <div class="history-status <?= $statusClass ?>">
+                                        <?= strtoupper($cmd->statut) ?>
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
+                        </a>
                     <?php endforeach; ?>
                 </div>
 

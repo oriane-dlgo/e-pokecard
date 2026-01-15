@@ -418,7 +418,6 @@
     background-color: #3498db; /* Couleur de base (Bleu par exemple) */
     color: white;
     width: 100%;
-    margin-top: 10px;
     
     /* C'est ici que la magie opère : transition fluide sur 0.3 secondes */
     transition: all 0.3s ease-in-out;

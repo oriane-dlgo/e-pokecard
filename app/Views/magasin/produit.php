@@ -65,10 +65,11 @@
 
                 <?php if ($product->stock > 0): ?>
                     <form action="<?= base_url('panier/ajouter') ?>" method="post" class="ajax-cart-form">
-                        <input type="hidden" name="id_produit" value="<?= $produit->id ?>">
+                        <input type="hidden" name="id_produit" value="<?= $product->id ?>">
                         <input type="hidden" name="quantite" value="1">
                         
-                        <button type="submit" class="btn-retro btn-add" <?= ($produit->stock <= 0) ? 'disabled' : '' ?>>
+                        <button type="submit" class="btn-pokedex btn-add" <?= ($product->stock <= 0) ? 'disabled' : '' ?>
+                        style="flex: 1;">
                             AJOUTER AU PANIER
                         </button>
                     </form>

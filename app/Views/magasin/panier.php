@@ -24,74 +24,10 @@
         </div>
     <?php else: ?>
 
-        <div class="inventory-list">
-            <div class="inventory-header-row">
-                <span class="col-item">ARTICLE</span>
-                <span class="col-price">PRIX</span>
-                <span class="col-qty">PROMO</span> <span class="col-qty">QTE</span>
-                 <span class="col-total">TVA</span>
-                <span class="col-total">TOTAL</span>
-                <span class="col-action"></span>
-            </div>
-
-            <?php foreach ($articles as $item): ?>
-            <div class="inventory-row">
-                
-                <div class="col-item item-info">
-                    <a href="<?= base_url('detail/' . $item['produit']->id) ?>" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px; width: 100%;">
-                        <img src="<?= base_url('assets/produits/' . esc($item['produit']->image_url ?? 'default.png')) ?>" class="pixel-img">
-                        <span><?= esc($item['produit']->nom) ?></span>
-                    </a>
-                </div>
-
-                <div class="col-price"><?= number_format($item['produit']->prix, 2) ?>€</div>
-                
-                <div class="col-qty" style="font-weight: bold;">
-                    <?php if(!empty($item['produit']->tauxPromo)): ?>
-                        <span style="color: red; background: #ffeaea; border: 1px solid red; padding: 2px 5px; border-radius: 4px;">
-                            -<?= intval($item['produit']->tauxPromo * 100) ?>%
-                        </span>
-                    <?php else: ?>
-                        <span style="color: #999;">-</span>
-                    <?php endif; ?>
-                </div>
-
-                <div class="col-qty" style="display: flex; align-items: center; justify-content: center; gap: 5px;">
-                    <form action="<?= base_url('panier/update') ?>" method="post" style="margin:0;">
-                        <input type="hidden" name="id" value="<?= $item['produit']->id ?>">
-                        <input type="hidden" name="action" value="decrease">
-                        <button type="submit" class="btn-retro" style="padding: 0 8px; font-size: 18px; min-width: 30px; line-height: 1;">-</button>
-                    </form>
-
-                    <span style="min-width: 20px; text-align: center;"><?= esc($item['quantite']) ?></span>
-
-                    <form action="<?= base_url('panier/update') ?>" method="post" style="margin:0;">
-                        <input type="hidden" name="id" value="<?= $item['produit']->id ?>">
-                        <input type="hidden" name="action" value="increase">
-                        
-                        <?php 
-                            // On vérifie si le max est atteint
-                            $isMaxReached = ($item['quantite'] >= $item['produit']->stock);
-                        ?>
-
-                        <button type="submit" class="btn-retro" 
-                                style="padding: 0 8px; font-size: 18px; min-width: 30px; line-height: 1; 
-                                       <?= $isMaxReached ? 'opacity: 0.5; cursor: not-allowed;' : '' ?>">
-                            
-                            +
-                        </button>
-                    </form>
-                </div>
-
-                <div class="col-total"><?= number_format($item['tva'], 2) ?>€</div>
-                <div class="col-total"><?= number_format($item['total_ligne'], 2) ?>€</div>
-                
-                <div class="col-action">
-                    <a href="<?= base_url('panier/supprimer/' . $item['produit']->id) ?>" class="btn-cross">X</a>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
+        <?= view('partials/tableau_articles', [
+            'items' => $articles, 
+            'editable' => true // C'est ici qu'on active le mode Panier
+        ]) ?>
 
         <div class="cart-summary">
             

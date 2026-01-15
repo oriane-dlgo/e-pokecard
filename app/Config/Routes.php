@@ -41,6 +41,7 @@ $routes->get('mdpoublie', 'MdpOublie::mdpoublie');
 $routes->get('profil', 'Profil::index');
 $routes->get('profil/edit', 'Profil::edit');
 $routes->post('profil/update', 'Profil::update');
+$routes->get('profil/commande/(:num)', 'Profil::details/$1');
 
 // Panier
 $routes->get('panier', 'Panier::index');

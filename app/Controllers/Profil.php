@@ -96,4 +96,34 @@ class Profil extends BaseController
         $session->set('user_name', $dataToUpdate['nom']);
         return redirect()->to('/profil')->with('success', 'PROFIL MIS À JOUR AVEC SUCCÈS !');
     }
+
+    /**
+     * Affiche le détail d'une commande spécifique
+     */
+    public function details($idCommande)
+    {
+        $session = session();
+        if (!$session->get('isLoggedIn')) {
+            return redirect()->to('/connexion');
+        }
+
+        $userId = $session->get('id');
+        $commandeModel = new CommandesModel();
+        
+        // 1. Sécurité : On vérifie que la commande appartient bien au user connecté
+        $commande = $commandeModel->getCommandeUtilisateur($idCommande, $userId);
+
+        if (!$commande) {
+            return redirect()->to('/profil')->with('error', 'Commande introuvable ou accès refusé.');
+        }
+
+        // 2. Récupération des articles de la commande
+        $lignesModel = new \App\Models\LignesCommandeModel();
+        $lignes = $lignesModel->getDetailsCommande($idCommande);
+
+        return view('utilisateur/details_commande', [
+            'commande' => $commande,
+            'lignes'   => $lignes
+        ]);
+    }
 }

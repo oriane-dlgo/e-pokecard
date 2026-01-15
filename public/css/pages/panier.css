@@ -43,7 +43,7 @@
 
 
 /* =========================================
-   3. LISTE D'INVENTAIRE (TABLEAU)
+   3. LISTE D'INVENTAIRE (GRID SYTEM)
    ========================================= */
 .inventory-list {
     background: var(--pok-grey, #e0e0e0);
@@ -52,40 +52,82 @@
     box-shadow: 6px 6px 0px rgba(0,0,0,0.5);
 }
 
+/* --- Configuration de la Grille (Remplacement de Flexbox) --- */
+
+.inventory-header-row, 
+.inventory-row {
+    display: grid; /* On utilise Grid pour l'alignement parfait */
+    align-items: center;
+    padding: 15px 10px;
+}
+
+/* Grille pour la COMMANDE (Mode Lecture : 6 colonnes) */
+/* Structure : Article | Prix | Promo | Qty | TVA | Total  */
+.mode-readOnly .inventory-header-row,
+.mode-readOnly .inventory-row {
+    grid-template-columns: 2fr 1fr 0.8fr 1.4fr 0.8fr 1fr;
+}
+
+/* Grille pour le PANIER (Mode Éditable : 7 colonnes) */
+/* Structure : Article | Prix | Promo | Qty | TVA | Total | Action */
+.mode-editable .inventory-header-row,
+.mode-editable .inventory-row {
+    grid-template-columns: 2fr 1fr 0.8fr 1.4fr 0.8fr 1fr 50px;
+}
+
+
+
+
+/* --- Styles Visuels des Lignes --- */
+
 /* En-têtes de colonnes */
 .inventory-header-row {
-    display: flex;
     background: var(--pok-black, #111);
     color: #FFD700; /* Or */
-    padding: 10px;
     font-size: 24px;
     font-weight: bold;
     text-transform: uppercase;
+    text-align: center;
+    border-bottom: none;
 }
 
 /* Lignes de produits */
 .inventory-row {
-    display: flex;
-    align-items: center;
-    padding: 15px 10px;
+    background: white;
     border-bottom: 2px dashed #999;
     font-size: 22px;
-    background: white;
+    text-align: center; /* Par défaut centré */
 }
+
 .inventory-row:last-child { border-bottom: none; }
 
-/* Gestion des Colonnes Flex */
+
+/* --- Gestion du contenu des cellules --- */
+
 .col-item { 
-    flex: 2; 
+    text-align: left; /* Nom du produit à gauche */
     display: flex; 
     align-items: center; 
     gap: 10px; 
     font-weight: bold; 
+    overflow: hidden;
 }
-.col-price { flex: 1; text-align: center; color: #555; }
-.col-qty   { flex: 1; text-align: center; }
-.col-total { flex: 1; text-align: right; color: var(--pok-red, #D32F2F); font-weight: bold; }
-.col-action { width: 50px; text-align: right; }
+
+.col-item span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.col-price { color: #555; }
+.col-qty   { display: flex; justify-content: center; align-items: center; gap: 5px; }
+
+.col-total { 
+    text-align: right; 
+    color: var(--pok-red, #D32F2F); 
+    font-weight: bold; 
+    padding-right: 10px;
+}
 
 /* Image miniature */
 .pixel-img {
@@ -94,11 +136,12 @@
     object-fit: contain; 
     image-rendering: pixelated; 
     border: 2px solid #ccc;
+    flex-shrink: 0;
 }
 
 
 /* =========================================
-   4. ACTIONS SPÉCIFIQUES (CROIX, VIDER)
+   4. ACTIONS SPÉCIFIQUES (CROIX)
    ========================================= */
 /* Bouton Supprimer (Croix rouge) */
 .btn-cross {
@@ -110,6 +153,7 @@
     padding: 0 8px;
     display: inline-block;
     transition: all 0.1s;
+    line-height: 1;
 }
 .btn-cross:hover { 
     background: red; 
@@ -124,10 +168,8 @@
     display: flex;
     justify-content: flex-end; /* Pousse tout le bloc vers la DROITE */
     align-items: center;       /* Aligne verticalement au centre */
-    gap: 20px;                 /* L'espace entre les boutons et le total (pour les "coller" mais pas trop) */
+    gap: 20px;                 
     margin-top: 20px;
-    
-    /* Responsive : sur mobile, on empile */
     flex-wrap: wrap; 
 }
 
@@ -137,14 +179,10 @@
     background: var(--pok-black, #111);
     color: #FFD700; /* Or */
     text-shadow: 2px 2px 0px black;
-    
     padding: 10px 30px;
-    
     display: inline-block;
     border: 4px solid white;
     outline: 4px solid var(--pok-black, #111);
-    
-    /* On enlève les marges car Flexbox gère l'espacement via 'gap' */
     margin: 0; 
 }
 
@@ -166,9 +204,8 @@
    7. BOUTONS D'ACTION (NAVIGATION)
    ========================================= */
 .menu-box {
-    /* Le conteneur des boutons */
     display: flex;
-    gap: 15px; /* Espace entre "Vider" et "Valider" */
+    gap: 15px; 
     margin: 0;
 }
 
@@ -202,7 +239,7 @@
     box-shadow: 0px 0px 0px black;
 }
 
-/* Couleurs Spécifiques (Bordures 3D simulées par border-color) */
+/* Couleurs Spécifiques (Bordures 3D simulées) */
 
 /* VERT (Payer) */
 .btn-save { 
@@ -225,3 +262,14 @@
     border-color: #85c1e9 #1f618d #1f618d #85c1e9;
 }
 
+/* --- Responsive pour le tableau --- */
+@media (max-width: 900px) {
+    .inventory-list {
+        overflow-x: auto;
+    }
+    
+    .inventory-header-row,
+    .inventory-row {
+        min-width: 800px;
+    }
+}
