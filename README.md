@@ -68,8 +68,8 @@ Utilisez PowerShell pour lancer le script équivalent :
 
 Une fois le script terminé (message "--- Installation terminée !"), accédez aux services :
 
-* ** Boutique (Site Web) :** [http://localhost:8080](https://www.google.com/search?q=http://localhost:8080)
-* ** Base de Données (PhpMyAdmin) :** [http://localhost:8081](https://www.google.com/search?q=http://localhost:8081)
+* **Boutique (Site Web) :** [http://localhost:8080](https://www.google.com/search?q=http://localhost:8080)
+* **Base de Données (PhpMyAdmin) :** [http://localhost:8081](https://www.google.com/search?q=http://localhost:8081)
 * **Serveur :** `sae_mysql`
 * **Utilisateur :** `root`
 * **Mot de passe :** `root`
