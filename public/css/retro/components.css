@@ -412,6 +412,63 @@
     border-color: #777 #333 #333 #777;
 }
 
+/* --- AMÉLIORATION BOUTON PANIER --- */
+
+.btn-add {
+    background-color: #3498db; /* Couleur de base (Bleu par exemple) */
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+    
+    /* C'est ici que la magie opère : transition fluide sur 0.3 secondes */
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+/* État : Chargement (Pendant la requête) */
+.btn-loading {
+    background-color: #f1c40f !important; /* Jaune */
+    border-color: #d4ac0d !important;
+    cursor: wait;
+    opacity: 0.8;
+}
+
+/* État : Succès (Vert) */
+.btn-success {
+    background-color: #2ecc71 !important; /* Vert */
+    border-color: #27ae60 !important;
+    transform: scale(1.02); /* Légère augmentation de taille */
+    font-weight: bold;
+}
+
+/* Petit effet de "pulse" sur le succès */
+.btn-success::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    box-shadow: 0 0 10px #2ecc71;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* État : Erreur (Rouge) */
+.btn-error {
+    background-color: #e74c3c !important; /* Rouge */
+    border-color: #c0392b !important;
+    color: white !important;
+    /* Animation de vibration pour attirer l'attention */
+    animation: shake 0.5s; 
+}
+
+/* Animation "Shake" (Secousse) */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
 
 /* =========================================
    8. BADGES & ÉTIQUETTES

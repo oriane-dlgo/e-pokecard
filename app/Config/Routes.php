@@ -48,6 +48,7 @@ $routes->post('panier/ajouter', 'Panier::ajouter');
 $routes->get('panier/supprimer/(:num)', 'Panier::supprimer/$1');
 $routes->get('panier/vider', 'Panier::vider');
 $routes->get('panier/valider', 'Panier::valider');
+$routes->post('panier/update', 'Panier::update');
 
 // Paiement & Commande (Côté Client)
 $routes->get('paiement/choix/(:num)', 'Paiement::choix/$1');

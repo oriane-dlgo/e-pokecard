@@ -81,8 +81,7 @@ class Panier extends BaseController
     }
 
     /**
-     * Ajoute un produit au panier
-     * FORMAT CIBLE : [id => qte]
+     * Ajoute un produit au panier (Avec vérification Stock + AJAX)
      */
     public function ajouter()
     {
@@ -90,17 +89,36 @@ class Panier extends BaseController
         $qty = (int)$this->request->getPost('quantite');
         if ($qty <= 0) $qty = 1;
 
+        // 1. Vérification du Stock Disponible
+        $productModel = new ProductModel();
+        $produit = $productModel->find($id);
+
+        if (!$produit) {
+            return $this->_reponseAjout('error', 'Produit introuvable.');
+        }
+
         $session = session();
         $panier = $session->get('panier');
 
-        // Initialisation ou conversion si format incorrect
+        // Initialisation ou nettoyage
         if (!is_array($panier) || ( !empty($panier) && array_values($panier) === $panier )) {
             $panier = []; 
-            // Note: Si tu veux migrer les anciens paniers ici, tu peux, 
-            // mais le plus simple est de repartir sur une base propre [id=>qty]
         }
 
-        // Logique Dictionnaire : [ID => QTE]
+        // Quantité actuelle dans le panier
+        $qteActuelle = $panier[$id] ?? 0;
+        
+        // 2. Test : Est-ce que le total dépassera le stock ?
+        if (($qteActuelle + $qty) > $produit->stock) {
+            $reste = max(0, $produit->stock - $qteActuelle);
+            $msg = ($reste > 0) 
+                ? "Vous avez déjà $qteActuelle articles. Il n'en reste que $reste."
+                : "Stock épuisé !";
+            
+            return $this->_reponseAjout('error', $msg);
+        }
+
+        // 3. Ajout validé
         if (isset($panier[$id])) {
             $panier[$id] += $qty;
         } else {
@@ -109,7 +127,33 @@ class Panier extends BaseController
 
         $session->set('panier', $panier);
 
-        return redirect()->to('/panier')->with('success', 'Produit ajouté !');
+        // 4. Succès
+        return $this->_reponseAjout('success', 'Produit ajouté !', array_sum($panier));
+    }
+
+    /**
+     * Méthode privée pour gérer la réponse (AJAX ou Redirection)
+     * Cela évite de dupliquer le code de retour
+     */
+    private function _reponseAjout($status, $message, $total = 0)
+    {
+        // Si la requête vient du JavaScript (fetch)
+        if ($this->request->isAJAX()) {
+            // On renvoie un JSON que ton script JS va lire
+            // Note : Si status est 'error', le JS affichera une alerte avec le message
+            return $this->response->setJSON([
+                'status'  => $status,
+                'message' => $message,
+                'total'   => $total
+            ]);
+        }
+
+        // Si JS désactivé (Fallback classique)
+        if ($status === 'success') {
+            return redirect()->back()->with('success', $message);
+        } else {
+            return redirect()->back()->with('error', $message); // Tu devras gérer l'affichage de 'error' dans ta vue si tu veux le voir hors JS
+        }
     }
 
     /**
@@ -126,7 +170,16 @@ class Panier extends BaseController
 
         if (isset($panier[$id])) {
             if ($action === 'increase') {
-                $panier[$id]++;
+                // --- AJOUT : Vérification du Stock ---
+                $productModel = new ProductModel();
+                $produit = $productModel->find($id);
+
+                if ($produit && $panier[$id] < $produit->stock) {
+                    $panier[$id]++;
+                } else {
+                    // Petit message flash si l'utilisateur insiste
+                    $session->setFlashdata('msg', "Vous avez atteint la quantité maximale disponible pour cet article.");
+                }
             } elseif ($action === 'decrease') {
                 $panier[$id]--;
                 if ($panier[$id] <= 0) {
@@ -224,4 +277,6 @@ class Panier extends BaseController
             return redirect()->to('/panier')->with('msg', 'Erreur : ' . $e->getMessage());
         }
     }
+
+    
 }

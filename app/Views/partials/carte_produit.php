@@ -39,9 +39,13 @@
         <a href="<?= base_url('detail/'.$produit->id) ?>" class="btn-inspect">Détails</a>
         
         <?php if ($produit->stock > 0): ?>
-            <form action="<?= base_url('panier/ajouter') ?>" method="post">
+            <form action="<?= base_url('panier/ajouter') ?>" method="post" class="ajax-cart-form">
                 <input type="hidden" name="id_produit" value="<?= $produit->id ?>">
-                <button class="btn-achat">Ajouter au panier</button>
+                <input type="hidden" name="quantite" value="1">
+                
+                <button type="submit" class="btn-retro btn-achat" <?= ($produit->stock <= 0) ? 'disabled' : '' ?>>
+                    AJOUTER AU PANIER
+                </button>
             </form>
         <?php else: ?>
             <div class="btn-soldout" style="flex:1;">Rupture de stock</div>

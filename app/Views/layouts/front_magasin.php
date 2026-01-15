@@ -79,13 +79,13 @@
                     }
                 }
              ?>
-             <a href="<?= base_url('panier')?>" title="Mon Panier" class="cart-icon-wrapper">
-                <img src="<?= base_url("assets/panier_icone.png")?>" alt="Panier">
-                
-                <?php if($totalArticles > 0): ?>
-                    <span class="cart-badge"><?= $totalArticles ?></span>
-                <?php endif; ?>
-             </a>
+             <a href="<?= base_url('panier') ?>" class="nav-link">
+                <img src="<?= base_url('assets/panier_icone.png') ?>" alt="Panier">
+                        
+                <span id="nav-cart-count" class="cart-badge">
+                    <?= array_sum(session('panier') ?? []) ?>
+                </span>
+            </a>
         </div>
     </nav>
 
@@ -135,5 +135,17 @@
     </footer>
 
 </div> 
+    
+    <script src="<?= base_url('js/panier_ajax.js') ?>"></script>
+    <style>
+        .bounce { animation: bounce 0.5s; }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+    </style>
+
+
 </body>
 </html>
