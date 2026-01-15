@@ -108,7 +108,7 @@
         <div class="footer-decoration"></div>
         <div class="footer-content">
             <div class="footer-col">
-                <h4>POKÉ-TRADER '85</h4>
+                <h4>E-POKECARD</h4>
                 <p>Le meilleur du TCG en 8-bits.</p>
                 <p>© 1985 - 2025 Nintendo/Creatures Inc./GAME FREAK inc.</p>
             </div>
@@ -116,10 +116,10 @@
                 <h4>LIENS UTILES</h4>
                 <a href="<?= base_url('cgu') ?>">Conditions Générales d'Utilisation (CGU)</a>
                 <a href="<?= base_url('cgv') ?>">Conditions Générales de vente (CGV)</a>
-                <a href="<?= base_url('mentions-legales') ?>">Mentions Légales</a>
                 <a href="<?= base_url('confidentialite') ?>">Confidentialité (RGPD)</a>
-                <a href="#">Livraison</a>
-                <a href="#">Contact</a>
+                <a href="<?= base_url('mentions-legales') ?>">Mentions Légales</a>
+
+
             </div>
             <div class="footer-col">
                 <h4>NOUS RETROUVER</h4>

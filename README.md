@@ -1,6 +1,6 @@
 
 
-# --- Projet SAE 3.01 - Boutique Pokémon (PokéStore)
+# --- Projet SAE 3.01 - Boutique Pokémon (E-POKECARD)
 
 Bienvenue sur le dépôt de notre application E-Commerce développée avec **CodeIgniter 4** et **Docker/Podman**.
 
