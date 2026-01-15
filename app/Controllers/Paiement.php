@@ -28,8 +28,6 @@ class Paiement extends BaseController
             return redirect()->to('/profil')->with('msg', 'Commande introuvable ou accès refusé.');
         }
 
-        // (Optionnel) Vérifier si déjà payé ici...
-
         return view('confirmation/paiement', [
             'commande'     => $commande,
             'total_global' => $commande->total

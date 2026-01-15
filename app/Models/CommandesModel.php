@@ -97,7 +97,6 @@ class CommandesModel extends Model
         return $this->update($commandeId, [
             'type_paiement' => $modePaiement,
             'statut'        => 'validee',
-            // On pourrait ajouter ici 'date_paiement' => date('Y-m-d H:i:s')
         ]);
     }
 
@@ -177,9 +176,6 @@ class CommandesModel extends Model
             return $commandeId;
 
         } catch (\Exception $e) {
-            // En cas d'erreur, tout est annulé (Rollback automatique via transStart/Complete ou manuel)
-            // CodeIgniter transComplete gère le rollback si status est false, 
-            // mais l'exception permet de remonter le message au controller.
             throw $e;
         }
     }
@@ -216,7 +212,6 @@ class CommandesModel extends Model
                  ->groupEnd();
         }
 
-        // On retourne $this (le builder) pour pouvoir enchaîner ->paginate() plus tard
         return $this;
     }
 

@@ -110,7 +110,7 @@ class Profil extends BaseController
         $userId = $session->get('id');
         $commandeModel = new CommandesModel();
         
-        // 1. Sécurité : On vérifie que la commande appartient bien au user connecté
+        // 1. Sécurité : appartenance de la commande
         $commande = $commandeModel->getCommandeUtilisateur($idCommande, $userId);
 
         if (!$commande) {

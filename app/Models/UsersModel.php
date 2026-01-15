@@ -44,9 +44,9 @@ class UsersModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    // =========================================================================
-    // 1. MÉTHODES DE VALIDATION 
-    // =========================================================================
+    /*
+    * 1. MÉTHODES DE VALIDATION 
+    */
 
     /**
      * Retourne les règles pour l'inscription
@@ -81,9 +81,10 @@ class UsersModel extends Model
         ];
     }
 
-    // =========================================================================
-    // 2. MÉTHODES MÉTIER & BUILDER
-    // =========================================================================
+
+    /*
+    * 2. MÉTHODES MÉTIER & BUILDER
+    */
 
     /**
      * Récupère un utilisateur par son login
@@ -111,7 +112,7 @@ class UsersModel extends Model
     public function withCredentials($login, $password)
     {
         $this->tempUser['login'] = $login;
-        // Le hashage est fait ici, dans le modèle !
+        // Hashage du mot de passe
         $this->tempUser['password'] = password_hash($password, PASSWORD_DEFAULT);
         return $this;
     }

@@ -47,9 +47,9 @@
             'editable' => false // Mode Lecture seule
         ]) ?>
         
-        <div style="text-align: right; padding: 20px; font-family: 'Press Start 2P', cursive; font-size: 1.2rem; color: #333;">
-            TOTAL PAYÉ : <span style="color: #c0392b;"><?= number_format($commande->total, 2) ?> €</span>
-        </div>
+        <<div class="total-display">
+                TOTAL: <?= number_format($commande->total, 2) ?>€ 
+            </div>
     </div>
 
 </div>

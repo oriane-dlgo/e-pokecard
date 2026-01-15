@@ -59,7 +59,7 @@ class Inscription extends BaseController
         ];
 
         // 3. Validation avec les messages
-        if (! $this->validate($rules, $messages)) { // On ajoute $messages ici
+        if (! $this->validate($rules, $messages)) {
             return view('auth/inscription', [
                 'validation' => $this->validator
             ]);
@@ -94,7 +94,6 @@ class Inscription extends BaseController
             }
 
         } catch (\Exception $e) {
-            // 6. Log serveur pour débogage et message générique pour l'user
             log_message('error', '[INSCRIPTION] ' . $e->getMessage());
             return redirect()->back()->withInput()->with('msg', 'Une erreur technique est survenue.');
         }

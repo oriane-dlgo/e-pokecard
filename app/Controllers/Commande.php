@@ -27,13 +27,12 @@ class Commande extends BaseController
             return redirect()->to('/connexion');
         }
 
-        // Instanciation des modèles
         $commandeModel = new CommandesModel();
         $lignesModel = new LignesCommandeModel();
         $userModel = new UsersModel();
 
 
-        //Récupération adresse
+        // Récupération adresse
         $user = $userModel->find($session->get('id'));
         $adresse = $user->adresse;
 
@@ -47,7 +46,7 @@ class Commande extends BaseController
         // 3. Récupérer le détail des produits achetés
         $lignes = $lignesModel->getDetailsCommande($idCommande);
 
-        //frais livraison
+        // Frais livraison
         $frais = 3.00;
         $data = [
             'commande' => $commande,

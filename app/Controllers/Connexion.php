@@ -4,17 +4,15 @@ namespace App\Controllers;
 
 use App\Models\UsersModel;
 
-/**
- * Contrôleur gérant l'authentification (Login / Logout)
- */
+
+// Contrôleur gérant l'authentification (Login / Logout)
 class Connexion extends BaseController
 {
-    /**
-     * Affiche le formulaire de connexion
-     */
+    
+    // Affiche le formulaire de connexion
     public function index()
     {
-        // UX : Si déjà connecté, on redirige vers l'accueil
+        //Si déjà connecté, on redirige vers l'accueil
         if (session()->get('isLoggedIn')) {
             return redirect()->to('/');
         }
@@ -22,20 +20,19 @@ class Connexion extends BaseController
         return view('auth/connexion');
     }
 
-    /**
-     * Traite la soumission du formulaire de connexion
-     */
+    
+    // Traite la soumission du formulaire de connexion 
     public function auth()
     {
         $session = session();
-        
+
         // 1. Validation des champs pour économiser une requête SQL
         $rules = [
             'login'    => 'required',
             'password' => 'required'
         ];
 
-        
+
         if (! $this->validate($rules)) {
             return redirect()->back()->withInput()->with('msg', 'Veuillez remplir tous les champs.');
         }
@@ -49,7 +46,7 @@ class Connexion extends BaseController
 
             // Sauvegarde du panier actuel 
             $panierSauvegarde = $session->get('panier');
-            
+
             // 4. Initialisation de la session
             $ses_data = [
                 'id'         => $user->id,
@@ -65,22 +62,19 @@ class Connexion extends BaseController
             }
 
             // Redirection spécifique pour les admins
-            if($user->role === 'admin') {
+            if ($user->role === 'admin') {
                 return redirect()->to('/admin/dashboard')->with('success', 'Bonjour Administrateur ' . $user->prenom);
             }
 
             return redirect()->to('/')->with('success', 'Ravi de vous revoir, ' . $user->prenom . ' !');
-            
         } else {
-            // 5. Échec de connexion
             $session->setFlashdata('msg', 'Identifiant ou mot de passe incorrect.');
             return redirect()->to('/connexion')->withInput();
         }
     }
 
-    /**
-     * Déconnecte l'utilisateur et détruit la session
-     */
+    
+    // Déconnecte l'utilisateur et détruit la session 
     public function deconnexion()
     {
         session()->destroy();

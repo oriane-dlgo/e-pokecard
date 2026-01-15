@@ -29,11 +29,10 @@ class ProductModel extends Model
 
     /**
      * Retourne le builder pré-configuré avec les jointures (Extensions, Séries, Promos)
-     * Cela évite de réécrire les JOIN partout.
      */
     public function getAvecDetails()
     {
-        // $this correspond ici au builder de la table 'produits'
+        // $this correspond au builder de la table 'produits'
         return $this->select('produits.*, extensions.nom as nom_extension, extensions.code as code_extension, series.nom as nom_serie, promotions.tauxPromo')
                     ->join('extensions', 'extensions.id = produits.id_extension', 'left')
                     ->join('series', 'series.id = extensions.id_serie', 'left')
@@ -46,7 +45,6 @@ class ProductModel extends Model
     public function getBestSellersSemaine($limit = 4)
     {
         // Pour les requêtes très complexes impliquant des tables tiers (commandes),
-        // on peut utiliser le db connect interne du model
         $db = \Config\Database::connect();
         
         return $db->table('lignes_commande')
@@ -101,9 +99,9 @@ class ProductModel extends Model
         $results = $db->table('extensions')
                       ->whereIn('id_serie', $seriesIds)
                       ->select('id')
-                      ->get()->getResultArray(); // Retourne un tableau associatif
+                      ->get()->getResultArray(); 
 
-        return array_column($results, 'id'); // On ne veut que les ID [1, 5, 8...]
+        return array_column($results, 'id'); 
     }
 
     /**

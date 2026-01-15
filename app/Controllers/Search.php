@@ -80,7 +80,6 @@ class Search extends BaseController
             }
 
             // 3. On génère le HTML (prix barré ou normal) et on l'injecte dans l'objet
-            // La vue 'carte_produit.php' attend cette propriété 'prix_html'
             $product->prix_html = $component->getHtmlDisplay();
         }
 
