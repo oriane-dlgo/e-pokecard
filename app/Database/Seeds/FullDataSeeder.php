@@ -8,12 +8,12 @@ class FullDataSeeder extends Seeder
 {
     public function run()
     {
-        // On désactive les vérifications de clés étrangères pour pouvoir vider/remplir dans n'importe quel ordre
+        // Désacivation des vérifications de clés étrangères pour remplissage rapide
         $this->db->disableForeignKeyChecks();
 
         // --------------------------------------------------------
         // NETTOYAGE (TRUNCATE)
-        // On vide les tables avant d'insérer pour éviter les doublons
+        // Vide les tables avant d'insérer pour éviter les doublons
         // --------------------------------------------------------
         $this->db->table('lignes_commande')->truncate();
         $this->db->table('commandes')->truncate();
@@ -40,7 +40,7 @@ class FullDataSeeder extends Seeder
         // 2. SERIES
         $series = [
             ['id' => 1, 'nom' => 'Écarlate et Violet'],
-            ['id' => 2, 'nom' => 'Méga-Évolution'], // Série Custom du projet
+            ['id' => 2, 'nom' => 'Méga-Évolution'], 
             ['id' => 3, 'nom' => 'Épée et Bouclier'],
             ['id' => 4, 'nom' => 'Soleil et Lune'],
             ['id' => 5, 'nom' => 'Wizards (Vintage)'],
@@ -95,8 +95,6 @@ class FullDataSeeder extends Seeder
         $this->db->table('extensions')->insertBatch($extensions);
 
         // 5. PRODUITS
-        // Note: 'image_url' pointe vers 'default.png' ou 'dracaufeu.png' quand je n'ai pas le fichier,
-        // ou vers les fichiers existants de ton précédent seeder.
         $produits = [
             // --- EXISTANTS ---
             ['id' => 1, 'type_produit' => 'carte', 'nom' => 'U.R Pikachu EX', 'description' => 'Une carte électrique surpuissante.', 'prix' => 85.00, 'image_url' => '1767838626_b07943e156f2381dd456.webp', 'stock' => 8, 'rarete' => 'Ultra Rare', 'numero_carte' => '001/190', 'id_extension' => 11, 'id_promo' => NULL, 'nb_ventes' => 2],
@@ -119,8 +117,6 @@ class FullDataSeeder extends Seeder
             ['id' => 18, 'type_produit' => 'carte', 'nom' => 'Rugit-Lune EX - PRE', 'description' => '', 'prix' => 10.00, 'image_url' => '1767836982_22470c489ca7403584b5.webp', 'stock' => 4, 'rarete' => 'Alternative', 'numero_carte' => NULL, 'id_extension' => 12, 'id_promo' => NULL, 'nb_ventes' => 0],
             ['id' => 19, 'type_produit' => 'carte', 'nom' => 'Voltli EX - PRE', 'description' => '', 'prix' => 8.50, 'image_url' => '1767836898_f3205d0f35cced1cf64e.webp', 'stock' => 5, 'rarete' => 'Alternative', 'numero_carte' => NULL, 'id_extension' => 12, 'id_promo' => NULL, 'nb_ventes' => 0],
             ['id' => 20, 'type_produit' => 'carte', 'nom' => 'Noctali Ex - PRE', 'description' => '', 'prix' => 499.99, 'image_url' => '1767836503_24f36d896f89baf1976e.webp', 'stock' => 10, 'rarete' => 'Alternative', 'numero_carte' => NULL, 'id_extension' => 12, 'id_promo' => NULL, 'nb_ventes' => 0],
-
-            // --- NOUVEAUX PRODUITS (S&S, S&L, Vintage) ---
             
             // Évolution Céleste (Chase cards)
             ['id' => 21, 'type_produit' => 'carte', 'nom' => 'Noctali VMAX (Alt Art)', 'description' => 'La fameuse "Moonbreon".', 'prix' => 650.00, 'image_url' => 'default.png', 'stock' => 1, 'rarete' => 'Secret Rare', 'numero_carte' => '215/203', 'id_extension' => 18, 'id_promo' => NULL, 'nb_ventes' => 0],
@@ -213,13 +209,12 @@ class FullDataSeeder extends Seeder
             ['id' => 26, 'commande_id' => 17, 'product_id' => 9, 'quantite' => 1, 'prix_unitaire' => 5.99],
             ['id' => 27, 'commande_id' => 17, 'product_id' => 1, 'quantite' => 1, 'prix_unitaire' => 85.00],
             ['id' => 28, 'commande_id' => 17, 'product_id' => 2, 'quantite' => 1, 'prix_unitaire' => 120.00],
-            // New lines
             ['id' => 29, 'commande_id' => 18, 'product_id' => 21, 'quantite' => 1, 'prix_unitaire' => 650.00], // Noctali VMAX
             ['id' => 30, 'commande_id' => 19, 'product_id' => 23, 'quantite' => 1, 'prix_unitaire' => 15.00], // Booster EVS
         ];
         $this->db->table('lignes_commande')->insertBatch($lignes_commande);
 
-        // On réactive les vérifications
+        // Réactionvation des vérifications des clées étrangères
         $this->db->enableForeignKeyChecks();
     }
 }
