@@ -25,32 +25,32 @@ CONVERTER_SCRIPT="$SCRIPT_DIR/convert_dump.php"
 DATE=$(date +"%Y-%m-%d_%H-%M-%S")
 FILENAME="backup_STOP_$DATE.sql"
 
-echo "🛑 Arrêt des conteneurs demandé."
+echo " Arrêt des conteneurs demandé."
 
 # ==============================================================================
 # SAUVEGARDE & CONVERSION
 # ==============================================================================
 
-read -p "💾 Voulez-vous générer un Seeder PHP (avec Backup SQL) avant de fermer ? (y/N) " response
+read -p " Voulez-vous générer un Seeder PHP (avec Backup SQL) avant de fermer ? (y/N) " response
 
 if [[ "$response" =~ ^[yY]([eE][sS])?$ ]]; then
     
     # 1. Vérifications
     if [ ! -f "$CONVERTER_SCRIPT" ]; then
-        echo "❌ Erreur : Le fichier '$CONVERTER_SCRIPT' est introuvable."
+        echo " Erreur : Le fichier '$CONVERTER_SCRIPT' est introuvable."
         exit 1
     fi
     
     mkdir -p "$BACKUP_DIR"
     mkdir -p "$OUTPUT_TXT_DIR"
 
-    echo "📦 [1/2] Sauvegarde SQL temporaire..."
+    echo " [1/2] Sauvegarde SQL temporaire..."
     
     # 2. Dump SQL vers le dossier backups
     podman exec $CONTAINER_DB mysqldump -u $DB_USER -p$DB_PASS --complete-insert --skip-comments $DB_NAME > "$BACKUP_DIR/$FILENAME"
     
     if [ -s "$BACKUP_DIR/$FILENAME" ]; then
-        echo "🔄 [2/2] Conversion en code PHP..."
+        echo " [2/2] Conversion en code PHP..."
         
         # A. On envoie le SQL dans le dossier /tmp du conteneur (ZONE SÛRE)
         cat "$BACKUP_DIR/$FILENAME" | podman exec -i $CONTAINER_PHP sh -c 'cat > /tmp/temp_dump.sql'
@@ -65,15 +65,15 @@ if [[ "$response" =~ ^[yY]([eE][sS])?$ ]]; then
         podman exec $CONTAINER_PHP rm /tmp/convert_dump.php /tmp/temp_dump.sql
 
         if [ -s "$OUTPUT_TXT_DIR/code_seeder_$DATE.txt" ]; then
-            echo "✅ Code Seeder généré : $OUTPUT_TXT_DIR/code_seeder_$DATE.txt"
+            echo " Code Seeder généré : $OUTPUT_TXT_DIR/code_seeder_$DATE.txt"
         else
-            echo "⚠️  Le fichier généré est vide."
+            echo "  Le fichier généré est vide."
         fi
     else
-        echo "❌ Erreur : Le dump SQL a échoué."
+        echo " Erreur : Le dump SQL a échoué."
     fi
 else
-    echo "⏩ Sauvegarde ignorée."
+    echo " Sauvegarde ignorée."
 fi
 
 # ==============================================================================
@@ -81,8 +81,8 @@ fi
 # ==============================================================================
 
 echo ""
-echo "👋 Arrêt des services..."
+echo " Arrêt des services..."
 # On se place à la racine pour être sûr que podman-compose trouve le fichier yml
 cd "$PROJECT_ROOT" && podman-compose down
 
-echo "✅ Terminé."
+echo " Terminé."

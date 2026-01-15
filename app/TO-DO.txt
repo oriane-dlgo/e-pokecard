@@ -1,6 +1,0 @@
-
-
-- résoudre problèmes group filtre admin pour les routes
-(- résoudre image du produit non supprimé lors de la supression d'un produit)
-- résoudre les retours à la ligne dans le contenu dans la description d'un produit
-

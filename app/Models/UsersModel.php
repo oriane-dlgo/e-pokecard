@@ -10,16 +10,42 @@ class UsersModel extends Model
     protected $table            = 'users';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = Users::class; // Utilisation de l'Entité
+    protected $returnType       = Users::class; 
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = ['login', 'password', 'nom', 'prenom', 'email', 'adresse', 'cp', 'ville', 'role'];
 
-    // Dates
-    protected $useTimestamps = false; // ou true si tu as created_at/updated_at
+    // --- CONFIGURATIONS STANDARDS ---
+
+    protected bool $allowEmptyInserts = false;
+    protected bool $updateOnlyChanged = true;
+
+    protected array $casts = [];
+    protected array $castHandlers = [];
+
+    protected $useTimestamps = false;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
+
+    protected $validationRules      = [];
+    protected $validationMessages   = [];
+    protected $skipValidation       = false;
+    protected $cleanValidationRules = true;
+
+    protected $allowCallbacks = true;
+    protected $beforeInsert   = [];
+    protected $afterInsert    = [];
+    protected $beforeUpdate   = [];
+    protected $afterUpdate    = [];
+    protected $beforeFind     = [];
+    protected $afterFind      = [];
+    protected $beforeDelete   = [];
+    protected $afterDelete    = [];
 
     // =========================================================================
-    // 1. MÉTHODES DE VALIDATION (Celle qui te manque !)
+    // 1. MÉTHODES DE VALIDATION 
     // =========================================================================
 
     /**
@@ -71,9 +97,7 @@ class UsersModel extends Model
     
     protected $tempUser = [];
 
-    /**
-     * Etape 1 : Initialise la construction
-     */
+    // Etape 1 : Initialise la construction 
     public function newUser()
     {
         $this->tempUser = [
@@ -82,9 +106,8 @@ class UsersModel extends Model
         return $this;
     }
 
-    /**
-     * Etape 2 : Ajoute les identifiants
-     */
+    
+    // Etape 2 : Ajoute les identifiants
     public function withCredentials($login, $password)
     {
         $this->tempUser['login'] = $login;
@@ -93,9 +116,8 @@ class UsersModel extends Model
         return $this;
     }
 
-    /**
-     * Etape 3 : Ajoute l'identité
-     */
+    
+    // Etape 3 : Ajoute l'identité
     public function withIdentity($nom, $prenom, $email, $adresse)
     {
         $this->tempUser['nom'] = $nom;
@@ -105,9 +127,8 @@ class UsersModel extends Model
         return $this;
     }
 
-    /**
-     * Etape 4 : Finalise et insère en base
-     */
+    
+    // Etape 4 : Finalise et insère en base
     public function create()
     {
         if (empty($this->tempUser)) {

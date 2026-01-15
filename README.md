@@ -1,185 +1,142 @@
-# 🛒 Projet SAE 3.01 - Boutique Pokémon
-
-Ce projet est une application e-commerce développée avec CodeIgniter 4 et Docker.
-
-## 🚀 Guide d'installation rapide
 
 
-### 1. Cloner le dépot & Séléction de la branche
-Tout d'abord, lancer la commande suivante via un terminal dans un dossier vide : 
+# --- Projet SAE 3.01 - Boutique Pokémon (PokéStore)
+
+Bienvenue sur le dépôt de notre application E-Commerce développée avec **CodeIgniter 4** et **Docker/Podman**.
+
+###  Auteurs (Équipe 4)
+
+* Oriane DELGADO
+* Nhael GUILLARD
+* Clara RENARD
+* Ryan SEMAOUNE
+
+---
+
+## --- Guide de Lancement Rapide (IUT & Personnel)
+
+Nous avons automatisé l'installation via des scripts shell pour simplifier le déploiement, que vous soyez sur les machines de l'IUT (Linux/Podman) ou sur une machine personnelle (Windows/Docker).
+
+### 1. Récupération du projet
+
+Ouvrez un terminal et lancez les commandes suivantes :
 
 ```bash
+# 1. Cloner le dépôt
 git clone https://gitlab.univ-nantes.fr/pub/but/but2/sae/groupe4/eq_4_04_delgado-oriane_guillard-nhael_renard-clara_semaoune-ryan.git
-```
 
-Entrer dans le dépot cloné : 
-```bash
+# 2. Entrer dans le dossier
 cd eq_4_04_delgado-oriane_guillard-nhael_renard-clara_semaoune-ryan
+
+# 3. Se placer sur la branche de développement (Code stable)
+git checkout dev
+
 ```
 
-Sélectionner la branche *dev* contenant le code : 
+### 2. Démarrage Automatisé
+
+Choisissez la méthode correspondant à votre environnement.
+
+#### Option A : Sur les machines de l'IUT (Linux / Podman)
+
+Nous avons préparé un script qui gère : le lancement des conteneurs, l'installation des dépendances (Composer), la configuration du `.env`, les permissions et l'initialisation de la Base de Données.
+
 ```bash
-git checkout dev 
+# 1. Donner les droits d'exécution au script
+chmod +x scripts/run_container.sh
+
+# 2. Lancer l'installation complète
+./scripts/run_container.sh
+
 ```
 
-### 2. Lancer l'environnement (Docker/Podman)
-Le projet est conteneurisé. Lancez donc la commande suivante à la racine :
+> **Note :** Le script vous demandera peut-être de confirmer l'utilisation de l'image `docker.io` ou du miroir local. À l'IUT, choisissez le miroir local si proposé, sinon `docker.io`.
+
+#### Option B : Sur Windows (Docker Desktop)
+
+Utilisez PowerShell pour lancer le script équivalent :
+
+```powershell
+# Exécuter le script d'installation Windows
+.\scripts\Windows\run_container.sh
+
+```
+
+---
+
+## --- Accès à l'application
+
+Une fois le script terminé (message "--- Installation terminée !"), accédez aux services :
+
+* ** Boutique (Site Web) :** [http://localhost:8080](https://www.google.com/search?q=http://localhost:8080)
+* ** Base de Données (PhpMyAdmin) :** [http://localhost:8081](https://www.google.com/search?q=http://localhost:8081)
+* **Serveur :** `sae_mysql`
+* **Utilisateur :** `root`
+* **Mot de passe :** `root`
+
+
+
+---
+
+## --- Commandes Utiles (Manuel)
+
+Si vous ne souhaitez pas utiliser les scripts automatiques, voici les commandes manuelles équivalentes.
+
+### Démarrage
 
 ```bash
-# Si vous êtes sur une machine personnelle
-docker compose up -d --build
-# Si vous êtes sur les machines de l'IUT (Podman)
+# IUT (Podman)
 podman-compose up -d --build
+
+# Perso (Docker)
+docker compose up -d --build
+
 ```
-> **Note** : 
-Si on vous demande de choisir une image.
-> - A l'IUT : sélectionnez l'option 1 (miroir local de l'université) pour plus de rapidité. 
-> - Hors de l'IUT : sélectionnez docker.io
 
-### 3. Installation des dépendances & Configuration
+### Installation Dépendances & Permissions
 
-Une fois le conteneur lancé, il faut initialiser le framework. Exécutez ces commandes (depuis votre terminal hôte) :
+```bash
+# Copie de la configuration
+cp env.example .env
 
-- **Sous Linux** :  
- ```Bash
- # 1. Installer les librairies CodeIgniter (dossier vendor)
- podman exec -it sae_php_app composer install
+# Installation Composer
+podman exec -it sae_php_app composer install
 
- # 2. Configurer l'environnement
- # Copiez le fichier d'exemple pour créer votre configuration locale
- cp env.example .env
+# Correction des droits d'écriture (Essentiel pour CodeIgniter)
+podman exec -it sae_php_app chmod -R 777 /var/www/html/writable
 
- # 3. Fixer les permissions 
- # Cette commande corrige les erreurs 403 Forbidden et les problèmes d'écriture
- podman exec -it sae_php_app chmod -R 755 /var/www/html
- podman exec -it sae_php_app chmod -R 777 /var/www/html/writable
- ```
+```
 
-- **Sous Windows** :
-```Bash
- # 1. Installer les librairies CodeIgniter (dossier vendor)
- docker exec sae_php_app composer install
+### Initialisation Base de Données
 
- # 2. Configurer l'environnement
- # Copiez le fichier d'exemple pour créer votre configuration locale
- cp env.example .env
+Pour remettre à zéro la BDD avec les données de test :
 
- # 3. Fixer les permissions 
- # Cette commande corrige les erreurs 403 Forbidden et les problèmes d'écriture
- docker exec sae_php_app chmod -R 777 writable
- ```
+```bash
+# Lance les migrations et les seeders
+podman exec -it sae_php_app php spark migrate:refresh
+podman exec -it sae_php_app php spark db:seed FullDataSeeder
 
-### 4. Base de Données 
-L'application nécessite une base de données MySQL initialisée.
-
-- Accédez à phpMyAdmin : http://localhost:8081
-    - Serveur : *mysql (ou sae_mysql)*
-    - User : *root*
-    - Password : *root*
-
-- Sélectionnez la base de données *sae_db*.
-
--  Allez dans l'onglet *Importer*.
-
--   Chargez le fichier *database.sql* situé dans *app/Database/Seeds/*.
-
-### 5. Accès au site
-
-L'application est accessible ici : 👉 http://localhost:8080  
-La base de donnée est accessible ici (*sae_db*): 👉 http://localhost:8081 
+```
 
 ---
 
+## --- Arrêt Propre
 
-## 📦 Gestion du Git (Workflow quotidien)
+Pour éteindre l'application et libérer les ressources :
 
-Pour éviter les conflits et ne pas perdre de travail, voici la procédure à suivre à chaque séance.
-### 1. Avant de commencer à coder 
-Toujours récupérer le travail des autres pour être à jour.
+**Via Script :**
+
 ```bash
-git pull origin dev
+./scripts/stop_container.sh
+
 ```
->(Si un conflit apparaît, VSCode vous proposera de choisir entre "Current Change" et "Incoming Change").
 
-### Problème pouvant être rencontré ⚠️
-Si après le pull, VSCode (ou via *git status*) détecte des différences entre votre version et celle de Git.   
-Cela est dû au fait que Git détecte des changements de permission et des retours à la ligne différents (Windows/Linux).   
+**Via Commande :**
 
-<ins> Pour régler tout ça : </ins>  
-
- - **Sous Linux** :  
- ```bash
- # Dit à Git : "Ne regarde pas si le fichier est exécutable ou non, ignore les chmod"
- git config core.filemode false
- # Dit à Git : "Si jamais tu trouves du CRLF (venant de Windows), convertis-le en LF. Sinon ne touche à rien."
- git config core.autocrlf input
- ```
- - **Sous Windows** :  
- ```bash
- # Dis à Git : "Arrête de surveiller si un fichier est exécutable ou non, je suis sous Windows, je m'en fiche."
- git config core.filemode false
- # Dis à Git : "Gére intelligemment les conversions ou ignore les."
- git config core.autocrlf true
- ```
-
-Si même après ces commandes VSCode (*git status*) affiche des fichiers modifiés, c'est qu'il n'a pas pris en compte les modifications.  
-- Essayer **CTRL+SHIF+P** et exécuter *Developer: Reload Window*  
-
-Sinon :
-> ⚠️ **Attention** : Ne fais cette commande que si tu es sûr de ne pas avoir commencé à codé (sinon tu perdras tes vraies modifs).  
-
-**Sous Linux/Windows** :
 ```bash
-# Annule toutes les modifications locales pour revenir à l'état propre du dernier commit
-git reset --hard
-```
-
-### 2. Sauvegarder son travail (Le Commit)
-Si vous changez d'ordinateur ou si c'est votre première connexion, Git ne sait pas qui vous êtes. Vous devez configurer votre identité pour que vos commits vous soient attribués.
-
-À taper dans le terminal avant de commencer à travailler :
-```bash
-# 1. Définir votre nom (C'est ce qui s'affichera dans l'historique GitLab)
-git config --global user.name "Prénom Nom"
-
-# 2. Définir votre email (Utilisez votre adresse universitaire)
-git config --global user.email "prenom.nom@etu.univ-nantes.fr"
-
-# (Optionnel) Vérifier que c'est bien pris en compte
-git config --list
-```
-
-Pour enregistrer vos modifications sur votre ordinateur uniquement.
-```Bash
-# 1. Ajouter les fichiers modifiés (Mise en carton)
-git add .
-# 2. Valider la version (Fermer le carton)
-git commit -m "Description claire de ce que j'ai fait (ex: Ajout page Panier)"
-```
-
-
-
-
-### 3. Envoyer le travail au groupe (Le Push)
-C'est l'étape obligatoire pour que les autres voient votre travail et pour le sauvegarder sur le serveur.
-```Bash
-# Envoyer le carton au serveur
-git push origin dev
-```
-> **Note** : Si VSCode indique "Outgoing Changes" ou "Modifications sortantes", c'est que vous avez oublié cette étape !
-
----
-
-
-## 🛑 Arrêter le projet proprement
-
-Lorsque vous avez fini de travailler, n'éteignez pas brutalement le terminal ou VSCode. Arrêtez les conteneurs pour libérer les ressources.
-```Bash
-# Arrête et supprime les conteneurs (Vos données BDD sont conservées)
 podman-compose down
-```
-(Ou docker compose down sur machine perso).
+# ou
+docker compose down
 
-```Bash
-podman exec -it sae_php_app chmod -R 777 /var/www/html/public/assets/
 ```
+

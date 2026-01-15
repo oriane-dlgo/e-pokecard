@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-// --- CORRECTION : Orthographe exacte de la classe Entité ---
 use App\Entities\LignesCommande;
 
 class LignesCommandeModel extends Model
@@ -12,26 +11,50 @@ class LignesCommandeModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     
-    // On utilise bien l'Entité comme type de retour
     protected $returnType       = LignesCommande::class;
     
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = ['commande_id', 'product_id', 'quantite', 'prix_unitaire'];
 
-    // ... (Reste de la config inchangée) ...
 
     /**
      * Récupère les lignes d'une commande AVEC les infos du produit (Image, Nom)
      */
     public function getDetailsCommande($idCommande)
     {
-        // CodeIgniter est assez intelligent : 
-        // Même si le returnType est LignesCommande, il va injecter 
-        // les colonnes jointes (nom, image_url) dynamiquement dans l'entité.
         return $this->select('lignes_commande.*, produits.nom, produits.image_url, produits.prix as prix_actuel')
                     ->join('produits', 'produits.id = lignes_commande.product_id')
                     ->where('commande_id', $idCommande)
                     ->findAll();
     }
+
+    // --- CONFIGURATIONS STANDARDS ---
+
+    protected bool $allowEmptyInserts = false;
+    protected bool $updateOnlyChanged = true;
+
+    protected array $casts = [];
+    protected array $castHandlers = [];
+
+    protected $useTimestamps = false;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
+
+    protected $validationRules      = [];
+    protected $validationMessages   = [];
+    protected $skipValidation       = false;
+    protected $cleanValidationRules = true;
+
+    protected $allowCallbacks = true;
+    protected $beforeInsert   = [];
+    protected $afterInsert    = [];
+    protected $beforeUpdate   = [];
+    protected $afterUpdate    = [];
+    protected $beforeFind     = [];
+    protected $afterFind      = [];
+    protected $beforeDelete   = [];
+    protected $afterDelete    = [];
 }

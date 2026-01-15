@@ -31,23 +31,23 @@ FILENAME="backup_$DATE.sql"
 mkdir -p "$BACKUP_DIR"
 mkdir -p "$OUTPUT_TXT_DIR"
 
-echo "📍 Script lancé depuis : $(pwd)"
-echo "📦 Dossier des backups : $BACKUP_DIR"
+echo " Script lancé depuis : $(pwd)"
+echo " Dossier des backups : $BACKUP_DIR"
 
 # ==============================================================================
 # 2. SAUVEGARDE SQL
 # ==============================================================================
 
 echo ""
-echo "📦 [1/2] Sauvegarde de la base de données..."
+echo " [1/2] Sauvegarde de la base de données..."
 
 # Utilisation de docker exec sans -t pour éviter les problèmes de retour à la ligne
 docker exec $CONTAINER_DB mysqldump -u $DB_USER -p$DB_PASS --complete-insert --skip-comments $DB_NAME > "$BACKUP_DIR/$FILENAME"
 
 if [ -s "$BACKUP_DIR/$FILENAME" ]; then
-    echo "✅ Sauvegarde réussie : $BACKUP_DIR/$FILENAME"
+    echo " Sauvegarde réussie : $BACKUP_DIR/$FILENAME"
 else
-    echo "❌ Erreur : Le fichier de backup est vide."
+    echo " Erreur : Le fichier de backup est vide."
     exit 1
 fi
 
@@ -56,16 +56,16 @@ fi
 # ==============================================================================
 
 echo ""
-read -p "⚡ [2/2] Voulez-vous générer le code PHP pour le Seeder ? (y/N) " response
+read -p " [2/2] Voulez-vous générer le code PHP pour le Seeder ? (y/N) " response
 
 if [[ "$response" =~ ^[yY]([eE][sS])?$ ]]; then
     
     if [ ! -f "$CONVERTER_SCRIPT" ]; then
-        echo "❌ Erreur : Le fichier '$CONVERTER_SCRIPT' est introuvable."
+        echo " Erreur : Le fichier '$CONVERTER_SCRIPT' est introuvable."
         exit 1
     fi
 
-    echo "🔄 Conversion en cours..."
+    echo " Conversion en cours..."
     
     # A. Copie du SQL vers le conteneur (/tmp)
     # Sur Windows, le pipe | docker exec -i est le moyen le plus sûr d'éviter les problèmes de montage
@@ -81,12 +81,12 @@ if [[ "$response" =~ ^[yY]([eE][sS])?$ ]]; then
     docker exec $CONTAINER_PHP rm /tmp/convert_dump.php /tmp/temp_dump.sql
 
     if [ -s "$OUTPUT_TXT_DIR/code_seeder_$DATE.txt" ]; then
-        echo "✅ Code PHP généré avec succès !"
-        echo "📄 Fichier : $OUTPUT_TXT_DIR/code_seeder_$DATE.txt"
+        echo " Code PHP généré avec succès !"
+        echo " Fichier : $OUTPUT_TXT_DIR/code_seeder_$DATE.txt"
     else
-        echo "⚠️  Attention : Le fichier généré semble vide."
+        echo "  Attention : Le fichier généré semble vide."
     fi
 fi
 
 echo ""
-echo "👋 Terminé."
+echo " Terminé."

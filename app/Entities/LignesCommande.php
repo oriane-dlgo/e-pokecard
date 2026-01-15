@@ -13,6 +13,5 @@ class LignesCommande extends Entity
         'product_id'    => 'integer',
         'quantite'      => 'integer',
         'prix_unitaire' => 'float',
-        // total_ligne n'est pas en base, mais calculé ou joint
     ];
 }

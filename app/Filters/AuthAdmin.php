@@ -16,7 +16,6 @@ class AuthAdmin implements FilterInterface
         }
 
         // 2. Vérifier si l'utilisateur est ADMIN
-        // (Adapte 'user_role' ou 'role' selon ce que tu as mis dans ton contrôleur Connexion)
         if (session()->get('user_role') !== 'admin') {
             // Si pas admin, on renvoie à l'accueil avec une erreur
             return redirect()->to('/')->with('error', 'Accès interdit réservé aux administrateurs.');

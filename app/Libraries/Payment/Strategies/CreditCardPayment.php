@@ -9,7 +9,7 @@ class CreditCardPayment implements PaymentStrategyInterface
 {
     public function pay(int $commandeId): void
     {
-        // Simulation de l'appel API Stripe/Banque ici...
+        // Simulation de l'appel API Banque ici...
         
         // Mise à jour via le modèle
         $model = new CommandesModel();

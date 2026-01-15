@@ -26,11 +26,6 @@ class ProductModel extends Model
         'id_promo',    
         'nb_ventes'    
     ];
-    protected bool $allowEmptyInserts = false;
-    protected bool $updateOnlyChanged = true;
-
-    protected array $casts = [];
-    protected array $castHandlers = [];
 
     /**
      * Retourne le builder pré-configuré avec les jointures (Extensions, Séries, Promos)
@@ -175,20 +170,25 @@ class ProductModel extends Model
     }
 
 
-    // Dates
+    // --- CONFIGURATIONS STANDARDS ---
+
+    protected bool $allowEmptyInserts = false;
+    protected bool $updateOnlyChanged = true;
+
+    protected array $casts = [];
+    protected array $castHandlers = [];
+
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
-    // Validation
     protected $validationRules      = [];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
-    // Callbacks
     protected $allowCallbacks = true;
     protected $beforeInsert   = [];
     protected $afterInsert    = [];

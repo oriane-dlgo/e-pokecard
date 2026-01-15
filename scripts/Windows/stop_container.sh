@@ -19,30 +19,30 @@ CONVERTER_SCRIPT="$SCRIPT_DIR/convert_dump.php"
 DATE=$(date +"%Y-%m-%d_%H-%M-%S")
 FILENAME="backup_STOP_$DATE.sql"
 
-echo "🛑 Arrêt des conteneurs demandé."
+echo " Arrêt des conteneurs demandé."
 
 # ==============================================================================
 # SAUVEGARDE & CONVERSION
 # ==============================================================================
 
-read -p "💾 Voulez-vous générer un Seeder PHP (avec Backup SQL) avant de fermer ? (y/N) " response
+read -p " Voulez-vous générer un Seeder PHP (avec Backup SQL) avant de fermer ? (y/N) " response
 
 if [[ "$response" =~ ^[yY]([eE][sS])?$ ]]; then
     
     if [ ! -f "$CONVERTER_SCRIPT" ]; then
-        echo "❌ Erreur : Le fichier '$CONVERTER_SCRIPT' est introuvable."
+        echo " Erreur : Le fichier '$CONVERTER_SCRIPT' est introuvable."
         exit 1
     fi
     
     mkdir -p "$BACKUP_DIR"
     mkdir -p "$OUTPUT_TXT_DIR"
 
-    echo "📦 [1/2] Sauvegarde SQL temporaire..."
+    echo " [1/2] Sauvegarde SQL temporaire..."
     
     docker exec $CONTAINER_DB mysqldump -u $DB_USER -p$DB_PASS --complete-insert --skip-comments $DB_NAME > "$BACKUP_DIR/$FILENAME"
     
     if [ -s "$BACKUP_DIR/$FILENAME" ]; then
-        echo "🔄 [2/2] Conversion en code PHP..."
+        echo " [2/2] Conversion en code PHP..."
         
         # A. Copie sécurisée vers /tmp
         cat "$BACKUP_DIR/$FILENAME" | docker exec -i $CONTAINER_PHP sh -c 'cat > /tmp/temp_dump.sql'
@@ -57,15 +57,15 @@ if [[ "$response" =~ ^[yY]([eE][sS])?$ ]]; then
         docker exec $CONTAINER_PHP rm /tmp/convert_dump.php /tmp/temp_dump.sql
 
         if [ -s "$OUTPUT_TXT_DIR/code_seeder_$DATE.txt" ]; then
-            echo "✅ Code Seeder généré : $OUTPUT_TXT_DIR/code_seeder_$DATE.txt"
+            echo " Code Seeder généré : $OUTPUT_TXT_DIR/code_seeder_$DATE.txt"
         else
-            echo "⚠️  Le fichier généré est vide."
+            echo "  Le fichier généré est vide."
         fi
     else
-        echo "❌ Erreur : Le dump SQL a échoué."
+        echo " Erreur : Le dump SQL a échoué."
     fi
 else
-    echo "⏩ Sauvegarde ignorée."
+    echo " Sauvegarde ignorée."
 fi
 
 # ==============================================================================
@@ -80,7 +80,7 @@ else
 fi
 
 echo ""
-echo "👋 Arrêt des services..."
+echo " Arrêt des services..."
 cd "$PROJECT_ROOT" && $COMPOSE_CMD down
 
-echo "✅ Terminé."
+echo " Terminé."

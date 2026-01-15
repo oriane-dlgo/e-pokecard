@@ -136,7 +136,6 @@ class CommandesModel extends Model
                     'product_id'    => $idProduit,
                     'quantite'      => $qty,
                     'prix_unitaire' => $prix,
-                    // 'total_ligne' => $prix * $qty // Si ta table a cette colonne
                 ];
             }
 
@@ -163,7 +162,6 @@ class CommandesModel extends Model
                 $lignesModel->insert($ligne);
 
                 // Décrémentation Stock
-                // Note : On utilise le Query Builder ici pour être atomique
                 $db->table('produits')
                    ->where('id', $ligne['product_id'])
                    ->decrement('stock', $ligne['quantite']);

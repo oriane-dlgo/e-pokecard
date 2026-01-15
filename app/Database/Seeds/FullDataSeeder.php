@@ -40,7 +40,7 @@ class FullDataSeeder extends Seeder
         // 2. SERIES
         $series = [
             ['id' => 1, 'nom' => 'Écarlate et Violet'],
-            ['id' => 2, 'nom' => 'Méga-Évolution'], 
+            ['id' => 2, 'nom' => 'Méga-Évolution'],
             ['id' => 3, 'nom' => 'Épée et Bouclier'],
             ['id' => 4, 'nom' => 'Soleil et Lune'],
             ['id' => 5, 'nom' => 'Wizards (Vintage)'],
@@ -74,7 +74,7 @@ class FullDataSeeder extends Seeder
             ['id' => 13, 'nom' => 'Aventures Ensemble', 'code' => 'JTG', 'id_serie' => 1],
             ['id' => 14, 'nom' => 'Foudre Noire', 'code' => 'BLK', 'id_serie' => 1],
             ['id' => 15, 'nom' => 'Flamme Blanche', 'code' => 'WHT', 'id_serie' => 1],
-            
+
             // Custom (Serie 2)
             ['id' => 16, 'nom' => 'Méga-Évolution', 'code' => 'MEG', 'id_serie' => 2],
             ['id' => 17, 'nom' => 'Flammes Fantasmagoriques', 'code' => 'PFL', 'id_serie' => 2],
@@ -117,7 +117,7 @@ class FullDataSeeder extends Seeder
             ['id' => 18, 'type_produit' => 'carte', 'nom' => 'Rugit-Lune EX - PRE', 'description' => '', 'prix' => 10.00, 'image_url' => '1767836982_22470c489ca7403584b5.webp', 'stock' => 4, 'rarete' => 'Alternative', 'numero_carte' => NULL, 'id_extension' => 12, 'id_promo' => NULL, 'nb_ventes' => 0],
             ['id' => 19, 'type_produit' => 'carte', 'nom' => 'Voltli EX - PRE', 'description' => '', 'prix' => 8.50, 'image_url' => '1767836898_f3205d0f35cced1cf64e.webp', 'stock' => 5, 'rarete' => 'Alternative', 'numero_carte' => NULL, 'id_extension' => 12, 'id_promo' => NULL, 'nb_ventes' => 0],
             ['id' => 20, 'type_produit' => 'carte', 'nom' => 'Noctali Ex - PRE', 'description' => '', 'prix' => 499.99, 'image_url' => '1767836503_24f36d896f89baf1976e.webp', 'stock' => 10, 'rarete' => 'Alternative', 'numero_carte' => NULL, 'id_extension' => 12, 'id_promo' => NULL, 'nb_ventes' => 0],
-            
+
             // Évolution Céleste (Chase cards)
             ['id' => 21, 'type_produit' => 'carte', 'nom' => 'Noctali VMAX (Alt Art)', 'description' => 'La fameuse "Moonbreon".', 'prix' => 650.00, 'image_url' => 'default.png', 'stock' => 1, 'rarete' => 'Secret Rare', 'numero_carte' => '215/203', 'id_extension' => 18, 'id_promo' => NULL, 'nb_ventes' => 0],
             ['id' => 22, 'type_produit' => 'carte', 'nom' => 'Rayquaza VMAX (Alt Art)', 'description' => 'Le dragon céleste dans toute sa splendeur.', 'prix' => 320.00, 'image_url' => 'default.png', 'stock' => 2, 'rarete' => 'Secret Rare', 'numero_carte' => '218/203', 'id_extension' => 18, 'id_promo' => NULL, 'nb_ventes' => 0],
@@ -131,7 +131,7 @@ class FullDataSeeder extends Seeder
 
             // Stars Étincelantes
             ['id' => 28, 'type_produit' => 'carte', 'nom' => 'Dracaufeu V (Alt Art)', 'description' => 'Combat contre Florizarre.', 'prix' => 140.00, 'image_url' => 'dracaufeu.png', 'stock' => 3, 'rarete' => 'Alternative', 'numero_carte' => '154/172', 'id_extension' => 19, 'id_promo' => NULL, 'nb_ventes' => 0],
-            
+
             // Origine Perdue
             ['id' => 29, 'type_produit' => 'carte', 'nom' => 'Giratina V (Alt Art)', 'description' => 'L\'illustration la plus complexe de la série.', 'prix' => 280.00, 'image_url' => 'default.png', 'stock' => 2, 'rarete' => 'Alternative', 'numero_carte' => '186/196', 'id_extension' => 21, 'id_promo' => NULL, 'nb_ventes' => 0],
             ['id' => 30, 'type_produit' => 'carte', 'nom' => 'Pikachu VMAX (TG)', 'description' => 'Trainer Gallery avec Sacha.', 'prix' => 45.00, 'image_url' => 'default.png', 'stock' => 10, 'rarete' => 'Trainer Gallery', 'numero_carte' => 'TG17/TG30', 'id_extension' => 21, 'id_promo' => NULL, 'nb_ventes' => 2],
@@ -142,7 +142,7 @@ class FullDataSeeder extends Seeder
 
             // Duo de Choc
             ['id' => 33, 'type_produit' => 'carte', 'nom' => 'Latias & Latios GX (Alt Art)', 'description' => 'Le cœur formé par les dragons.', 'prix' => 600.00, 'image_url' => 'default.png', 'stock' => 1, 'rarete' => 'Alternative', 'numero_carte' => '170/181', 'id_extension' => 23, 'id_promo' => NULL, 'nb_ventes' => 0],
-            
+
             // Base Set (Vintage)
             ['id' => 34, 'type_produit' => 'carte', 'nom' => 'Dracaufeu (Base Set)', 'description' => 'La carte par qui tout a commencé. État Good.', 'prix' => 250.00, 'image_url' => 'dracaufeu.png', 'stock' => 1, 'rarete' => 'Holo Rare', 'numero_carte' => '4/102', 'id_extension' => 24, 'id_promo' => NULL, 'nb_ventes' => 0],
             ['id' => 35, 'type_produit' => 'carte', 'nom' => 'Tortank (Base Set)', 'description' => 'État Near Mint.', 'prix' => 150.00, 'image_url' => 'default.png', 'stock' => 1, 'rarete' => 'Holo Rare', 'numero_carte' => '2/102', 'id_extension' => 24, 'id_promo' => NULL, 'nb_ventes' => 0],
