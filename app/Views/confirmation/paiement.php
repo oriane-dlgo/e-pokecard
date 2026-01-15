@@ -29,16 +29,16 @@
                     <input type="hidden" name="type_paiement" value="card">
 
                     <label>NUMÉRO DE CARTE</label>
-                    <input type="number" name="cc_num" placeholder="XXXX XXXX XXXX XXXX" class="pay-input">
+                    <input type="text" name="cc_num" inputmode = "numeric" pattern="[0-9]{16}" placeholder="XXXX XXXX XXXX XXXX" class="pay-input" required>
                     
                     <div class="pay-row">
                         <div style="flex:1">
                             <label>EXP</label>
-                            <input type="text" name="cc_exp" placeholder="MM/YY" class="pay-input">
+                            <input type="month" name="cc_exp" placeholder="MM/YY" pattern = "[01-12]{2}/[25-60]{2}"class="pay-input" required>
                         </div>
                         <div style="flex:1">
                             <label>CVV</label>
-                            <input type="number" name="cc_cvv" placeholder="123" class="pay-input">
+                            <input type="text" inputmode= "numeric" pattern = "[0-9]{3}" name="cc_cvv" placeholder="123" class="pay-input" required>
                         </div>
                     </div>
 

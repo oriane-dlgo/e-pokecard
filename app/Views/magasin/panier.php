@@ -59,7 +59,7 @@
             </div>
 
             <div class="total-display">
-                TOTAL: <?= $total_global ?>€ 
+                TOTAL: <?= number_format($total_global, 2) ?>€ 
             </div>
             €
         </div>

@@ -67,8 +67,8 @@ class Panier extends BaseController
                 $articles[] = [
                     'produit'     => $produit,     // Pour $item['produit']->nom
                     'quantite'    => $qty,          // Pour $item['quantite']
-                    'tva'         => round($totalLigne/1.2*0.2, 2),  // Pour afficher la TVA       
-                    'total_ligne' => $totalLigne   // Pour $item['total_ligne']
+                    'tva'         => number_format($totalLigne/1.2*0.2, 2),  // Pour afficher la TVA       
+                    'total_ligne' => number_format($totalLigne, 2)   // Pour $item['total_ligne']
                 ];
             }
         }
