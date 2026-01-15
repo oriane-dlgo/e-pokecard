@@ -41,6 +41,24 @@
     }
 }
 
+/* --- TABLETTES PORTRAIT (max-width: 900px) --- */
+@media (max-width: 900px) {
+    
+    /* On nettoie le conteneur principal pour gagner de l'espace */
+    main {
+        width: 100%;        /* Prend toute la largeur */
+        border: none;       /* On enlève les bordures */
+        padding: 15px;      /* Padding réduit */
+        box-shadow: none;
+        margin: 0;
+    }
+
+    /* Grille Principale (Fond Gris) */
+    .catalogue-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
 
 /* --- TABLETTES PORTRAIT (max-width: 768px) --- */
 @media (max-width: 768px) {
