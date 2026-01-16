@@ -24,7 +24,9 @@
     
     <div class="tags-row">
         <span class="tag-left"><?= strtoupper(esc($produit->type_produit)) ?></span>
-        <span class="tag-right"><?= strtoupper(esc($tagDroite)) ?></span>
+        <?php if (strtoupper(esc($produit->type_produit)) != 'ACCESSOIRE') : ?>
+            <span class="tag-right"><?= strtoupper(esc($tagDroite)) ?></span>
+        <?php endif; ?>
     </div>
 
     <hr class="separator">
