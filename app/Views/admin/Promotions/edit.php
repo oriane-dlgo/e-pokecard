@@ -20,7 +20,7 @@
             <h3 class="column-title title-cyan">CONFIGURATION</h3>
             <div class="form-group promo-box">
                 <label>POURCENTAGE DE RÉDUCTION (%)</label>
-                <input type="number" name="tauxPromo" required min="1" max="100" value="<?= intval($p->tauxPromo * 100) ?>" class="input-promo-rate">
+                <input type="number" name="tauxPromo" required min="1" max="90" value="<?= intval($p->tauxPromo * 100) ?>" class="input-promo-rate">
             </div>
             <div class="form-row">
                 <div class="form-group"><label>DATE DE DÉBUT</label><input type="date" name="dateDebut" required value="<?= $p->dateDebut ?>"></div>

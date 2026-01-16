@@ -20,7 +20,7 @@
                 <h3 class="column-title title-cyan">CONFIGURATION DE L'OFFRE</h3>
                 <div class="form-group promo-box">
                     <label>POURCENTAGE DE RÉDUCTION (%)</label>
-                    <input type="number" name="tauxPromo" required min="1" max="100" placeholder="Ex: 20" class="input-promo-rate">
+                    <input type="number" name="tauxPromo" required min="1" max="90" placeholder="Ex: 20" class="input-promo-rate">
                 </div>
                 <div class="form-row">
                     <div class="form-group"><label>DATE DE DÉBUT</label><input type="date" name="dateDebut" required value="<?= date('d-m-Y') ?>"></div>
