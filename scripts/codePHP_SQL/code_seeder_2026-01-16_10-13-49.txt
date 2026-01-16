@@ -1,68 +1,38 @@
-<?php
 
-namespace App\Database\Seeds;
+------------------------------------------------------------
+ CODE À COPIER DANS FullDataSeeder.php
+------------------------------------------------------------
 
-use CodeIgniter\Database\Seeder;
-
-class FullDataSeeder extends Seeder
-{
-    public function run()
-    {
-        // Désacivation des vérifications de clés étrangères pour remplissage rapide
-        $this->db->disableForeignKeyChecks();
-
-        // --------------------------------------------------------
-        // NETTOYAGE (TRUNCATE)
-        // Vide les tables avant d'insérer pour éviter les doublons
-        // --------------------------------------------------------
-        $this->db->table('lignes_commande')->truncate();
-        $this->db->table('commandes')->truncate();
-        $this->db->table('produits')->truncate();
-        $this->db->table('extensions')->truncate();
-        $this->db->table('promotions')->truncate();
-        $this->db->table('series')->truncate();
-        $this->db->table('users')->truncate();
-
-        // --------------------------------------------------------
-        // INSERTION DES DONNÉES
-        // --------------------------------------------------------
-
-        // 1. USERS
-        $users = [
-            ['id' => 1, 'login' => 'admin', 'password' => '$2y$10$4rvjj9ktrVhOcLwU1F19NuWkgWup118LWKF.0b6MQxm/6r.kdblMG', 'role' => 'admin', 'nom' => 'Administrateur', 'prenom' => NULL, 'email' => NULL, 'adresse' => NULL],
-            ['id' => 2, 'login' => 'sacha', 'password' => '$2y$10$KfO2nz9J3H6T34yhLDQI9O1cXYJ1XPXB2YUA2.LTvVlqEYQYHvbUO', 'role' => 'client', 'nom' => 'Ketchum', 'prenom' => NULL, 'email' => NULL, 'adresse' => NULL],
-            ['id' => 3, 'login' => 'ronflex', 'password' => '$2y$12$cvF2b8kDjaKsdosEvcrZSOJyMq85nu0grZvepb/ZHZLmmU9s2KUia', 'role' => 'client', 'nom' => 'ronflex', 'prenom' => 'ronflex', 'email' => 'ronflex@ronflex.ronflex', 'adresse' => NULL],
-            ['id' => 4, 'login' => 'pierre', 'password' => '$2y$12$dY9MFtgpueQc/qok2N20pOO9lY7dnsm.qijn2FELjI8x75g84aMVG', 'role' => 'client', 'nom' => 'Rochard', 'prenom' => 'Pierre', 'email' => 'pierre@argent.com', 'adresse' => NULL],
-            ['id' => 5, 'login' => 'ondine', 'password' => '$2y$12$bG88WHAFfQJh5cJR.hrbdO.L3jVFdqkjo2zCsSGyNIpaNi9z8JvL.', 'role' => 'client', 'nom' => 'Azuria', 'prenom' => 'Ondine', 'email' => 'ondine@eau.com', 'adresse' => NULL],
+        // COMMANDES
+        $commandes = [
+            ['id' => 1, 'id_user' => 2, 'date_creation' => '2025-12-08 00:07:27', 'statut' => 'terminee', 'total' => 240.00, 'type_paiement' => 'Credit Card'],
+            ['id' => 2, 'id_user' => 2, 'date_creation' => '2026-01-06 00:07:27', 'statut' => 'validee', 'total' => 59.90, 'type_paiement' => 'Paypal'],
+            ['id' => 3, 'id_user' => 1, 'date_creation' => '2026-01-07 00:07:27', 'statut' => 'expediee', 'total' => 45.00, 'type_paiement' => 'Paypal'],
+            ['id' => 4, 'id_user' => 2, 'date_creation' => '2026-01-08 00:07:27', 'statut' => 'panier', 'total' => 85.00, 'type_paiement' => 'Credit Card'],
+            ['id' => 5, 'id_user' => 2, 'date_creation' => '2025-11-09 00:12:17', 'statut' => 'terminee', 'total' => 240.00, 'type_paiement' => 'Paypal'],
+            ['id' => 6, 'id_user' => 1, 'date_creation' => '2025-12-18 00:12:17', 'statut' => 'terminee', 'total' => 90.00, 'type_paiement' => 'Credit Card'],
+            ['id' => 7, 'id_user' => 2, 'date_creation' => '2026-01-04 00:12:17', 'statut' => 'expediee', 'total' => 29.95, 'type_paiement' => 'Credit Card'],
+            ['id' => 8, 'id_user' => 1, 'date_creation' => '2026-01-07 00:12:17', 'statut' => 'validee', 'total' => 114.95, 'type_paiement' => 'Paypal'],
+            ['id' => 9, 'id_user' => 2, 'date_creation' => '2026-01-08 00:12:17', 'statut' => 'validee', 'total' => 90.00, 'type_paiement' => 'Credit Card'],
+            ['id' => 10, 'id_user' => 2, 'date_creation' => '2026-01-08 00:12:17', 'statut' => 'panier', 'total' => 140.00, 'type_paiement' => NULL],
+            ['id' => 11, 'id_user' => 1, 'date_creation' => '2026-01-08 14:15:11', 'statut' => 'validee', 'total' => 0.00, 'type_paiement' => NULL],
+            ['id' => 12, 'id_user' => 1, 'date_creation' => '2026-01-08 14:27:05', 'statut' => 'expediee', 'total' => 12.00, 'type_paiement' => NULL],
+            ['id' => 13, 'id_user' => 1, 'date_creation' => '2026-01-08 14:28:53', 'statut' => 'terminee', 'total' => 215.99, 'type_paiement' => NULL],
+            ['id' => 14, 'id_user' => 1, 'date_creation' => '2026-01-08 14:33:06', 'statut' => 'annulee', 'total' => 215.99, 'type_paiement' => NULL],
+            ['id' => 15, 'id_user' => 1, 'date_creation' => '2026-01-08 14:35:15', 'statut' => 'validee', 'total' => 12.00, 'type_paiement' => NULL],
+            ['id' => 16, 'id_user' => 1, 'date_creation' => '2026-01-08 14:37:02', 'statut' => 'terminee', 'total' => 90.99, 'type_paiement' => NULL],
+            ['id' => 17, 'id_user' => 1, 'date_creation' => '2026-01-08 14:38:33', 'statut' => 'terminee', 'total' => 210.99, 'type_paiement' => NULL],
+            ['id' => 18, 'id_user' => 3, 'date_creation' => '2026-01-10 10:00:00', 'statut' => 'terminee', 'total' => 650.00, 'type_paiement' => 'Credit Card'],
+            ['id' => 19, 'id_user' => 4, 'date_creation' => '2026-01-12 11:30:00', 'statut' => 'expediee', 'total' => 15.00, 'type_paiement' => 'Paypal'],
         ];
-        $this->db->table('users')->insertBatch($users);
+        $this->db->table('commandes')->insertBatch($commandes);
 
-        // 2. SERIES
-        $series = [
-            ['id' => 1, 'nom' => 'Écarlate et Violet'],
-            ['id' => 2, 'nom' => 'Méga-Évolution'],
-            ['id' => 3, 'nom' => 'Épée et Bouclier'],
-            ['id' => 4, 'nom' => 'Soleil et Lune'],
-            ['id' => 5, 'nom' => 'Wizards (Vintage)'],
-        ];
-        $this->db->table('series')->insertBatch($series);
-
-        // 3. PROMOTIONS
-        $promotions = [
-            ['idPromo' => 1, 'tauxPromo' => 0.50, 'dateDebut' => '2026-01-08 00:07:27', 'dateFin' => '2026-01-15 00:07:27'],
-            ['idPromo' => 2, 'tauxPromo' => 0.20, 'dateDebut' => '2026-01-08 00:10:37', 'dateFin' => '2026-01-15 00:10:37'],
-            ['idPromo' => 3, 'tauxPromo' => 0.10, 'dateDebut' => '2026-01-08 00:10:37', 'dateFin' => '2026-01-22 00:10:37'],
-            ['idPromo' => 4, 'tauxPromo' => 0.30, 'dateDebut' => '2026-01-08 00:10:37', 'dateFin' => '2026-01-11 00:10:37'],
-        ];
-        $this->db->table('promotions')->insertBatch($promotions);
-
-        // 4. EXTENSIONS
+        // EXTENSIONS
         $extensions = [
-            // Écarlate et Violet (Serie 1)
             ['id' => 1, 'nom' => 'Écarlate et Violet', 'code' => 'SVI', 'id_serie' => 1],
             ['id' => 2, 'nom' => 'Évolutions à Paldea', 'code' => 'PAL', 'id_serie' => 1],
             ['id' => 3, 'nom' => 'Flammes Obsidiennes', 'code' => 'OBF', 'id_serie' => 1],
-            ['id' => 4, 'nom' => '151', 'code' => 'MEW', 'id_serie' => 1],
+            ['id' => 4, 'nom' => 151, 'code' => 'MEW', 'id_serie' => 1],
             ['id' => 5, 'nom' => 'Faille Paradoxe', 'code' => 'PAR', 'id_serie' => 1],
             ['id' => 6, 'nom' => 'Destinées de Paldea', 'code' => 'PAF', 'id_serie' => 1],
             ['id' => 7, 'nom' => 'Forces Temporelles', 'code' => 'TEF', 'id_serie' => 1],
@@ -74,28 +44,61 @@ class FullDataSeeder extends Seeder
             ['id' => 13, 'nom' => 'Aventures Ensemble', 'code' => 'JTG', 'id_serie' => 1],
             ['id' => 14, 'nom' => 'Foudre Noire', 'code' => 'BLK', 'id_serie' => 1],
             ['id' => 15, 'nom' => 'Flamme Blanche', 'code' => 'WHT', 'id_serie' => 1],
-
-            // Custom (Serie 2)
             ['id' => 16, 'nom' => 'Méga-Évolution', 'code' => 'MEG', 'id_serie' => 2],
             ['id' => 17, 'nom' => 'Flammes Fantasmagoriques', 'code' => 'PFL', 'id_serie' => 2],
-
-            // Épée et Bouclier (Serie 3)
             ['id' => 18, 'nom' => 'Évolution Céleste', 'code' => 'EVS', 'id_serie' => 3],
             ['id' => 19, 'nom' => 'Stars Étincelantes', 'code' => 'BRS', 'id_serie' => 3],
             ['id' => 20, 'nom' => 'Zénith Suprême', 'code' => 'CRZ', 'id_serie' => 3],
             ['id' => 21, 'nom' => 'Origine Perdue', 'code' => 'LOR', 'id_serie' => 3],
-
-            // Soleil et Lune (Serie 4)
             ['id' => 22, 'nom' => 'Destinées Occultes', 'code' => 'HIF', 'id_serie' => 4],
             ['id' => 23, 'nom' => 'Duo de Choc', 'code' => 'TEU', 'id_serie' => 4],
-
-            // Vintage (Serie 5)
             ['id' => 24, 'nom' => 'Set de Base', 'code' => 'BS', 'id_serie' => 5],
         ];
         $this->db->table('extensions')->insertBatch($extensions);
 
-        // 5. PRODUITS
-                $produits = [
+        // LIGNES_COMMANDE
+        $lignes_commande = [
+            ['id' => 1, 'commande_id' => 1, 'product_id' => 2, 'quantite' => 2, 'prix_unitaire' => 120.00],
+            ['id' => 2, 'commande_id' => 2, 'product_id' => 3, 'quantite' => 10, 'prix_unitaire' => 5.99],
+            ['id' => 3, 'commande_id' => 3, 'product_id' => 5, 'quantite' => 1, 'prix_unitaire' => 45.00],
+            ['id' => 4, 'commande_id' => 4, 'product_id' => 1, 'quantite' => 1, 'prix_unitaire' => 85.00],
+            ['id' => 5, 'commande_id' => 5, 'product_id' => 2, 'quantite' => 2, 'prix_unitaire' => 120.00],
+            ['id' => 6, 'commande_id' => 6, 'product_id' => 16, 'quantite' => 1, 'prix_unitaire' => 90.00],
+            ['id' => 7, 'commande_id' => 7, 'product_id' => 9, 'quantite' => 5, 'prix_unitaire' => 5.99],
+            ['id' => 8, 'commande_id' => 8, 'product_id' => 1, 'quantite' => 1, 'prix_unitaire' => 85.00],
+            ['id' => 9, 'commande_id' => 8, 'product_id' => 9, 'quantite' => 5, 'prix_unitaire' => 5.99],
+            ['id' => 10, 'commande_id' => 9, 'product_id' => 16, 'quantite' => 1, 'prix_unitaire' => 90.00],
+            ['id' => 11, 'commande_id' => 10, 'product_id' => 14, 'quantite' => 1, 'prix_unitaire' => 140.00],
+            ['id' => 12, 'commande_id' => 11, 'product_id' => 19, 'quantite' => 1, 'prix_unitaire' => 0.00],
+            ['id' => 13, 'commande_id' => 12, 'product_id' => 17, 'quantite' => 1, 'prix_unitaire' => 12.00],
+            ['id' => 14, 'commande_id' => 12, 'product_id' => 18, 'quantite' => 1, 'prix_unitaire' => 0.00],
+            ['id' => 15, 'commande_id' => 13, 'product_id' => 2, 'quantite' => 1, 'prix_unitaire' => 120.00],
+            ['id' => 16, 'commande_id' => 13, 'product_id' => 3, 'quantite' => 1, 'prix_unitaire' => 5.99],
+            ['id' => 17, 'commande_id' => 13, 'product_id' => 16, 'quantite' => 1, 'prix_unitaire' => 90.00],
+            ['id' => 18, 'commande_id' => 14, 'product_id' => 16, 'quantite' => 1, 'prix_unitaire' => 90.00],
+            ['id' => 19, 'commande_id' => 14, 'product_id' => 2, 'quantite' => 1, 'prix_unitaire' => 120.00],
+            ['id' => 20, 'commande_id' => 14, 'product_id' => 3, 'quantite' => 1, 'prix_unitaire' => 5.99],
+            ['id' => 21, 'commande_id' => 15, 'product_id' => 18, 'quantite' => 1, 'prix_unitaire' => 0.00],
+            ['id' => 22, 'commande_id' => 15, 'product_id' => 17, 'quantite' => 1, 'prix_unitaire' => 12.00],
+            ['id' => 23, 'commande_id' => 15, 'product_id' => 19, 'quantite' => 1, 'prix_unitaire' => 0.00],
+            ['id' => 24, 'commande_id' => 16, 'product_id' => 3, 'quantite' => 1, 'prix_unitaire' => 5.99],
+            ['id' => 25, 'commande_id' => 16, 'product_id' => 1, 'quantite' => 1, 'prix_unitaire' => 85.00],
+            ['id' => 26, 'commande_id' => 17, 'product_id' => 9, 'quantite' => 1, 'prix_unitaire' => 5.99],
+            ['id' => 27, 'commande_id' => 17, 'product_id' => 1, 'quantite' => 1, 'prix_unitaire' => 85.00],
+            ['id' => 28, 'commande_id' => 17, 'product_id' => 2, 'quantite' => 1, 'prix_unitaire' => 120.00],
+            ['id' => 29, 'commande_id' => 18, 'product_id' => 21, 'quantite' => 1, 'prix_unitaire' => 650.00],
+            ['id' => 30, 'commande_id' => 19, 'product_id' => 23, 'quantite' => 1, 'prix_unitaire' => 15.00],
+        ];
+        $this->db->table('lignes_commande')->insertBatch($lignes_commande);
+
+        // MIGRATIONS
+        $migrations = [
+            ['id' => 1, 'version' => '2026-01-14-091822', 'class' => 'App\\Database\\Migrations\\InitFullDatabase', 'group' => 'default', 'namespace' => 'App', 'time' => 1768549565, 'batch' => 1],
+        ];
+        $this->db->table('migrations')->insertBatch($migrations);
+
+        // PRODUITS
+        $produits = [
             ['id' => 1, 'type_produit' => 'carte', 'nom' => 'U.R Pikachu EX', 'description' => 'Une carte électrique surpuissante.', 'prix' => 85.00, 'image_url' => '1767838626_b07943e156f2381dd456.webp', 'stock' => 800, 'rarete' => 'Ultra Rare', 'numero_carte' => '001/190', 'id_extension' => 11, 'id_promo' => NULL, 'nb_ventes' => 2],
             ['id' => 2, 'type_produit' => 'display', 'nom' => 'Display - SCR', 'description' => 'Boîte de 36 boosters Couronne Stellaire.', 'prix' => 120.00, 'image_url' => '1767839880_6f5e5eba142eaeac35dc.webp', 'stock' => 200, 'rarete' => '', 'numero_carte' => NULL, 'id_extension' => 10, 'id_promo' => 2, 'nb_ventes' => 4],
             ['id' => 3, 'type_produit' => 'booster', 'nom' => 'Booster - MEW', 'description' => 'Un booster de la série mythique 151.', 'prix' => 5.99, 'image_url' => '1767838434_43bfaac1b0d6497f80b5.png', 'stock' => 970, 'rarete' => '', 'numero_carte' => NULL, 'id_extension' => 4, 'id_promo' => 1, 'nb_ventes' => 10],
@@ -136,66 +139,34 @@ class FullDataSeeder extends Seeder
             ['id' => 38, 'type_produit' => 'accessoire', 'nom' => 'Deck Box Ultra Pro', 'description' => 'Boîte de rangement noire.', 'prix' => 4.50, 'image_url' => '1768549865_e86ac59691ae049bd321.webp', 'stock' => 500, 'rarete' => '', 'numero_carte' => NULL, 'id_extension' => 1, 'id_promo' => NULL, 'nb_ventes' => 15],
         ];
         $this->db->table('produits')->insertBatch($produits);
-        // 6. COMMANDES
-                $commandes = [
-            ['id' => 1, 'id_user' => 2, 'date_creation' => '2025-12-08 00:07:27', 'statut' => 'terminee', 'total' => 240.00, 'type_paiement' => 'Credit Card'],
-            ['id' => 2, 'id_user' => 2, 'date_creation' => '2026-01-06 00:07:27', 'statut' => 'validee', 'total' => 59.90, 'type_paiement' => 'Paypal'],
-            ['id' => 3, 'id_user' => 1, 'date_creation' => '2026-01-07 00:07:27', 'statut' => 'expediee', 'total' => 45.00, 'type_paiement' => 'Paypal'],
-            ['id' => 4, 'id_user' => 2, 'date_creation' => '2026-01-08 00:07:27', 'statut' => 'panier', 'total' => 85.00, 'type_paiement' => 'Credit Card'],
-            ['id' => 5, 'id_user' => 2, 'date_creation' => '2025-11-09 00:12:17', 'statut' => 'terminee', 'total' => 240.00, 'type_paiement' => 'Paypal'],
-            ['id' => 6, 'id_user' => 1, 'date_creation' => '2025-12-18 00:12:17', 'statut' => 'terminee', 'total' => 90.00, 'type_paiement' => 'Credit Card'],
-            ['id' => 7, 'id_user' => 2, 'date_creation' => '2026-01-04 00:12:17', 'statut' => 'expediee', 'total' => 29.95, 'type_paiement' => 'Credit Card'],
-            ['id' => 8, 'id_user' => 1, 'date_creation' => '2026-01-07 00:12:17', 'statut' => 'validee', 'total' => 114.95, 'type_paiement' => 'Paypal'],
-            ['id' => 9, 'id_user' => 2, 'date_creation' => '2026-01-08 00:12:17', 'statut' => 'validee', 'total' => 90.00, 'type_paiement' => 'Credit Card'],
-            ['id' => 10, 'id_user' => 2, 'date_creation' => '2026-01-08 00:12:17', 'statut' => 'panier', 'total' => 140.00, 'type_paiement' => NULL],
-            ['id' => 11, 'id_user' => 1, 'date_creation' => '2026-01-08 14:15:11', 'statut' => 'validee', 'total' => 0.00, 'type_paiement' => NULL],
-            ['id' => 12, 'id_user' => 1, 'date_creation' => '2026-01-08 14:27:05', 'statut' => 'expediee', 'total' => 12.00, 'type_paiement' => NULL],
-            ['id' => 13, 'id_user' => 1, 'date_creation' => '2026-01-08 14:28:53', 'statut' => 'terminee', 'total' => 215.99, 'type_paiement' => NULL],
-            ['id' => 14, 'id_user' => 1, 'date_creation' => '2026-01-08 14:33:06', 'statut' => 'annulee', 'total' => 215.99, 'type_paiement' => NULL],
-            ['id' => 15, 'id_user' => 1, 'date_creation' => '2026-01-08 14:35:15', 'statut' => 'validee', 'total' => 12.00, 'type_paiement' => NULL],
-            ['id' => 16, 'id_user' => 1, 'date_creation' => '2026-01-08 14:37:02', 'statut' => 'terminee', 'total' => 90.99, 'type_paiement' => NULL],
-            ['id' => 17, 'id_user' => 1, 'date_creation' => '2026-01-08 14:38:33', 'statut' => 'terminee', 'total' => 210.99, 'type_paiement' => NULL],
-            ['id' => 18, 'id_user' => 3, 'date_creation' => '2026-01-10 10:00:00', 'statut' => 'terminee', 'total' => 650.00, 'type_paiement' => 'Credit Card'],
-            ['id' => 19, 'id_user' => 4, 'date_creation' => '2026-01-12 11:30:00', 'statut' => 'expediee', 'total' => 15.00, 'type_paiement' => 'Paypal'],
-        ];
-        $this->db->table('commandes')->insertBatch($commandes);
 
-        // 7. LIGNES_COMMANDE
-        $lignes_commande = [
-            ['id' => 1, 'commande_id' => 1, 'product_id' => 2, 'quantite' => 2, 'prix_unitaire' => 120.00],
-            ['id' => 2, 'commande_id' => 2, 'product_id' => 3, 'quantite' => 10, 'prix_unitaire' => 5.99],
-            ['id' => 3, 'commande_id' => 3, 'product_id' => 5, 'quantite' => 1, 'prix_unitaire' => 45.00],
-            ['id' => 4, 'commande_id' => 4, 'product_id' => 1, 'quantite' => 1, 'prix_unitaire' => 85.00],
-            ['id' => 5, 'commande_id' => 5, 'product_id' => 2, 'quantite' => 2, 'prix_unitaire' => 120.00],
-            ['id' => 6, 'commande_id' => 6, 'product_id' => 16, 'quantite' => 1, 'prix_unitaire' => 90.00],
-            ['id' => 7, 'commande_id' => 7, 'product_id' => 9, 'quantite' => 5, 'prix_unitaire' => 5.99],
-            ['id' => 8, 'commande_id' => 8, 'product_id' => 1, 'quantite' => 1, 'prix_unitaire' => 85.00],
-            ['id' => 9, 'commande_id' => 8, 'product_id' => 9, 'quantite' => 5, 'prix_unitaire' => 5.99],
-            ['id' => 10, 'commande_id' => 9, 'product_id' => 16, 'quantite' => 1, 'prix_unitaire' => 90.00],
-            ['id' => 11, 'commande_id' => 10, 'product_id' => 14, 'quantite' => 1, 'prix_unitaire' => 140.00],
-            ['id' => 12, 'commande_id' => 11, 'product_id' => 19, 'quantite' => 1, 'prix_unitaire' => 0.00],
-            ['id' => 13, 'commande_id' => 12, 'product_id' => 17, 'quantite' => 1, 'prix_unitaire' => 12.00],
-            ['id' => 14, 'commande_id' => 12, 'product_id' => 18, 'quantite' => 1, 'prix_unitaire' => 0.00],
-            ['id' => 15, 'commande_id' => 13, 'product_id' => 2, 'quantite' => 1, 'prix_unitaire' => 120.00],
-            ['id' => 16, 'commande_id' => 13, 'product_id' => 3, 'quantite' => 1, 'prix_unitaire' => 5.99],
-            ['id' => 17, 'commande_id' => 13, 'product_id' => 16, 'quantite' => 1, 'prix_unitaire' => 90.00],
-            ['id' => 18, 'commande_id' => 14, 'product_id' => 16, 'quantite' => 1, 'prix_unitaire' => 90.00],
-            ['id' => 19, 'commande_id' => 14, 'product_id' => 2, 'quantite' => 1, 'prix_unitaire' => 120.00],
-            ['id' => 20, 'commande_id' => 14, 'product_id' => 3, 'quantite' => 1, 'prix_unitaire' => 5.99],
-            ['id' => 21, 'commande_id' => 15, 'product_id' => 18, 'quantite' => 1, 'prix_unitaire' => 0.00],
-            ['id' => 22, 'commande_id' => 15, 'product_id' => 17, 'quantite' => 1, 'prix_unitaire' => 12.00],
-            ['id' => 23, 'commande_id' => 15, 'product_id' => 19, 'quantite' => 1, 'prix_unitaire' => 0.00],
-            ['id' => 24, 'commande_id' => 16, 'product_id' => 3, 'quantite' => 1, 'prix_unitaire' => 5.99],
-            ['id' => 25, 'commande_id' => 16, 'product_id' => 1, 'quantite' => 1, 'prix_unitaire' => 85.00],
-            ['id' => 26, 'commande_id' => 17, 'product_id' => 9, 'quantite' => 1, 'prix_unitaire' => 5.99],
-            ['id' => 27, 'commande_id' => 17, 'product_id' => 1, 'quantite' => 1, 'prix_unitaire' => 85.00],
-            ['id' => 28, 'commande_id' => 17, 'product_id' => 2, 'quantite' => 1, 'prix_unitaire' => 120.00],
-            ['id' => 29, 'commande_id' => 18, 'product_id' => 21, 'quantite' => 1, 'prix_unitaire' => 650.00], // Noctali VMAX
-            ['id' => 30, 'commande_id' => 19, 'product_id' => 23, 'quantite' => 1, 'prix_unitaire' => 15.00], // Booster EVS
+        // PROMOTIONS
+        $promotions = [
+            ['idPromo' => 1, 'tauxPromo' => 0.50, 'dateDebut' => '2026-01-08 00:07:27', 'dateFin' => '2026-01-15 00:07:27'],
+            ['idPromo' => 2, 'tauxPromo' => 0.20, 'dateDebut' => '2026-01-08 00:10:37', 'dateFin' => '2026-01-15 00:10:37'],
+            ['idPromo' => 3, 'tauxPromo' => 0.10, 'dateDebut' => '2026-01-08 00:10:37', 'dateFin' => '2026-01-22 00:10:37'],
+            ['idPromo' => 4, 'tauxPromo' => 0.30, 'dateDebut' => '2026-01-08 00:10:37', 'dateFin' => '2026-01-11 00:10:37'],
         ];
-        $this->db->table('lignes_commande')->insertBatch($lignes_commande);
+        $this->db->table('promotions')->insertBatch($promotions);
 
-        // Réactionvation des vérifications des clées étrangères
-        $this->db->enableForeignKeyChecks();
-    }
-}
+        // SERIES
+        $series = [
+            ['id' => 1, 'nom' => 'Écarlate et Violet'],
+            ['id' => 2, 'nom' => 'Méga-Évolution'],
+            ['id' => 3, 'nom' => 'Épée et Bouclier'],
+            ['id' => 4, 'nom' => 'Soleil et Lune'],
+            ['id' => 5, 'nom' => 'Wizards (Vintage'],
+        ];
+        $this->db->table('series')->insertBatch($series);
+
+        // USERS
+        $users = [
+            ['id' => 1, 'login' => 'admin', 'password' => '$2y$10$4rvjj9ktrVhOcLwU1F19NuWkgWup118LWKF.0b6MQxm/6r.kdblMG', 'role' => 'admin', 'nom' => 'Administrateur', 'prenom' => NULL, 'email' => NULL, 'adresse' => NULL],
+            ['id' => 2, 'login' => 'sacha', 'password' => '$2y$10$KfO2nz9J3H6T34yhLDQI9O1cXYJ1XPXB2YUA2.LTvVlqEYQYHvbUO', 'role' => 'client', 'nom' => 'Ketchum', 'prenom' => NULL, 'email' => NULL, 'adresse' => NULL],
+            ['id' => 3, 'login' => 'ronflex', 'password' => '$2y$12$cvF2b8kDjaKsdosEvcrZSOJyMq85nu0grZvepb/ZHZLmmU9s2KUia', 'role' => 'client', 'nom' => 'ronflex', 'prenom' => 'ronflex', 'email' => 'ronflex@ronflex.ronflex', 'adresse' => NULL],
+            ['id' => 4, 'login' => 'pierre', 'password' => '$2y$12$dY9MFtgpueQc/qok2N20pOO9lY7dnsm.qijn2FELjI8x75g84aMVG', 'role' => 'client', 'nom' => 'Rochard', 'prenom' => 'Pierre', 'email' => 'pierre@argent.com', 'adresse' => NULL],
+            ['id' => 5, 'login' => 'ondine', 'password' => '$2y$12$bG88WHAFfQJh5cJR.hrbdO.L3jVFdqkjo2zCsSGyNIpaNi9z8JvL.', 'role' => 'client', 'nom' => 'Azuria', 'prenom' => 'Ondine', 'email' => 'ondine@eau.com', 'adresse' => NULL],
+        ];
+        $this->db->table('users')->insertBatch($users);
+
+------------------------------------------------------------
