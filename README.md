@@ -13,6 +13,14 @@ Bienvenue sur le dépôt de notre application E-Commerce développée avec **Cod
 
 ---
 
+Il s'agit d'un projet marquant la fin de notre premier semestre de 2ème année. Nous devions développer un site web marchand en utilisant le langage **PHP** via le framework  **CodeIgniter 4**. Nous avons réalisé ce projet par groupe de 4 étudiants. Ce site porte sur la vente de cartes **pokémon** et d'autres produits en lien avec ce thème.
+
+## Objectifs du projet
+* Pratiquer le langage **PHP** vu en cours dans le cadre d'un projet concret
+* Intégrer des **design pattern** cohérents au code
+* Réfléchir à la structure du projet via des diagrammes de cas d'utilisation, d'activités et d'analyse
+* Mettre en oeuvre une architecture MVC
+
 ## --- Guide de Lancement Rapide (IUT & Personnel)
 
 Nous avons automatisé l'installation via des scripts shell pour simplifier le déploiement, que vous soyez sur les machines de l'IUT (Linux/Podman) ou sur une machine personnelle (Windows/Docker).
